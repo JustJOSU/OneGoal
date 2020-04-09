@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1078756089032",
+    "firebase_url": "https://onegoal-c66d5.firebaseio.com",
+    "project_id": "onegoal-c66d5",
+    "storage_bucket": "onegoal-c66d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078756089032:android:cbaf569ed3235baedf59fd",
+        "android_client_info": {
+          "package_name": "com.hour.onegoal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078756089032-k2h7eh3cr7fnet0omgpfktqavuqc305b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ97_6AMD23IkLdWDAidLEe15oFfyBzKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078756089032-k2h7eh3cr7fnet0omgpfktqavuqc305b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
