@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.Login.LoginActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
@@ -46,6 +45,14 @@ class RegisterActivity : AppCompatActivity() {
             startActivityForResult(intent, 0)
 
         }
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
     var selectedPhotoUri: Uri? = null
 
