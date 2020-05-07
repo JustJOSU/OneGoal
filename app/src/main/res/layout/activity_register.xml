@@ -54,18 +54,66 @@
         app:layout_constraintStart_toStartOf="@+id/email_edittext_register"
         app:layout_constraintTop_toBottomOf="@+id/email_edittext_register" />
 
+    <EditText
+        android:id="@+id/birthday_edittext_register"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_edittext_register_login"
+        android:ems="10"
+        android:maxLength="8"
+        android:hint="예시) 19960624"
+        android:inputType="number"
+        android:paddingLeft="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/password_edittext_register"
+        app:layout_constraintStart_toStartOf="@+id/password_edittext_register"
+        app:layout_constraintTop_toBottomOf="@+id/password_edittext_register" />
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        app:layout_constraintEnd_toEndOf="@+id/birthday_edittext_register"
+        app:layout_constraintStart_toStartOf="@+id/birthday_edittext_register"
+        app:layout_constraintTop_toBottomOf="@+id/birthday_edittext_register"
+        android:gravity="center"
+        >
+
+        <RadioButton
+            android:id="@+id/rb_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="남자"
+            android:checked="true"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="여자"
+            android:checked="false"
+            />
+    </RadioGroup>
+
     <Button
         android:id="@+id/register_button_register"
-        android:layout_width="0dp"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button"
         android:text="Register"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/password_edittext_register"
-        app:layout_constraintStart_toStartOf="@+id/password_edittext_register"
-        app:layout_constraintTop_toBottomOf="@+id/password_edittext_register" />
+        app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+
+        />
+
 
     <TextView
         android:id="@+id/already_have_account_text_view"

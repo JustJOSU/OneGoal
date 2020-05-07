@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             } else {
                 Log.w(TAG, "signInWithEmail:failure", task.exception)
-                Toast.makeText(baseContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "아이디와 비밀번호를 확인하여주세요.", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Patterns
+import android.view.View
+import android.widget.RadioButton
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -21,12 +24,14 @@ class RegisterActivity : AppCompatActivity() {
         val TAG = "RegisterActivity"
     }
 
+    private var selection = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         register_button_register.setOnClickListener {
             performRegister()
+            return@setOnClickListener
         }
 
         already_have_account_text_view.setOnClickListener {
@@ -74,13 +79,39 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun performRegister() {
-        val email = email_edittext_register.text.toString()
-        val password = password_edittext_register.text.toString()
+        // trim() : 오른쪽 끝에 있는 공백을 없애는 역할.
+        val email = email_edittext_register.text.toString().trim()
+        val password = password_edittext_register.text.toString().trim()
+        val birth = birthday_edittext_register.text.toString().trim()
+        val username = username_edittext_register.text.toString().trim()
 
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter text in email/pw", Toast.LENGTH_SHORT).show()
+        if(username.isEmpty()){
+            username_edittext_register.error = "회원명을 입력해주세요."
+            username_edittext_register.requestFocus()
             return
         }
+        if(email.isEmpty()){
+            email_edittext_register.error = "이메일을 입력해주세요."
+            email_edittext_register.requestFocus()
+            return
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            email_edittext_register.error = "이메일 형식이 올바르지 않습니다."
+            email_edittext_register.requestFocus()
+            return
+        }
+
+        if(password.isEmpty() || password.length < 6){
+            password_edittext_register.error = "비밀번호는 6글자 이상이어야 합니다."
+            password_edittext_register.requestFocus()
+            return
+        }
+        if(birth.isEmpty() || birth.length < 8){
+            birthday_edittext_register.error = "생년월일을 입력해주세요."
+            birthday_edittext_register.requestFocus()
+        }
+
+
 
         Log.d("RegisterActivity", "Email is: " + email)
         Log.d("RegisterActivity", "Password: $password")
@@ -93,17 +124,22 @@ class RegisterActivity : AppCompatActivity() {
                 // else if successful
                 Log.d("RegisterActivity", "Successfully created user with uid: ${it.result?.user?.uid}")
                 uploadImageToFirebaseStorage()
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                // TODO: .apply {
+                //        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                //    }
+                startActivity(intent)
             }
             .addOnFailureListener{
                 Log.d("RegisterActivity", "Failed to create user: ${it.message}")
-                Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "이메일 주소가 중복되어있는지 확인해주세요. ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
     private fun uploadImageToFirebaseStorage() {
-        if (selectedPhotoUri == null) return
 
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+        if (selectedPhotoUri == null) return
 
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
@@ -120,11 +156,14 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
+    private fun saveUserToFirebaseDatabase(profileImageUrl:String) {
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val selectedId = radioGroup.checkedRadioButtonId
+        val radioButton = findViewById<RadioButton>(selectedId).text.toString()
 
-        val user = User(uid, username_edittext_register.text.toString(), profileImageUrl)
+
+        val user = User(uid, username_edittext_register.text.toString(), profileImageUrl,birthday_edittext_register.text.toString(),radioButton)
 
         ref.setValue(user)
             .addOnSuccessListener {
@@ -134,5 +173,6 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d(TAG, "Failed to set value to database: ${it.message}")
             }
     }
+
+
 }
-class User(val uid: String, val username: String, val profileImageUrl: String)
