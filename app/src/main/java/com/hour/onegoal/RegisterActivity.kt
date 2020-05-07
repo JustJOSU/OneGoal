@@ -78,6 +78,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+
     private fun performRegister() {
         // trim() : 오른쪽 끝에 있는 공백을 없애는 역할.
         val email = email_edittext_register.text.toString().trim()
@@ -109,16 +110,18 @@ class RegisterActivity : AppCompatActivity() {
         if(birth.isEmpty() || birth.length < 8){
             birthday_edittext_register.error = "생년월일을 입력해주세요."
             birthday_edittext_register.requestFocus()
+            return
         }
 
 
 
         Log.d("RegisterActivity", "Email is: " + email)
         Log.d("RegisterActivity", "Password: $password")
-
+        progressbar.visibility = View.VISIBLE
         // Firebase Authentication to create a user with email and password
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
+                progressbar.visibility = View.GONE
                 if (!it.isSuccessful) return@addOnCompleteListener
 
                 // else if successful

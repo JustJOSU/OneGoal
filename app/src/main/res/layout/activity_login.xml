@@ -52,6 +52,16 @@
         app:layout_constraintStart_toStartOf="@+id/password_edittext_login"
         app:layout_constraintTop_toBottomOf="@+id/password_edittext_login" />
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/register"
+        app:layout_constraintEnd_toEndOf="@+id/login_button"
+        app:layout_constraintStart_toStartOf="@+id/login_button" />
     <Button
         android:id="@+id/register"
         android:layout_width="0dp"

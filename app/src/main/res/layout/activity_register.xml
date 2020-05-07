@@ -99,6 +99,18 @@
             />
     </RadioGroup>
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:visibility="invisible"
+        android:outlineAmbientShadowColor="@color/common_google_signin_btn_text_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/already_have_account_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
     <Button
         android:id="@+id/register_button_register"
         android:layout_width="340dp"

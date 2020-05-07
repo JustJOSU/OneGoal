@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.hour.onegoal.MainActivity
 import com.hour.onegoal.R
 import com.hour.onegoal.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.progressbar
+import kotlinx.android.synthetic.main.activity_register.*
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -23,8 +26,30 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         auth = FirebaseAuth.getInstance()
 
-        // buttons
-        login_button.setOnClickListener(this)
+        // TODO: progressbar show
+        login_button.setOnClickListener{
+            // trim() : 오른쪽 끝에 있는 공백을 없애는 역할.
+            val email = email_edittext_login.text.toString().trim()
+            val password = password_edittext_login.text.toString().trim()
+            if(email.isEmpty()){
+                email_edittext_login.error = "이메일을 입력해주십시오."
+                email_edittext_login.requestFocus()
+                return@setOnClickListener
+            }
+            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                email_edittext_login.error = "이메일 형식이 올바르지 않습니다."
+                email_edittext_login.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(password.isEmpty() || password.length < 6){
+                password_edittext_login.error = "비밀번호를 확인 해 주십시오."
+                password_edittext_login.requestFocus()
+                return@setOnClickListener
+            }
+
+            signIn(email,password)
+        }
 
 
         register.setOnClickListener {
@@ -37,12 +62,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun signIn(email: String, password: String){
         Log.d(TAG, "signIn:$email")
+        progressbar.visibility = View.VISIBLE
         if(!validateForm()){
             return
         }
 
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {task ->
+            progressbar.visibility = View.GONE
             if(task.isSuccessful){
+                progressbar.visibility = View.GONE
                 Log.d(TAG, "signInWithEmail:success")
                 val user = auth.currentUser
                 val intent = Intent(this, MainActivity::class.java)
