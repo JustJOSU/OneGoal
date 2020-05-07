@@ -1,4 +1,4 @@
-package com.hour.onegoal
+package com.hour.onegoal.Login
 
 import android.app.Activity
 import android.content.Intent
@@ -14,7 +14,9 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.hour.onegoal.Login.LoginActivity
+import com.hour.onegoal.R
+import com.hour.onegoal.Data.User
+import com.hour.onegoal.login
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
@@ -167,7 +169,13 @@ class RegisterActivity : AppCompatActivity() {
         val radioButton = findViewById<RadioButton>(selectedId).text.toString()
 
 
-        val user = User(uid, username_edittext_register.text.toString(), profileImageUrl,birthday_edittext_register.text.toString(),radioButton)
+        val user = User(
+            uid,
+            username_edittext_register.text.toString(),
+            profileImageUrl,
+            birthday_edittext_register.text.toString(),
+            radioButton
+        )
 
         ref.setValue(user)
             .addOnSuccessListener {

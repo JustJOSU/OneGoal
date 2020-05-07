@@ -11,11 +11,9 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.hour.onegoal.MainActivity
 import com.hour.onegoal.R
-import com.hour.onegoal.RegisterActivity
 import com.hour.onegoal.login
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.progressbar
-import kotlinx.android.synthetic.main.activity_register.*
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
