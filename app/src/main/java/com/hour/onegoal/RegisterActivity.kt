@@ -20,6 +20,7 @@ import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
+    private lateinit var auth : FirebaseAuth
     companion object {
         val TAG = "RegisterActivity"
     }
@@ -177,5 +178,11 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
+    override fun onStart() {
+        super.onStart()
+        auth.currentUser?.let {
+            login()
+        }
+    }
 
 }
