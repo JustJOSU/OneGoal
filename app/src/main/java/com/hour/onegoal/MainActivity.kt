@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         mDb.child("users").child(userKey).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val userID =
-                    dataSnapshot.child("username").getValue(String::class.java)!!
+                    dataSnapshot.child("username").getValue(String::class.java)
                 val photoID =
                     dataSnapshot.child("profileImageUrl").getValue(String::class.java)
                 currentUser?.let {user ->

@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.firebase:firebase-database:19.3.0'
+    implementation 'com.google.firebase:firebase-firestore:21.4.3'
 
     // circleimageview !-For profile -! **2020-04-01**
     implementation 'de.hdodenhof:circleimageview:3.1.0'
