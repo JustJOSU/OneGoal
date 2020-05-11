@@ -3,6 +3,7 @@ package com.hour.onegoal
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hour.onegoal.Data.Category
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_profile.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,22 +43,13 @@ class MainActivity : AppCompatActivity() {
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val userKey = user.uid
 
-        mDb.child("users").child(userKey).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val userID =
-                    dataSnapshot.child("username").getValue(String::class.java)
-                val photoID =
-                    dataSnapshot.child("profileImageUrl").getValue(String::class.java)
-                currentUser?.let {user ->
-                    user_textView.text = userID
-                    Glide.with(this@MainActivity)
-                        .load(photoID)
-                        .into(current_user_imageView)
-                }
-            }
+        currentUser?.let { user ->
+            user_textView.text = user.displayName
 
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
+            Glide.with(this@MainActivity)
+                .load(user.photoUrl)
+                .into(current_user_imageView)
+        }
 
         // 현재 유저 선택했을 경우
         main_id_set.setOnClickListener {
