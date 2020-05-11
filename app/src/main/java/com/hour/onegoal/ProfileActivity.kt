@@ -34,7 +34,6 @@ class ProfileActivity : AppCompatActivity() {
     private val OPEN_GALLERY = 1
     private var filePath: Uri? = null
     private val currentUser = FirebaseAuth.getInstance().currentUser
-    private var storageReference: StorageReference? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

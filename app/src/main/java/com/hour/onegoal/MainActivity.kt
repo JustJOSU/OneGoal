@@ -21,9 +21,6 @@ import kotlinx.android.synthetic.main.activity_profile.*
 
 class MainActivity : AppCompatActivity() {
 
-    companion object{
-        val INTENT_PARCELABLE = "OBJECT_INTENT"
-    }
     val categoryList = arrayListOf<Category>(
         Category(R.drawable.workout,"운동") ,
         Category(R.drawable.study, "공부"),
@@ -43,13 +40,21 @@ class MainActivity : AppCompatActivity() {
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val userKey = user.uid
 
-        currentUser?.let { user ->
-            user_textView.text = user.displayName
+            currentUser?.let { user ->
+                if (user.displayName == null){
+                    user_textView.visibility = View.VISIBLE
+                    current_user_imageView.visibility = View.VISIBLE
+                }
+                else{
+                    user_textView.text = user.displayName
+                    Glide.with(this@MainActivity)
+                        .load(user.photoUrl)
+                        .into(current_user_imageView)
+                }
+            }
 
-            Glide.with(this@MainActivity)
-                .load(user.photoUrl)
-                .into(current_user_imageView)
-        }
+
+
 
         // 현재 유저 선택했을 경우
         main_id_set.setOnClickListener {
