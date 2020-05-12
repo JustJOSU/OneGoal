@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.hour.onegoal.Login.LoginActivity
 
 fun Context.toast(message:String) =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
 fun Context.login(){
     //FLAG_ACTIIVTY_CLEAR_TASK는 기존에 쌓여있던

@@ -2,21 +2,16 @@ package com.hour.onegoal
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.hour.onegoal.Data.Category
+import com.hour.onegoal.Login.ProfileActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_profile.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,25 +35,26 @@ class MainActivity : AppCompatActivity() {
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val userKey = user.uid
 
-            currentUser?.let { user ->
-                if (user.displayName == null){
-                    user_textView.visibility = View.VISIBLE
-                    current_user_imageView.visibility = View.VISIBLE
-                }
-                else{
-                    user_textView.text = user.displayName
-                    Glide.with(this@MainActivity)
-                        .load(user.photoUrl)
-                        .into(current_user_imageView)
-                }
+        currentUser?.let { user ->
+            if (user.displayName == null && user.photoUrl == null){
+                user_textView.visibility = View.VISIBLE
+                current_user_imageView.visibility = View.VISIBLE
             }
+            else{
+                user_textView.text = user.displayName
+                Glide.with(this@MainActivity)
+                    .load(user.photoUrl)
+                    .into(current_user_imageView)
+            }
+        }
 
 
 
 
         // 현재 유저 선택했을 경우
         main_id_set.setOnClickListener {
-            val intent = Intent(applicationContext,ProfileActivity::class.java)
+            val intent = Intent(applicationContext,
+                ProfileActivity::class.java)
             startActivity(intent)
         }
 

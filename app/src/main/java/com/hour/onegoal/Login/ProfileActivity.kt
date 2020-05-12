@@ -1,4 +1,4 @@
-package com.hour.onegoal
+package com.hour.onegoal.Login
 
 import android.app.Activity
 import android.content.Intent
@@ -9,21 +9,19 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
-import kotlinx.android.synthetic.main.activity_main.*
+import com.hour.onegoal.*
+import com.hour.onegoal.R
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.activity_profile.edit_text_name
+import kotlinx.android.synthetic.main.activity_profile.logout
+import kotlinx.android.synthetic.main.activity_profile.progressbar
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -34,7 +32,6 @@ class ProfileActivity : AppCompatActivity() {
     private val OPEN_GALLERY = 1
     private var filePath: Uri? = null
     private val currentUser = FirebaseAuth.getInstance().currentUser
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,10 +50,11 @@ class ProfileActivity : AppCompatActivity() {
                 text_not_verified.visibility = View.VISIBLE
             }
         }
-
+        // 프로필 이미지 클릭
         profile_image_view.setOnClickListener {
             showPictureDialog()
         }
+        // 저장버튼
         button_save.setOnClickListener {
             val photo = when {
                 // 선택된 이미지를 사진에 사용한다.
@@ -86,7 +84,7 @@ class ProfileActivity : AppCompatActivity() {
                     progressbar.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
                         application?.toast("프로필 업데이트 성공")
-                        val intent = Intent(this,MainActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     } else {
                         application?.toast(task.exception?.message!!)
@@ -94,6 +92,7 @@ class ProfileActivity : AppCompatActivity() {
                 }
         }
 
+        // 로그아웃
         logout.setOnClickListener {
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
@@ -108,7 +107,44 @@ class ProfileActivity : AppCompatActivity() {
             }.create().show()
         }
 
+        // 패스워드 변경
+        text_password.setOnClickListener {
+            val intent = Intent(this, UpdatePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 이메일 인증이 안되었을 때
+        text_not_verified.setOnClickListener {
+            AlertDialog.Builder(this).apply {
+                setTitle("이메일 인증하시겠습니까?")
+                setPositiveButton("Yes") { _, _ ->
+                    currentUser?.sendEmailVerification()
+                        ?.addOnCompleteListener {
+                            if (it.isSuccessful){
+                                FirebaseAuth.getInstance().signOut()
+                                logout()
+                                toast("현재 로그인 하신 이메일로 인증 메일을 보내드렸습니다. 인증 후 다시 로그인 하여주세요 ^^")
+                            }else{
+                                toast(it.exception?.message!!)
+                            }
+
+                        }
+                }
+                setNegativeButton("Cancel") { _, _ ->
+                }
+            }.create().show()
+
+        }
+
+        // 이메일 인증 페이지
+        text_email.setOnClickListener {
+            val intent = Intent(this,UpdateEmailActivity::class.java)
+            startActivity(intent)
+        }
+
     }
+
+
 
     // 카메라
     private fun takePictureIntent() {
