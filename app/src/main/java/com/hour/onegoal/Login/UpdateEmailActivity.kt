@@ -1,15 +1,15 @@
-package com.hour.onegoal
+package com.hour.onegoal.Login
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import androidx.navigation.Navigation
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.hour.onegoal.Login.ProfileActivity
+import com.hour.onegoal.R
+import com.hour.onegoal.logout
+import com.hour.onegoal.toast
 import kotlinx.android.synthetic.main.activity_update_email.*
 
 class UpdateEmailActivity : AppCompatActivity() {

@@ -89,6 +89,28 @@
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content"/>
+            <EditText
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_gravity="top"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_lock"
+                android:text=""
+                android:enabled="true"
+                android:id="@+id/text_birth"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_gravity="top"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_lock"
+                android:text=""
+                android:enabled="true"
+                android:id="@+id/text_gender"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:layout_gravity="top"

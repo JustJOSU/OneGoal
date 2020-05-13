@@ -9,17 +9,23 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.*
+import com.hour.onegoal.Data.User
 import com.hour.onegoal.R
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.edit_text_name
 import kotlinx.android.synthetic.main.activity_profile.logout
 import kotlinx.android.synthetic.main.activity_profile.progressbar
+import kotlinx.android.synthetic.main.activity_register.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 
@@ -36,26 +42,50 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        // UserName 가져오는 코드
-        currentUser?.let { user ->
-            edit_text_name.setText(user.displayName)
-            text_email.text = user.email
-            Glide.with(this@ProfileActivity)
-                .load(user.photoUrl)
-                .into(profile_image_view)
+        val mDatabase = FirebaseDatabase.getInstance()
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val mDb = mDatabase.reference
+        val user: FirebaseUser = firebaseAuth.currentUser!!
+        val userKey = user.uid
+        mDb.child("users").child(userKey).addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
 
-            if (user.isEmailVerified) {
-                text_not_verified.visibility = View.INVISIBLE
-            } else {
-                text_not_verified.visibility = View.VISIBLE
             }
-        }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val birthID =
+                    p0.child("birth").getValue(String::class.java)!!
+                val genderID =
+                    p0.child("gender").getValue(String::class.java)
+                currentUser?.let {
+                    text_birth.setText(birthID)
+                    text_gender.setText(genderID)
+                    edit_text_name.setText(user.displayName)
+                    text_email.text = user.email
+                    Glide.with(this@ProfileActivity)
+                        .load(user.photoUrl)
+                        .into(profile_image_view)
+                    if (user.isEmailVerified) {
+                        text_not_verified.visibility = View.INVISIBLE
+                    } else {
+                        text_not_verified.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+        })
+
+        text_birth.visibility = View.INVISIBLE
+        text_gender.visibility = View.INVISIBLE
+
+
         // 프로필 이미지 클릭
         profile_image_view.setOnClickListener {
             showPictureDialog()
         }
         // 저장버튼
         button_save.setOnClickListener {
+
             val photo = when {
                 // 선택된 이미지를 사진에 사용한다.
                 ::imageUri.isInitialized -> imageUri
@@ -83,6 +113,10 @@ class ProfileActivity : AppCompatActivity() {
                 ?.addOnCompleteListener { task ->
                     progressbar.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
+                        val uid = FirebaseAuth.getInstance().uid?: ""
+                        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+                        val user = User(uid,text_birth.text.toString(),text_gender.text.toString(),username = currentUser.displayName!!)
+                        ref.setValue(user)
                         application?.toast("프로필 업데이트 성공")
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
@@ -138,7 +172,8 @@ class ProfileActivity : AppCompatActivity() {
 
         // 이메일 인증 페이지
         text_email.setOnClickListener {
-            val intent = Intent(this,UpdateEmailActivity::class.java)
+            val intent = Intent(this,
+                UpdateEmailActivity::class.java)
             startActivity(intent)
         }
 

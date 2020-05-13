@@ -84,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 progressbar.visibility = View.GONE
                 if (!it.isSuccessful) return@addOnCompleteListener
-
+                saveUser()
                 // else if successful
                 Log.d("RegisterActivity", "Successfully created user with uid: ${it.result?.user?.uid}")
                 val intent = Intent(applicationContext, LoginActivity::class.java)
@@ -97,6 +97,26 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d("RegisterActivity", "Failed to create user: ${it.message}")
                 Toast.makeText(this, "이메일 주소가 중복되어있는지 확인해주세요. ${it.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun saveUser(){
+        val uid = FirebaseAuth.getInstance().uid?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val selectedId = radioGroup.checkedRadioButtonId
+        val radioButton = findViewById<RadioButton>(selectedId).text.toString()
+        val birth = birthday_edittext_register.text.toString()
+        val user = User(uid,birth,radioButton)
+        ref.setValue(user)
+            .addOnSuccessListener {
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+            .addOnFailureListener{
+
+            }
+
     }
 
 
