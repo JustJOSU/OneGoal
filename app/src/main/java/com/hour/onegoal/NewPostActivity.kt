@@ -1,27 +1,45 @@
     package com.hour.onegoal
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
+import android.provider.MediaStore
 import android.util.Log
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.core.Tag
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.hour.onegoal.Data.User
 import com.hour.onegoal.Data.WorkoutRoom
 import kotlinx.android.synthetic.main.activity_new_post.*
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 
     class NewPostActivity : AppCompatActivity() {
 
     private lateinit var database: DatabaseReference
-
-
+        private val REQUEST_IMAGE_CAPTURE = 100
+        private val OPEN_GALLERY = 1
+        private var filePath: Uri? = null
+        private lateinit var imageUri: Uri
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post)
 
         database = FirebaseDatabase.getInstance().reference
 
-        fabSubmitPost.setOnClickListener { submitRoom()}
+        fabSubmitRoom.setOnClickListener { submitRoom()}
+
+        fieldPhoto.setOnClickListener { showPictureDialog() }
+
+
     }
 
         private fun submitRoom() {
@@ -29,6 +47,7 @@ import kotlinx.android.synthetic.main.activity_new_post.*
             val title = fieldTitle.text.toString()
             val summary = fieldSummary.text.toString()
             val discription = fieldDiscription.text.toString()
+
             // Title is required
             if (title.isEmpty()) {
                 fieldTitle.error = "제목을 입력해주세요"
@@ -46,19 +65,192 @@ import kotlinx.android.synthetic.main.activity_new_post.*
                 return
             }
 
-        }
 
-        private fun writeNewWorkOutRoom(userId:String, username:String, title:String,
-                                 summary:String, discription:String, photoUrl:String){
-            val key = database.child("rooms").push().key
-            if(key == null){
-                Log.w(TAG, "Couldn't get push key for rooms")
-                return
-            }
-            val workOutroom = WorkoutRoom(userId)
+            // [START single_value_read]
+            val firebaseAuth = FirebaseAuth.getInstance()
+            val user: FirebaseUser = firebaseAuth.currentUser!!
+            val userId = user.uid
+            database.child("users").child(userId).addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val username = dataSnapshot.child("username").value.toString()
+                        // [START_EXCLUDE]
+                        // filePath 는 갤러리 이미지
+                        // imageUri 는 카메라 이미지
+                        if(filePath == null){
+                            writeNewPost(userId, username, title, summary, discription,photoUrl = imageUri.toString())
+                        }
+                        else{
+                            writeNewPost(userId, username, title, summary, discription,photoUrl = filePath.toString())
+                        }
+
+                        finish()
+                        // [END_EXCLUDE]
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.w(TAG, "getUser:onCancelled", databaseError.toException())
+
+                    }
+                })
+            // [END single_value_read]
         }
 
         companion object{
             val TAG = NewPostActivity::class.qualifiedName
         }
+        // 카메라 or 갤러리 선택
+        private fun showPictureDialog() {
+            val pictureDialog = AlertDialog.Builder(this)
+            pictureDialog.setTitle("Select Action")
+            val pictureDialogItems = arrayOf("카메라", "갤러리")
+            pictureDialog.setItems(
+                pictureDialogItems
+            ) { dialog, which ->
+                when (which) {
+                    0 -> takePictureIntent()
+                    1 -> openGallery()
+                }
+            }
+            pictureDialog.show()
+        }
+        // 카메라
+        private fun takePictureIntent() {
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { pictureIntent ->
+                pictureIntent.resolveActivity(packageManager)?.also {
+                    startActivityForResult(pictureIntent, REQUEST_IMAGE_CAPTURE)
+                }
+
+            }
+        }
+
+        // 갤러리
+        private fun openGallery() {
+            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.setType("image/*")
+            startActivityForResult(intent, OPEN_GALLERY)
+        }
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+            if (requestCode == OPEN_GALLERY && resultCode == Activity.RESULT_OK) {
+                if(data == null || data.data == null){
+                    return
+                }
+                filePath = data.data
+                try {
+                    uploadImage()
+                }catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            }
+            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
+                val imageBitmap = data!!.extras?.get("data") as Bitmap
+                uploadImageAndSaveUri(imageBitmap)
+
+            }
+
+
+        }
+
+        // 갤러리에서 이미지 업로드
+        private fun uploadImage(){
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
+            // ByteArrayOutputStream 은 메모리, 즉 바이트 배열에 데이터를 입출력하는데 사용되는 스트림이다
+            val baos = ByteArrayOutputStream()
+            // Storage 인스턴스 얻어와서 child() 에는 유저 정보를 받아와서 현재 유저정보를 받고 pics 라는 폴더에 저장한다.
+            val storageRef = FirebaseStorage.getInstance()
+                .reference
+                .child("workRoom/${FirebaseAuth.getInstance().currentUser?.uid}")
+            // bitmap 압축 방식
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            // ByteArray 메소드를 이용하면 저장된 모든 내용이 바이트 배열로 반환
+            val image = baos.toByteArray()
+            // 스토리지 레퍼런스에 배열로 반환한 image 변수를 put !
+            val upload = storageRef.putBytes(image)
+            // 불러오는 동안 프로그레스바 로 보이도록 !
+            progressbar_pic.visibility = View.VISIBLE
+            upload.addOnCompleteListener { uploadTask ->
+                // 성공하면 프로그레스바 안보이도록
+                progressbar_pic.visibility = View.INVISIBLE
+
+                if (uploadTask.isSuccessful) {
+                    // 객체를 다운로드하는 데 사용할 수 있는 URL
+                    storageRef.downloadUrl.addOnCompleteListener { urlTask ->
+                        urlTask.result?.let {
+                            filePath = it
+                            fieldPhoto.setImageBitmap(bitmap)
+                        }
+                    }
+                } else {
+                    uploadTask.exception?.let {
+                        toast(it.message!!)
+                    }
+                }
+            }
+
+        }
+
+        // 카메라에서 업로드
+        private fun uploadImageAndSaveUri(bitmap: Bitmap) {
+
+            // ByteArrayOutputStream 은 메모리, 즉 바이트 배열에 데이터를 입출력하는데 사용되는 스트림이다
+            val baos = ByteArrayOutputStream()
+            // Storage 인스턴스 얻어와서 child() 에는 유저 정보를 받아와서 현재 유저정보를 받고 pics 라는 폴더에 저장한다.
+            val storageRef = FirebaseStorage.getInstance()
+                .reference
+                .child("workRoom/${FirebaseAuth.getInstance().currentUser?.uid}")
+            // bitmap 압축 방식
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            // ByteArray 메소드를 이용하면 저장된 모든 내용이 바이트 배열로 반환
+            val image = baos.toByteArray()
+            // 스토리지 레퍼런스에 배열로 반환한 image 변수를 put !
+            val upload = storageRef.putBytes(image)
+
+            // 불러오는 동안 프로그레스바 로 보이도록 !
+            progressbar_pic.visibility = View.VISIBLE
+            upload.addOnCompleteListener { uploadTask ->
+                // 성공하면 프로그레스바 안보이도록
+                progressbar_pic.visibility = View.INVISIBLE
+
+                if (uploadTask.isSuccessful) {
+                    // 객체를 다운로드하는 데 사용할 수 있는 URL
+                    storageRef.downloadUrl.addOnCompleteListener { urlTask ->
+                        urlTask.result?.let {
+                            imageUri = it
+                            Toast.makeText(this,"$it",Toast.LENGTH_SHORT).show()
+                            fieldPhoto.setImageBitmap(bitmap)
+                        }
+                    }
+                } else {
+                    uploadTask.exception?.let {
+                        toast(it.message!!)
+                    }
+                }
+            }
+
+        }
+        // [START write_fan_out]
+
+        // 방 업로드
+        private fun writeNewPost(userId: String, teamHead: String, title: String,
+                                 summary:String, discription:String,photoUrl:String) {
+
+            val key = database.child("workOutRooms").push().key
+            if (key == null) {
+                Log.w(TAG, "Couldn't get push key for posts")
+                return
+            }
+
+            val workOutRoom = WorkoutRoom(userId, teamHead, title, summary, discription,photoUrl)
+            val workOutRoomValues = workOutRoom.toMap()
+
+            val childUpdates = HashMap<String, Any>()
+            childUpdates["/workOutRooms/$key"] = workOutRoomValues
+            childUpdates["/user-workOutRooms/$userId/$key"] = workOutRoomValues
+
+            database.updateChildren(childUpdates)
+        }
+        // [END write_fan_out]
+
     }

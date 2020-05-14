@@ -89,28 +89,6 @@
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content"/>
-            <EditText
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:layout_gravity="top"
-                android:drawablePadding="16dp"
-                android:drawableLeft="@drawable/ic_lock"
-                android:text=""
-                android:enabled="true"
-                android:id="@+id/text_birth"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:layout_gravity="top"
-                android:drawablePadding="16dp"
-                android:drawableLeft="@drawable/ic_lock"
-                android:text=""
-                android:enabled="true"
-                android:id="@+id/text_gender"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_height="wrap_content"/>
             <TextView
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:layout_gravity="top"
@@ -122,15 +100,6 @@
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content"/>
-
-            <ProgressBar
-                android:id="@+id/progressbar"
-                android:visibility="invisible"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
             <Button
                 android:id="@+id/button_save"
                 android:layout_marginTop="15dp"
@@ -141,6 +110,40 @@
                 android:text="저장하기"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"/>
+            <EditText
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_gravity="top"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_lock"
+                android:text=""
+                android:visibility="invisible"
+                android:enabled="true"
+                android:id="@+id/text_birth"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_gravity="top"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_lock"
+                android:text=""
+                android:visibility="invisible"
+                android:enabled="true"
+                android:id="@+id/text_gender"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content"/>
+
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:visibility="invisible"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
 
         </LinearLayout>
 

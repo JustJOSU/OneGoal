@@ -53,8 +53,6 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-
-
             // 현재 유저 선택했을 경우
             main_id_set.setOnClickListener {
                 val intent = Intent(applicationContext,
@@ -71,7 +69,6 @@ class MainActivity : AppCompatActivity() {
             main_category_recyclerView.adapter = MainRvAdapter(applicationContext, categoryList){
 
             }
-            //TODO: 리사이클러뷰 끝까지 내려가질 않음
             main_category_recyclerView.viewTreeObserver.addOnGlobalLayoutListener { scrollToEnd() }
 
         }

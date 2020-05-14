@@ -47,7 +47,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSubmitPost"
+        android:id="@+id/fabSubmitRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -64,5 +64,11 @@
         android:layout_marginEnd="100dp"
         android:layout_marginTop="100dp"
         app:srcCompat="@drawable/ic_collections_black_24dp" />
+    <ProgressBar
+        android:visibility="invisible"
+        android:id="@+id/progressbar_pic"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

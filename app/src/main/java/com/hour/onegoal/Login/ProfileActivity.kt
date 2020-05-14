@@ -75,9 +75,6 @@ class ProfileActivity : AppCompatActivity() {
 
         })
 
-        text_birth.visibility = View.INVISIBLE
-        text_gender.visibility = View.INVISIBLE
-
 
         // 프로필 이미지 클릭
         profile_image_view.setOnClickListener {
@@ -115,7 +112,9 @@ class ProfileActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val uid = FirebaseAuth.getInstance().uid?: ""
                         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-                        val user = User(uid,text_birth.text.toString(),text_gender.text.toString(),username = currentUser.displayName!!)
+                        val birth = text_birth.text.toString()
+                        val gender = text_gender.text.toString()
+                        val user = User(uid,birth,gender,username = currentUser.displayName!!)
                         ref.setValue(user)
                         application?.toast("프로필 업데이트 성공")
                         val intent = Intent(this, MainActivity::class.java)

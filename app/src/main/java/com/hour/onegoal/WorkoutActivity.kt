@@ -27,6 +27,8 @@ class WorkoutActivity : AppCompatActivity() {
             startActivity(intent)
         }
         toolbar.elevation = 3.0F
+
+
     }
 
     //setting menu in action bar
@@ -51,7 +53,8 @@ class WorkoutActivity : AppCompatActivity() {
                 return true
             }
             R.id.navigation_make-> {
-
+                val intent = Intent(this,NewPostActivity::class.java)
+                startActivity(intent)
                 return true
             }
 
