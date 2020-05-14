@@ -9,10 +9,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.firestore.auth.User
 import com.hour.onegoal.Data.Category
 import com.hour.onegoal.Login.ProfileActivity
@@ -27,18 +24,22 @@ class MainActivity : AppCompatActivity() {
         Category(R.drawable.music, "음악" )
     )
     private val currentUser = FirebaseAuth.getInstance().currentUser
-
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         // UserName 가져오는 코드
         val firebaseAuth = FirebaseAuth.getInstance()
         val mDatabase = FirebaseDatabase.getInstance()
+        database = FirebaseDatabase.getInstance().reference
         val mDb = mDatabase.reference
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val userKey = user.uid
+        /**
         currentUser?.let {
             if (it.displayName == null && it.photoUrl == null){
                 user_textView.visibility = View.VISIBLE
@@ -50,7 +51,28 @@ class MainActivity : AppCompatActivity() {
                     .load(user.photoUrl)
                     .into(current_user_imageView)
                 }
-            }
+            }**/
+        // [START single_value_read]
+        val userId = user.uid
+        database.child("users").child(userId).addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if(user.displayName == null && user.photoUrl == null)
+                    {
+                        user_textView.visibility = View.VISIBLE
+                        current_user_imageView.visibility = View.VISIBLE
+                    }
+                    else{
+                        user_textView.text = user.displayName
+                        Glide.with(this@MainActivity)
+                            .load(user.photoUrl)
+                            .into(current_user_imageView)
+                    }
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                }
+            })
+        // [END single_value_read]
 
 
             // 현재 유저 선택했을 경우
@@ -74,5 +96,6 @@ class MainActivity : AppCompatActivity() {
         }
     private fun scrollToEnd() =
         (main_category_recyclerView.adapter!!.itemCount - 1).takeIf { it > 0 }?.let(main_category_recyclerView::smoothScrollToPosition)
+
 
 }

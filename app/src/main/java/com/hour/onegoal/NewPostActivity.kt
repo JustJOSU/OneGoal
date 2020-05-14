@@ -18,6 +18,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.Data.User
 import com.hour.onegoal.Data.WorkoutRoom
+import com.hour.onegoal.Login.ProfileActivity
 import kotlinx.android.synthetic.main.activity_new_post.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -70,19 +71,31 @@ import java.io.IOException
             val firebaseAuth = FirebaseAuth.getInstance()
             val user: FirebaseUser = firebaseAuth.currentUser!!
             val userId = user.uid
+
             database.child("users").child(userId).addListenerForSingleValueEvent(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val username = dataSnapshot.child("username").value.toString()
-                        // [START_EXCLUDE]
-                        // filePath 는 갤러리 이미지
-                        // imageUri 는 카메라 이미지
-                        if(filePath == null){
-                            writeNewPost(userId, username, title, summary, discription,photoUrl = imageUri.toString())
+                        val teamHead = dataSnapshot.child("teamHead").value
+                        when {
+                            teamHead == null -> {
+                                val intent = Intent(this@NewPostActivity, ProfileActivity::class.java).apply {
+                                    toast("프로필을 완성시켜야만 방을 만들 수가 있습니다!!")
+                                }
+                                startActivity(intent)
+                            }
+                            // [START_EXCLUDE]
+                            // filePath 는 갤러리 이미지
+                            // imageUri 는 카메라 이미지
+                            filePath == null -> {
+                                writeNewPost(userId, username, title, summary, discription,photoUrl = imageUri.toString())
+                            }
+                            else -> {
+                                writeNewPost(userId, username, title, summary, discription,photoUrl = filePath.toString())
+                            }
                         }
-                        else{
-                            writeNewPost(userId, username, title, summary, discription,photoUrl = filePath.toString())
-                        }
+
+
 
                         finish()
                         // [END_EXCLUDE]
@@ -246,7 +259,9 @@ import java.io.IOException
             val workOutRoomValues = workOutRoom.toMap()
 
             val childUpdates = HashMap<String, Any>()
+            // 일반 방
             childUpdates["/workOutRooms/$key"] = workOutRoomValues
+            // 유저가 만든 방 구분
             childUpdates["/user-workOutRooms/$userId/$key"] = workOutRoomValues
 
             database.updateChildren(childUpdates)
