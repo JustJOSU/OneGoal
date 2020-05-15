@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val currentUser = FirebaseAuth.getInstance().currentUser
     private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var database: DatabaseReference
-
+    private var mAuthListener : FirebaseAuth.AuthStateListener? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -96,6 +96,5 @@ class MainActivity : AppCompatActivity() {
         }
     private fun scrollToEnd() =
         (main_category_recyclerView.adapter!!.itemCount - 1).takeIf { it > 0 }?.let(main_category_recyclerView::smoothScrollToPosition)
-
 
 }

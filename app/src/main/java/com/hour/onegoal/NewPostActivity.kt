@@ -76,7 +76,7 @@ import java.io.IOException
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val username = dataSnapshot.child("username").value.toString()
-                        val teamHead = dataSnapshot.child("teamHead").value
+                        val teamHead = dataSnapshot.child("username").value
                         when {
                             teamHead == null -> {
                                 val intent = Intent(this@NewPostActivity, ProfileActivity::class.java).apply {
