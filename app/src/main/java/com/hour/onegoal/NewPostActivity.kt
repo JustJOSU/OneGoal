@@ -30,6 +30,7 @@ import java.io.IOException
         private val OPEN_GALLERY = 1
         private var filePath: Uri? = null
         private lateinit var imageUri: Uri
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post)
@@ -192,7 +193,7 @@ import java.io.IOException
                     storageRef.downloadUrl.addOnCompleteListener { urlTask ->
                         urlTask.result?.let {
                             filePath = it
-                            fieldPhoto.setImageBitmap(bitmap)
+                            field_selectPhoto.setImageBitmap(bitmap)
                         }
                     }
                 } else {
@@ -232,7 +233,7 @@ import java.io.IOException
                         urlTask.result?.let {
                             imageUri = it
                             Toast.makeText(this,"$it",Toast.LENGTH_SHORT).show()
-                            fieldPhoto.setImageBitmap(bitmap)
+                            field_selectPhoto.setImageBitmap(bitmap)
                         }
                     }
                 } else {

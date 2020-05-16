@@ -31,13 +31,14 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
             itemView?.setOnClickListener {
                 val room = workoutList[adapterPosition]
                 //TODO: 아이템뷰 클릭했을 때 intent
-                val intent = Intent(context,DetailActivity::class.java)
+                val intent = Intent(context,WorkOutRoomActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.putExtra("roomId",room.roomId)
                 intent.putExtra("title",room.title)
                 intent.putExtra("summary",room.summary)
                 intent.putExtra("description",room.description)
                 intent.putExtra("photoUrl",room.photoUrl)
+                intent.putExtra("teamHead",room.teamHead)
                 context.startActivity(intent)
             }
         }

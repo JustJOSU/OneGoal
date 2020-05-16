@@ -70,7 +70,6 @@ class WorkoutActivity : AppCompatActivity() {
     }
 
 
-
     //setting menu in action bar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.bottom_nav_menu,menu)

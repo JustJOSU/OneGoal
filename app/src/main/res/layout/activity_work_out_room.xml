@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
     <!-- TODO: 추후 UI 수정-->
-    <EditText
-        android:id="@+id/fieldTitle"
+    <TextView
+        android:id="@+id/roomTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="방 이름"
+        android:text="방 이름"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,17 +24,16 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
 
-    <EditText
-        android:id="@+id/fieldSummary"
+    <TextView
+        android:id="@+id/roomSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fieldTitle"
-        android:hint="Write your Summary..."
+        android:layout_below="@+id/roomTitle"
+        android:text="Write your Summary..."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/summary_Tv"
-        android:inputType="textMultiLine"
         android:maxLines="3"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:scrollHorizontally="false" />
     <TextView
         android:id="@+id/summary_Tv"
@@ -53,22 +52,20 @@
         app:layout_constraintGuide_percent="0.40218878" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="관리자 ID "
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="관리자"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@id/guideline3" />
 
     <TextView
-        android:id="@+id/teamHead_Tv"
+        android:id="@+id/roomTeamHead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TeamHead"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@id/guideline3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -86,61 +83,42 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline4"
         android:text="상세설명"/>
 
-    <EditText
-        android:id="@+id/fieldDescription"
+    <TextView
+        android:id="@+id/roomDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fieldSummary"
-        android:hint="Write your Description..."
-        android:inputType="textMultiLine"
+        android:layout_below="@+id/roomSummary"
+        android:text="Write your Description..."
+        android:layout_marginStart="10dp"
         android:maxLines="10"
         android:scrollHorizontally="false"
         app:layout_constraintTop_toBottomOf="@+id/description_Tv"
         />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSubmitRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_navigation_check_24"
+    <Button
+        android:id="@+id/roomEnter_btn"
+        android:text="입장"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp"/>
+
 
     <ImageView
-        android:id="@+id/fieldPhoto"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline5" />
-
-    <ImageView
-        android:id="@+id/field_selectPhoto"
+        android:id="@+id/roomPhoto"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@+id/fieldDescription"
+        android:layout_below="@+id/roomDescription"
         android:layout_alignParentEnd="true"
         android:alpha="0.5"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressbar_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/fieldDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fieldDescription" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="방 이미지" />
 
 
 

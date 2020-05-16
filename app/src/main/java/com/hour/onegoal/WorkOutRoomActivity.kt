@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.google.firebase.database.*
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
-import kotlinx.android.synthetic.main.activity_detail.*
-import org.w3c.dom.Text
 
-class DetailActivity : AppCompatActivity() {
+class WorkOutRoomActivity : AppCompatActivity() {
 
     private lateinit var database: DatabaseReference
     private val REQUEST_IMAGE_CAPTURE = 100
@@ -23,7 +20,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        setContentView(R.layout.activity_work_out_room)
 
         database = FirebaseDatabase.getInstance().reference
 
@@ -34,24 +31,24 @@ class DetailActivity : AppCompatActivity() {
         val roomSummary = intent.getStringExtra("summary")
         val roomTeamHead = intent.getStringExtra("teamHead")
         FirebaseDatabase.getInstance().getReference("/workOutRooms")
-            .addValueEventListener(object :ValueEventListener{
+            .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
-                    val detailPhoto = findViewById<ImageView>(R.id.detailPhoto)
-                    val detailTitle = findViewById<TextView>(R.id.detailTitle)
-                    val detailDescription = findViewById<TextView>(R.id.detailDescription)
-                    val detailSummary = findViewById<TextView>(R.id.detailSummary)
-                    val detailTeamHead = findViewById<TextView>(R.id.detailTeamHead)
+                    val workRoomPhoto = findViewById<ImageView>(R.id.roomPhoto)
+                    val workRoomTitle = findViewById<TextView>(R.id.roomTitle)
+                    val workRoomDescription = findViewById<TextView>(R.id.roomDescription)
+                    val workRoomSummary = findViewById<TextView>(R.id.roomSummary)
+                    val workRoomTeamHead = findViewById<TextView>(R.id.roomTeamHead)
 
                     toast("This is summary : $roomSummary")
-                    detailTitle.text = roomTitle
-                    detailDescription.text = roomDescription
-                    detailSummary.text = roomSummary
-                    detailPhoto.loadImage(roomPhotoUrl)
-                    detailTeamHead.text= roomTeamHead
+                    workRoomTitle.text = roomTitle
+                    workRoomDescription.text = roomDescription
+                    workRoomSummary.text = roomSummary
+                    workRoomPhoto.loadImage(roomPhotoUrl)
+                    workRoomTeamHead.text = " : $roomTeamHead"
                 }
 
             })
@@ -60,9 +57,9 @@ class DetailActivity : AppCompatActivity() {
 
 
 
-    // TAG DetailActivity
+    // TAG WorkOutRoomActivity
     companion object{
-        val TAG = DetailActivity::class.qualifiedName
+        val TAG = WorkOutRoomActivity::class.qualifiedName
     }
     // [START write_fan_out]
 
