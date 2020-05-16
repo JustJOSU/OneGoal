@@ -35,7 +35,6 @@ class WorkoutActivity : AppCompatActivity() {
         }
         toolbar.elevation = 3.0F
 
-        val firedatabase:FirebaseDatabase?= null
         var ref: DatabaseReference?= null
         var roomList: ArrayList<WorkoutRoom>?= null
         var mRecyclerView:RecyclerView?= null
@@ -57,16 +56,20 @@ class WorkoutActivity : AppCompatActivity() {
                     for ( h in p0.children){
                         val room = h.getValue(WorkoutRoom::class.java)
                         roomList.add(room!!)
+
                     }
 
                     mRecyclerView?.adapter = WorkOutAdapter(applicationContext,roomList){
 
                     }
+
                 }
             }
 
         })
     }
+
+
 
     //setting menu in action bar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

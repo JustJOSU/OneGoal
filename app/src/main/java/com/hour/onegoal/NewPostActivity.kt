@@ -47,7 +47,7 @@ import java.io.IOException
             //TODO: photourl 넘기는 거랑 현재 user 의 name 도 넘겨줘야하는 것 고민
             val title = fieldTitle.text.toString()
             val summary = fieldSummary.text.toString()
-            val discription = fieldDiscription.text.toString()
+            val description = fieldDescription.text.toString()
 
             // Title is required
             if (title.isEmpty()) {
@@ -60,9 +60,9 @@ import java.io.IOException
                 fieldSummary.requestFocus()
                 return
             }
-            if (discription.isEmpty()) {
-                fieldDiscription.error = "상세설명을 입력해주세요"
-                fieldDiscription.requestFocus()
+            if (description.isEmpty()) {
+                fieldDescription.error = "상세설명을 입력해주세요"
+                fieldDescription.requestFocus()
                 return
             }
 
@@ -88,10 +88,10 @@ import java.io.IOException
                             // filePath 는 갤러리 이미지
                             // imageUri 는 카메라 이미지
                             filePath == null -> {
-                                writeNewPost(userId, username, title, summary, discription,photoUrl = imageUri.toString())
+                                writeNewPost(userId, username, title, summary, description,photoUrl = imageUri.toString())
                             }
                             else -> {
-                                writeNewPost(userId, username, title, summary, discription,photoUrl = filePath.toString())
+                                writeNewPost(userId, username, title, summary, description,photoUrl = filePath.toString())
                             }
                         }
 
@@ -247,7 +247,7 @@ import java.io.IOException
 
         // 방 업로드
         private fun writeNewPost(userId: String, teamHead: String, title: String,
-                                 summary:String, discription:String,photoUrl:String) {
+                                 summary:String, description:String,photoUrl:String) {
 
             val key = database.child("workOutRooms").push().key
             if (key == null) {
@@ -255,7 +255,7 @@ import java.io.IOException
                 return
             }
 
-            val workOutRoom = WorkoutRoom(userId, teamHead, title, summary, discription,photoUrl)
+            val workOutRoom = WorkoutRoom(userId, teamHead, title, summary, description,photoUrl)
             val workOutRoomValues = workOutRoom.toMap()
 
             val childUpdates = HashMap<String, Any>()

@@ -1,18 +1,20 @@
 package com.hour.onegoal
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
 
 
 class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoom>,
-                     val itemClick: (WorkoutRoom) -> Unit)
+                     var itemClick: (WorkoutRoom) -> Unit)
     : RecyclerView.Adapter<WorkOutAdapter.Holder>() {
 
     inner class Holder(itemView: View?, itemClick: (WorkoutRoom) -> Unit) : RecyclerView.ViewHolder(itemView!!){
@@ -21,10 +23,23 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
         val workoutSummary = itemView?.findViewById<TextView>(R.id.item_summary)
 
         fun bind(workoutRoom: WorkoutRoom, context: Context){
-
             workoutTeamHead?.text = workoutRoom.teamHead
             workoutSummary?.text = workoutRoom.summary
             workoutPhoto?.loadImage(workoutRoom.photoUrl)
+        }
+        init {
+            itemView?.setOnClickListener {
+                val room = workoutList[adapterPosition]
+                //TODO: 아이템뷰 클릭했을 때 intent
+                val intent = Intent(context,DetailActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("roomId",room.roomId)
+                intent.putExtra("title",room.title)
+                intent.putExtra("summary",room.summary)
+                intent.putExtra("description",room.description)
+                intent.putExtra("photoUrl",room.photoUrl)
+                context.startActivity(intent)
+            }
         }
     }
 

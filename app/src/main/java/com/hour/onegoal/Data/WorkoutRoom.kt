@@ -7,7 +7,7 @@ data class WorkoutRoom(
     var teamHead: String?= "",
     var title: String? = "",
     var summary:String?="",
-    var discription: String?="",
+    var description: String?="",
     var photoUrl: String?=""
 ){
     // [START post_to_map]
@@ -18,7 +18,7 @@ data class WorkoutRoom(
             "teamHead" to teamHead,
             "title" to title,
             "summary" to summary,
-            "discription" to discription,
+            "description" to description,
             "photoUrl" to photoUrl
         )
     }
