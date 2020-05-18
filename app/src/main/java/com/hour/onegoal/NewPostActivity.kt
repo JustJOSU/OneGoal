@@ -29,7 +29,7 @@ import java.io.IOException
         private val REQUEST_IMAGE_CAPTURE = 100
         private val OPEN_GALLERY = 1
         private var filePath: Uri? = null
-        private lateinit var imageUri: Uri
+        private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ import java.io.IOException
     }
 
         private fun submitRoom() {
-            //TODO: photourl 넘기는 거랑 현재 user 의 name 도 넘겨줘야하는 것 고민
+            //photourl 넘기는 거랑 현재 user 의 name 도 넘겨줘야하는 것 고민
             val title = fieldTitle.text.toString()
             val summary = fieldSummary.text.toString()
             val description = fieldDescription.text.toString()
@@ -78,33 +78,28 @@ import java.io.IOException
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val username = dataSnapshot.child("username").value.toString()
                         val teamHead = dataSnapshot.child("username").value
-                        when {
-                            teamHead == null -> {
-                                val intent = Intent(this@NewPostActivity, ProfileActivity::class.java).apply {
-                                    toast("프로필을 완성시켜야만 방을 만들 수가 있습니다!!")
-                                }
-                                startActivity(intent)
+
+                        if(teamHead == null){
+                            val intent = Intent(this@NewPostActivity, ProfileActivity::class.java).apply {
+                                toast("프로필을 완성시켜야만 방을 만들 수가 있습니다!!")
                             }
-                            // [START_EXCLUDE]
-                            // filePath 는 갤러리 이미지
-                            // imageUri 는 카메라 이미지
-                            filePath == null -> {
+                            startActivity(intent)
+                            finish()
+                        } else if (filePath == null && imageUri == null){
+                            writeNewPost(userId, username, title, summary, description, photoUrl = "")
+                        } else {
+                            if (filePath == null){
                                 writeNewPost(userId, username, title, summary, description,photoUrl = imageUri.toString())
-                            }
-                            else -> {
+                            } else{
                                 writeNewPost(userId, username, title, summary, description,photoUrl = filePath.toString())
                             }
                         }
-
-
-
                         finish()
                         // [END_EXCLUDE]
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.w(TAG, "getUser:onCancelled", databaseError.toException())
-
                     }
                 })
             // [END single_value_read]
@@ -161,7 +156,6 @@ import java.io.IOException
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
                 val imageBitmap = data!!.extras?.get("data") as Bitmap
                 uploadImageAndSaveUri(imageBitmap)
-
             }
 
 

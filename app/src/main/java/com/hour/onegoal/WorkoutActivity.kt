@@ -36,14 +36,14 @@ class WorkoutActivity : AppCompatActivity() {
         toolbar.elevation = 3.0F
 
         var ref: DatabaseReference?= null
-        var roomList: ArrayList<WorkoutRoom>?= null
+
         var mRecyclerView:RecyclerView?= null
 
         mRecyclerView = findViewById(R.id.workOut_recyclerview)
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView?.layoutManager = LinearLayoutManager(applicationContext)
 
-        roomList = ArrayList<WorkoutRoom>()
+
         ref = FirebaseDatabase.getInstance().getReference("workOutRooms")
 
         ref.addValueEventListener(object :ValueEventListener{
@@ -53,14 +53,13 @@ class WorkoutActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.exists()){
+                    var roomList: ArrayList<WorkoutRoom>?= null
+                    roomList = ArrayList<WorkoutRoom>()
                     for ( h in p0.children){
                         val room = h.getValue(WorkoutRoom::class.java)
                         roomList.add(room!!)
-
                     }
-
                     mRecyclerView?.adapter = WorkOutAdapter(applicationContext,roomList){
-
                     }
 
                 }

@@ -10,8 +10,15 @@ fun ImageView.loadImage(uri:String?){
         .placeholder(R.drawable.user)
         .circleCrop()
         .error(R.mipmap.ic_launcher_round)
-    Glide.with(this.context)
-        .setDefaultRequestOptions(options)
-        .load(uri)
-        .into(this)
+    if(uri == null){
+        Glide.with(this.context)
+            .setDefaultRequestOptions(options)
+            .load(R.drawable.user)
+            .into(this)
+    } else {
+        Glide.with(this.context)
+            .setDefaultRequestOptions(options)
+            .load(uri)
+            .into(this)
+    }
 }

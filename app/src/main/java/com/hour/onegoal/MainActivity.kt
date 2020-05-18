@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var database: DatabaseReference
     private var mAuthListener : FirebaseAuth.AuthStateListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         database.child("users").child(userId).addListenerForSingleValueEvent(
             object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if(user.displayName == null && user.photoUrl == null)
+                    if(user.displayName == null || user.photoUrl == null)
                     {
                         user_textView.visibility = View.VISIBLE
                         current_user_imageView.visibility = View.VISIBLE
