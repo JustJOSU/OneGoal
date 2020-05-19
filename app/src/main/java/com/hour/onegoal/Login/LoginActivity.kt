@@ -1,19 +1,20 @@
 package com.hour.onegoal.Login
 
 import android.content.Intent
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
+import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.hour.onegoal.MainActivity
 import com.hour.onegoal.R
 import com.hour.onegoal.login
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_login.progressbar
+
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 

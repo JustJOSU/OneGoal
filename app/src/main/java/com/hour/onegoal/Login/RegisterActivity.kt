@@ -1,11 +1,8 @@
 package com.hour.onegoal.Login
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.util.Patterns
 import android.view.View
@@ -13,12 +10,11 @@ import android.widget.RadioButton
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.R
 import com.hour.onegoal.Data.User
-import com.hour.onegoal.login
+import com.hour.onegoal.toast
 import kotlinx.android.synthetic.main.activity_register.*
-import java.util.*
+import soup.neumorphism.NeumorphImageButton
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -31,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
             return@setOnClickListener
         }
 
+
         already_have_account_text_view.setOnClickListener {
             Log.d("RegisterActivity", "Try to show login activity")
 
@@ -38,6 +35,19 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
+    /**
+        flat_image_male.setOnClickListener {
+            flat_image_male.setShapeType(1)
+            flat_image_female.setShapeType(0)
+            toast(male_tv.text.toString())
+        }
+        flat_image_female.setOnClickListener {
+            flat_image_male.setShapeType(0)
+            flat_image_female.setShapeType(1)
+            toast("${female_tv.text}")
+        }
+    **/
 
     }
 
@@ -118,6 +128,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
     }
+
 
 
 }

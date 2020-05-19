@@ -19,9 +19,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     val categoryList = arrayListOf<Category>(
-        Category(R.drawable.workout,"운동") ,
-        Category(R.drawable.study, "공부"),
-        Category(R.drawable.music, "음악" )
+        Category(R.drawable.run,"운동") ,
+        Category(R.drawable.study, "공부")
     )
     private val currentUser = FirebaseAuth.getInstance().currentUser
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     .load(user.photoUrl)
                     .into(current_user_imageView)
                 }
-            }**/
+            }
         // [START single_value_read]
         val userId = user.uid
         database.child("users").child(userId).addListenerForSingleValueEvent(
@@ -74,17 +73,17 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         // [END single_value_read]
-
+        **/
 
             // 현재 유저 선택했을 경우
-            main_id_set.setOnClickListener {
+        profile_btn.setOnClickListener {
                 val intent = Intent(applicationContext,
                     ProfileActivity::class.java)
                 startActivity(intent)
             }
 
             // 카테고리 리스트
-            val lm = GridLayoutManager(applicationContext,1)
+            val lm = GridLayoutManager(applicationContext,2)
             //LayoutManager는 RecyclerView의 각 item들을 배치하고,
             // item이 더이상 보이지 않을 때 재사용할 것인지 결정하는 역할을 한다
             main_category_recyclerView.layoutManager = lm

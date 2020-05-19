@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_green_light"
+    android:background="#f1f3f5"
     tools:context=".Login.RegisterActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -16,58 +16,113 @@
         app:layout_constraintGuide_percent="0.2"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <EditText
-        android:id="@+id/email_edittext_register"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/rounded_edittext_register_login"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="16dp"
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/edittext_card_2"
+        app:neumorph_shapeType="basin"
+        style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="@id/guideline2">
+
+        <EditText
+            android:id="@+id/email_edittext_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="10dp"
+            android:paddingStart="16dp"
+            android:background="@null"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />
+
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/edittext_card_3"
+        app:neumorph_shapeType="basin"
+        style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edittext_card_2" >
 
     <EditText
         android:id="@+id/password_edittext_register"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_edittext_register_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Password"
+        android:background="@null"
         android:inputType="textPassword"
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="@+id/email_edittext_register"
         app:layout_constraintStart_toStartOf="@+id/email_edittext_register"
         app:layout_constraintTop_toBottomOf="@+id/email_edittext_register" />
-
+    </soup.neumorphism.NeumorphCardView>
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/edittext_card_4"
+        app:neumorph_shapeType="basin"
+        style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edittext_card_3">
     <EditText
         android:id="@+id/birthday_edittext_register"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_edittext_register_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
+        android:background="@null"
         android:maxLength="8"
-        android:hint="예시) 19960624"
+        android:hint="성년월일 예) 19960624"
         android:inputType="number"
         android:paddingLeft="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/password_edittext_register"
-        app:layout_constraintStart_toStartOf="@+id/password_edittext_register"
-        app:layout_constraintTop_toBottomOf="@+id/password_edittext_register" />
+        />
 
+    </soup.neumorphism.NeumorphCardView>
 
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/edittext_card_5"
+        app:neumorph_shapeType="basin"
+        style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edittext_card_4">
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         app:layout_constraintEnd_toEndOf="@+id/birthday_edittext_register"
         app:layout_constraintStart_toStartOf="@+id/birthday_edittext_register"
         app:layout_constraintTop_toBottomOf="@+id/birthday_edittext_register"
@@ -103,20 +158,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-    <Button
-        android:id="@+id/register_button_register"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_button"
-        android:text="Register"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/radioGroup"
-        app:layout_constraintStart_toStartOf="@+id/radioGroup"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+    </soup.neumorphism.NeumorphCardView>
 
-        />
+
+    <soup.neumorphism.NeumorphButton
+        android:id="@+id/register_button_register"
+        style="@style/Widget.Neumorph.Button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="회원가입"
+        app:layout_constraintEnd_toEndOf="@+id/edittext_card_5"
+        app:layout_constraintStart_toStartOf="@+id/edittext_card_5"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_card_5"
+        app:neumorph_shapeType="flat" />
 
 
     <TextView
@@ -129,14 +184,66 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Already have an account?"
-        android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/register_button_register"
         app:layout_constraintStart_toStartOf="@+id/register_button_register"
         app:layout_constraintTop_toBottomOf="@+id/register_button_register" />
 
+    <!--
+    <soup.neumorphism.NeumorphImageButton
+        android:id="@+id/flat_image_female"
+        style="@style/Widget.Neumorph.ImageButton"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_female1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/already_have_account_text_view" />
 
+    <soup.neumorphism.NeumorphTextView
+        android:id="@+id/female_tv"
+        style="@style/Widget.Neumorph.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="여자"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flat_image_female" />
 
+    <LinearLayout
+        android:id="@+id/linLayout"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <soup.neumorphism.NeumorphImageButton
+            android:id="@+id/flat_image_male"
+            style="@style/Widget.Neumorph.ImageButton"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_female1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/flat_image_female"
+            app:layout_constraintTop_toBottomOf="@+id/already_have_account_text_view" />
+
+        <soup.neumorphism.NeumorphTextView
+            android:id="@+id/male_tv"
+            style="@style/Widget.Neumorph.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="남자"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/female_tv"
+            app:layout_constraintTop_toBottomOf="@id/flat_image_male" />
+    </LinearLayout>
+    -->
 </androidx.constraintlayout.widget.ConstraintLayout>

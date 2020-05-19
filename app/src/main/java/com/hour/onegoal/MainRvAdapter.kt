@@ -9,13 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hour.onegoal.Data.Category
+import soup.neumorphism.NeumorphImageButton
+import soup.neumorphism.NeumorphImageView
+import soup.neumorphism.NeumorphTextView
 
 class MainRvAdapter(val context: Context, val categoryList: ArrayList<Category>, val itemClick: (Category) -> Unit)
     : RecyclerView.Adapter<MainRvAdapter.Holder>() {
 
     inner class Holder(itemView: View?,itemClick: (Category) -> Unit) : RecyclerView.ViewHolder(itemView!!){
         val categoryPhoto = itemView?.findViewById<ImageView>(R.id.category_image)
-        val categoryTitle = itemView?.findViewById<TextView>(R.id.category_title)
+        val categoryTitle = itemView?.findViewById<NeumorphTextView>(R.id.category_title)
 
         fun bind(category:Category, context: Context){
 

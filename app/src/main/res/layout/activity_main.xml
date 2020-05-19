@@ -3,47 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#f1f3f5"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <soup.neumorphism.NeumorphImageButton
+        android:id="@+id/profile_btn"
+        style="@style/Widget.Neumorph.ImageButton"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        app:neumorph_shapeType="flat"
+        android:scaleType="centerInside"
+        android:src="@drawable/settings"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.10123119"
+        app:layout_constraintGuide_percent="0.2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/main_id_set"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/current_user_imageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/user"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/user_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="User"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintStart_toEndOf="@+id/current_user_imageView" />
-
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_category_recyclerView"
@@ -51,7 +46,7 @@
         android:layout_height="655dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toTopOf="@+id/guideline0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

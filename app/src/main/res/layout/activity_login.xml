@@ -1,56 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8BC34A"
+    android:background="#f1f3f5"
     tools:context=".Login.LoginActivity">
 
-    <EditText
-        android:id="@+id/email_edittext_login"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/rounded_edittext_register_login"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="16dp"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.2"
+        android:orientation="horizontal" />
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/edittext_card"
+        app:neumorph_shapeType="basin"
+        style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/guideline7">
 
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/account" />
+        <EditText
+            android:id="@+id/email_edittext_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="10dp"
+            android:paddingStart="16dp"
+            android:background="@null"
+            android:textColor="#000"
+            android:hint="E-mail"
+            android:singleLine="true" />
+
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/edittext_card_1"
+        app:neumorph_shapeType="basin"
+        style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edittext_card">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/lock" />
     <EditText
         android:id="@+id/password_edittext_login"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_edittext_register_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
         android:ems="10"
-        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
         android:hint="Password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/email_edittext_login"
-        app:layout_constraintStart_toStartOf="@+id/email_edittext_login"
-        app:layout_constraintTop_toBottomOf="@+id/email_edittext_login" />
+        app:layout_constraintEnd_toEndOf="@+id/edittext_card"
+        app:layout_constraintStart_toStartOf="@+id/edittext_card"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_card" />
+    </soup.neumorphism.NeumorphCardView>
 
-    <Button
+    <soup.neumorphism.NeumorphButton
         android:id="@+id/login_button"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        style="@style/Widget.Neumorph.Button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
         android:text="로그인"
-        android:background="@drawable/rounded_button"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/password_edittext_login"
-        app:layout_constraintStart_toStartOf="@+id/password_edittext_login"
-        app:layout_constraintTop_toBottomOf="@+id/password_edittext_login" />
+        app:layout_constraintEnd_toEndOf="@+id/edittext_card_1"
+        app:layout_constraintStart_toStartOf="@+id/edittext_card_1"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_card_1"
+        app:neumorph_shapeType="flat" />
 
     <ProgressBar
         android:id="@+id/progressbar"
@@ -62,16 +109,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/register"
         app:layout_constraintEnd_toEndOf="@+id/login_button"
         app:layout_constraintStart_toStartOf="@+id/login_button" />
-    <Button
+
+    <soup.neumorphism.NeumorphButton
         android:id="@+id/register"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        style="@style/Widget.Neumorph.Button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:text="회원가입"
-        android:background="@drawable/rounded_button"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/login_button"
-        app:layout_constraintStart_toStartOf="@+id/login_button"
-        app:layout_constraintTop_toBottomOf="@+id/login_button"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        app:neumorph_shapeType="flat" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
