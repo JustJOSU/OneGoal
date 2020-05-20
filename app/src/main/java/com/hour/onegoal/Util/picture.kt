@@ -8,12 +8,11 @@ import com.hour.onegoal.R
 fun ImageView.loadImage(uri:String?){
     val options = RequestOptions()
         .placeholder(R.drawable.user)
-        .circleCrop()
         .error(R.mipmap.ic_launcher_round)
     if(uri == null){
         Glide.with(this.context)
             .setDefaultRequestOptions(options)
-            .load(R.drawable.user)
+            .load(R.drawable.account)
             .into(this)
     } else {
         Glide.with(this.context)

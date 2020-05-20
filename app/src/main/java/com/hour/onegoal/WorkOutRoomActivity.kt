@@ -22,6 +22,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_work_out_room)
 
+
         database = FirebaseDatabase.getInstance().reference
 
         val roomId = intent.getStringExtra("roomId")

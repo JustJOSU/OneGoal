@@ -1,6 +1,7 @@
 package com.hour.onegoal
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         val mDb = mDatabase.reference
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val userKey = user.uid
+
         /**
         currentUser?.let {
             if (it.displayName == null && it.photoUrl == null){

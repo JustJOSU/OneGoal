@@ -73,4 +73,7 @@ dependencies {
 
     //neumorphism
     implementation 'com.github.fornewid:neumorphism:0.1.8'
+
+    //roundedimageview
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }
