@@ -73,18 +73,19 @@
             android:id="@+id/category_image1"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginBottom="16dp"
             android:layout_gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/run" />
 
-        <soup.neumorphism.NeumorphTextView
+        <TextView
             android:id="@+id/category_title"
-            style="@style/Widget.Neumorph.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:text="오늘의 미션"
+            android:textStyle="bold"
             android:textColor="#454e5f"
             android:textSize="12sp" />
 

@@ -19,11 +19,11 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
 
     inner class Holder(itemView: View?, itemClick: (WorkoutRoom) -> Unit) : RecyclerView.ViewHolder(itemView!!){
         val workoutPhoto = itemView?.findViewById<ImageView>(R.id.item_photo)
-        val workoutTeamHead = itemView?.findViewById<TextView>(R.id.item_teamHead)
+        val workoutTitle = itemView?.findViewById<TextView>(R.id.item_title)
         val workoutSummary = itemView?.findViewById<TextView>(R.id.item_summary)
 
         fun bind(workoutRoom: WorkoutRoom, context: Context){
-            workoutTeamHead?.text = workoutRoom.teamHead
+            workoutTitle?.text = workoutRoom.title
             workoutSummary?.text = workoutRoom.summary
             workoutPhoto?.loadImage(workoutRoom.photoUrl)
         }

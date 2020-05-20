@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
@@ -22,18 +23,16 @@ class WorkoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workout)
 
-        // 액션바
-        setSupportActionBar(findViewById(R.id.toolbar))
-        toolbar.setTitleTextColor(Color.WHITE)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
-        toolbar.setNavigationOnClickListener {
-            val intent = Intent(this, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
+        // 뒤로가기
+        fab_backBtn.setOnClickListener {
+            onBackPressed()
+        }
+
+        // 방 생성
+        fab_addBtn.setOnClickListener {
+            val intent = Intent(this,NewPostActivity::class.java)
             startActivity(intent)
         }
-        toolbar.elevation = 3.0F
 
         var ref: DatabaseReference?= null
 
@@ -41,7 +40,7 @@ class WorkoutActivity : AppCompatActivity() {
 
         mRecyclerView = findViewById(R.id.workOut_recyclerview)
         mRecyclerView.setHasFixedSize(true)
-        mRecyclerView?.layoutManager = LinearLayoutManager(applicationContext)
+        mRecyclerView?.layoutManager = GridLayoutManager(applicationContext,2)
 
 
         ref = FirebaseDatabase.getInstance().getReference("workOutRooms")
@@ -69,36 +68,4 @@ class WorkoutActivity : AppCompatActivity() {
     }
 
 
-    //setting menu in action bar
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.bottom_nav_menu,menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle presses on the action bar menu items
-        when (item.itemId) {
-            R.id.navigation_home -> {
-
-                return true
-            }
-            R.id.navigation_dashboard -> {
-
-                return true
-            }
-            R.id.navigation_notifications -> {
-
-                return true
-            }
-            R.id.navigation_make-> {
-                val intent = Intent(this,NewPostActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-
-        }
-
-
-        return super.onOptionsItemSelected(item)
-    }
 }
