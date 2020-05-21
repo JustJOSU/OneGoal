@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.google.firebase.database.*
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
+import kotlinx.android.synthetic.main.activity_work_out_room.*
 
 class WorkOutRoomActivity : AppCompatActivity() {
 

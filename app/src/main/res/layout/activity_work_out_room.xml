@@ -1,78 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: 추후 UI 수정-->
     <TextView
         android:id="@+id/roomTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="방 이름"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:maxLength="15"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="방 이름"
+        android:textColor="#2a344f"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintStart_toStartOf="@+id/guideline5" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.11" />
 
-    <TextView
-        android:id="@+id/roomSummary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/summaryCardView"
+        style="@style/ShapeAppearance.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_below="@+id/roomTitle"
-        android:text="Write your Summary..."
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/summary_Tv"
-        android:maxLines="3"
-        android:layout_marginStart="10dp"
-        android:scrollHorizontally="false" />
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
+        app:neumorph_shapeType="basin">
+
+        <TextView
+            android:id="@+id/roomSummary"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:scrollHorizontally="false"
+            android:text="Write your Summary..." />
+
+    </soup.neumorphism.NeumorphCardView>
+
+
     <TextView
         android:id="@+id/summary_Tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="요약"
+        android:textColor="#2a344f"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/guideline3"
-        android:text="요약"/>
+        app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.40218878" />
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="관리자"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@id/guideline3" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
         android:id="@+id/roomTeamHead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TeamHead"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.72" />
 
     <TextView
         android:id="@+id/description_Tv"
@@ -83,17 +128,31 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline4"
         android:text="상세설명"/>
 
-    <TextView
-        android:id="@+id/roomDescription"
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/descriptionCardView"
+        style="@style/ShapeAppearance.Neumorph.CardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/roomSummary"
-        android:text="Write your Description..."
-        android:layout_marginStart="10dp"
-        android:maxLines="10"
-        android:scrollHorizontally="false"
+        android:layout_height="160dp"
+        android:layout_below="@+id/roomTitle"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_Tv"
-        />
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
+        app:neumorph_shapeType="basin">
+
+        <TextView
+            android:id="@+id/roomDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:maxLines="10"
+            android:scrollHorizontally="false"
+            android:text="Write your Description..." />
+    </soup.neumorphism.NeumorphCardView>
+
 
     <Button
         android:id="@+id/roomEnter_btn"
@@ -106,19 +165,103 @@
         android:layout_marginBottom="20dp"/>
 
 
-    <ImageView
-        android:id="@+id/roomPhoto"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@+id/roomDescription"
-        android:layout_alignParentEnd="true"
-        android:alpha="0.5"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="방 이미지" />
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toTopOf="@+id/roomEnter_btn"
+        app:layout_constraintTop_toTopOf="@+id/guideline9">
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/roomCardView"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/roomEnter_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline9"
+            app:layout_constraintVertical_bias="0.0"
+            app:neumorph_shapeAppearance="@style/CustomShapeAppearance2">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/roomPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/roomDescription"
+                android:layout_margin="10dp"
+                android:contentDescription="방 이미지"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toTopOf="@+id/roomEnter_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline9"
+                app:riv_corner_radius="10dp" />
+
+        </soup.neumorphism.NeumorphCardView>
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/roomCardView1"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/roomEnter_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline9"
+            app:layout_constraintVertical_bias="0.0"
+            app:neumorph_shapeAppearance="@style/CustomShapeAppearance2">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/roomPhoto1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/roomDescription"
+                android:layout_margin="10dp"
+                android:contentDescription="방 이미지"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toTopOf="@+id/roomEnter_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline9"
+                app:riv_corner_radius="10dp" />
+
+        </soup.neumorphism.NeumorphCardView>
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/roomCardView2"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/roomEnter_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline9"
+            app:layout_constraintVertical_bias="0.0"
+            app:neumorph_shapeAppearance="@style/CustomShapeAppearance2">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/roomPhoto2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/roomDescription"
+                android:layout_margin="10dp"
+                android:contentDescription="방 이미지"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toTopOf="@+id/roomEnter_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline9"
+                app:riv_corner_radius="10dp" />
+
+        </soup.neumorphism.NeumorphCardView>
+
+    </LinearLayout>
 
 
 

@@ -57,14 +57,8 @@ class WorkoutActivity : AppCompatActivity() {
                         //TODO: 버벅임
                         //TODO: Scrool To End
                         workOut_recyclerview.post {
-                            workOut_recyclerview.smoothScrollToPosition(roomList.size-1)
-                            if (roomList.size > 0) {
-                                Handler().postDelayed({
-                                    workOut_recyclerview.smoothScrollToPosition(
-                                        roomList.size - 1
-                                    )
-                                }, 500)
-                            }
+                            workOut_recyclerview.smoothScrollToPosition(1)
+
                         }
 
 

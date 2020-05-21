@@ -11,6 +11,10 @@
         <item name="neumorph_cornerFamily">rounded</item>
         <item name="neumorph_cornerSize">40dp</item>
     </style>
+    <style name="CustomShapeAppearance2">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">20dp</item>
+    </style>
 
 
 
