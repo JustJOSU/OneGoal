@@ -7,6 +7,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -41,7 +44,25 @@ import java.io.IOException
 
         fieldPhoto.setOnClickListener { showPictureDialog() }
 
+        fieldSummary.filters = arrayOf(InputFilter.LengthFilter(100))
 
+        fieldSummary.addTextChangedListener(object: TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                countWord.text = "0 / 100"
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var userinput = fieldSummary.text.toString()
+                countWord.text = userinput.length.toString() + " / 100"
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var userinput = fieldSummary.text.toString()
+                countWord.text = userinput.length.toString() + " / 100"
+            }
+
+        })
     }
 
         private fun submitRoom() {
@@ -187,7 +208,7 @@ import java.io.IOException
                     storageRef.downloadUrl.addOnCompleteListener { urlTask ->
                         urlTask.result?.let {
                             filePath = it
-                            field_selectPhoto.setImageBitmap(bitmap)
+                            fieldPhoto.setImageBitmap(bitmap)
                         }
                     }
                 } else {
@@ -227,7 +248,7 @@ import java.io.IOException
                         urlTask.result?.let {
                             imageUri = it
                             Toast.makeText(this,"$it",Toast.LENGTH_SHORT).show()
-                            field_selectPhoto.setImageBitmap(bitmap)
+                            fieldPhoto.setImageBitmap(bitmap)
                         }
                     }
                 } else {
