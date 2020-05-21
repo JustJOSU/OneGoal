@@ -1,20 +1,14 @@
 package com.hour.onegoal
 
 import android.content.Intent
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
+import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.hour.onegoal.Data.WorkoutRoom
 import kotlinx.android.synthetic.main.activity_workout.*
+
 
 class WorkoutActivity : AppCompatActivity() {
 
@@ -34,17 +28,15 @@ class WorkoutActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+        // 레퍼런스
         var ref: DatabaseReference?= null
 
-        var mRecyclerView:RecyclerView?= null
-
-        mRecyclerView = findViewById(R.id.workOut_recyclerview)
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView?.layoutManager = GridLayoutManager(applicationContext,2)
 
 
         ref = FirebaseDatabase.getInstance().getReference("workOutRooms")
 
+        // 글 목록
         ref.addValueEventListener(object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -57,14 +49,31 @@ class WorkoutActivity : AppCompatActivity() {
                     for ( h in p0.children){
                         val room = h.getValue(WorkoutRoom::class.java)
                         roomList.add(room!!)
-                    }
-                    mRecyclerView?.adapter = WorkOutAdapter(applicationContext,roomList){
-                    }
+                        workOut_recyclerview?.adapter = WorkOutAdapter(applicationContext,roomList){
 
+                        }
+                        workOut_recyclerview?.layoutManager = LinearLayoutManager(applicationContext)
+                        workOut_recyclerview.setHasFixedSize(true)
+                        //TODO: 버벅임
+                        //TODO: Scrool To End
+                        workOut_recyclerview.post {
+                            workOut_recyclerview.smoothScrollToPosition(roomList.size-1)
+                            if (roomList.size > 0) {
+                                Handler().postDelayed({
+                                    workOut_recyclerview.smoothScrollToPosition(
+                                        roomList.size - 1
+                                    )
+                                }, 500)
+                            }
+                        }
+
+
+                    }
                 }
             }
-
         })
+
+
     }
 
 
