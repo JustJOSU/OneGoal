@@ -12,9 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.hour.onegoal.R
 import com.hour.onegoal.Data.User
-import com.hour.onegoal.toast
 import kotlinx.android.synthetic.main.activity_register.*
-import soup.neumorphism.NeumorphImageButton
 
 class RegisterActivity : AppCompatActivity() {
 

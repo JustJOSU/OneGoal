@@ -21,11 +21,12 @@ import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.*
 import com.hour.onegoal.Data.User
 import com.hour.onegoal.R
+import com.hour.onegoal.Util.logout
+import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.edit_text_name
 import kotlinx.android.synthetic.main.activity_profile.logout
 import kotlinx.android.synthetic.main.activity_profile.progressbar
-import kotlinx.android.synthetic.main.activity_register.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 

@@ -6,13 +6,12 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.hour.onegoal.MainActivity
 import com.hour.onegoal.R
-import com.hour.onegoal.login
+import com.hour.onegoal.Util.login
 import kotlinx.android.synthetic.main.activity_login.*
 
 

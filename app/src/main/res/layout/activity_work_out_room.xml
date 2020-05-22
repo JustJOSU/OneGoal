@@ -49,6 +49,7 @@
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scrollbars="vertical"
             android:maxLines="3"
             android:scrollHorizontally="false"
             android:text="Write your Summary..." />
@@ -149,16 +150,27 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:maxLines="5"
+            android:scrollbars="vertical"
             android:scrollHorizontally="false"
             android:text="Write your Description..." />
     </soup.neumorphism.NeumorphCardView>
 
+    <soup.neumorphism.NeumorphButton
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="삭제"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <soup.neumorphism.NeumorphButton
         android:id="@+id/roomEnter_btn"
         android:text="입장"
         android:layout_width="300dp"
         android:layout_height="0dp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

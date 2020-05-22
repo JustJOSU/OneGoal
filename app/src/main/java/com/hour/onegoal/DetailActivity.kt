@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.google.firebase.database.*
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
-import kotlinx.android.synthetic.main.activity_detail.*
-import org.w3c.dom.Text
+import com.hour.onegoal.Util.toast
 
 class DetailActivity : AppCompatActivity() {
 

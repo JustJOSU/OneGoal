@@ -1,9 +1,10 @@
-package com.hour.onegoal
+package com.hour.onegoal.Util
 
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.hour.onegoal.Login.LoginActivity
+import com.hour.onegoal.MainActivity
 
 fun Context.toast(message:String) =
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()

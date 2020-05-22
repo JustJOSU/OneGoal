@@ -8,8 +8,8 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.hour.onegoal.R
-import com.hour.onegoal.logout
-import com.hour.onegoal.toast
+import com.hour.onegoal.Util.logout
+import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_update_email.*
 
 class UpdateEmailActivity : AppCompatActivity() {

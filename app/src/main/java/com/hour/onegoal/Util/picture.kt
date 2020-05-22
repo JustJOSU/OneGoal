@@ -15,8 +15,8 @@ fun ImageView.loadImage(uri:String?){
             .load(R.drawable.account)
             .into(this)
     } else {
+        //TODO: error 처리
         Glide.with(this.context)
-            .setDefaultRequestOptions(options)
             .load(uri)
             .into(this)
     }

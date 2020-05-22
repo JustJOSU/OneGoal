@@ -4,27 +4,28 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.bumptech.glide.Glide
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.hour.onegoal.Data.User
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Login.ProfileActivity
+import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_new_post.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+
 
     class NewPostActivity : AppCompatActivity() {
 
@@ -63,6 +64,27 @@ import java.io.IOException
             }
 
         })
+
+        fieldDescription.filters = arrayOf(InputFilter.LengthFilter(100))
+
+        fieldDescription.addTextChangedListener(object: TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                countWord_1.text = "0 / 100"
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var userinput = fieldDescription.text.toString()
+                countWord_1.text = userinput.length.toString() + " / 100"
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var userinput = fieldDescription.text.toString()
+                countWord_1.text = userinput.length.toString() + " / 100"
+            }
+
+        })
+        fieldDescription.movementMethod= ScrollingMovementMethod()
     }
 
         private fun submitRoom() {
@@ -124,6 +146,8 @@ import java.io.IOException
                     }
                 })
             // [END single_value_read]
+
+
         }
 
         companion object{

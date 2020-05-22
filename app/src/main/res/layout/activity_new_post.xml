@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline9" />
-    <TextView
+    <EditText
         android:id="@+id/fieldTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,8 @@
         android:ellipsize="end"
         android:maxLength="15"
         android:maxLines="1"
-        android:text="방 이름"
+        android:hint="방 이름"
+        android:background="@null"
         android:textColor="#2a344f"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -152,16 +153,23 @@
 
         <EditText
             android:id="@+id/fieldDescription"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:background="@null"
+            android:lines="3"
+            android:maxLines="3"
+            android:scrollHorizontally="false"
+            android:hint="Write your Summary..." />
+        <TextView
+            android:id="@+id/countWord_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:textSize="15sp"
-            android:inputType="text"
-            android:layout_margin="10dp"
-            android:maxLength="100"
-            android:maxLines="5"
-            android:scrollHorizontally="false"
-            android:hint="Write your Description..." />
+            android:layout_weight="0.5"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="right|bottom"
+            android:hint="글자 수가 표시될 자리 입니다."/>
     </soup.neumorphism.NeumorphCardView>
 
     <soup.neumorphism.NeumorphButton
