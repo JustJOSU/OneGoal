@@ -1,4 +1,4 @@
-    package com.hour.onegoal
+package com.hour.onegoal
 
 import android.app.Activity
 import android.content.Intent
@@ -308,7 +308,6 @@ import java.io.IOException
             childUpdates["/workOutRooms/$roomId"] = workOutRoomValues
             // 유저가 만든 방 구분
             childUpdates["/user-workOutRooms/$userId/$roomId"] = workOutRoomValues
-            Log.d(TAG, "Child update : $childUpdates")
             database.updateChildren(childUpdates)
         }
         // [END write_fan_out]

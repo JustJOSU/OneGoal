@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.Util.loadImage
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_work_out_room.*
@@ -20,15 +21,17 @@ class WorkOutRoomActivity : AppCompatActivity() {
     private val OPEN_GALLERY = 1
     private var filePath: Uri? = null
     private lateinit var imageUri: Uri
+    private lateinit var superRoomPhotoUri: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_work_out_room)
 
         database = FirebaseDatabase.getInstance().reference
+        superRoomPhotoUri = intent.getStringExtra("photoUrl")
 
         val roomId = intent.getStringExtra("roomId")
-        Log.d(TAG,"Test : $roomId")
         val roomTitle = intent.getStringExtra("title")
         val roomDescription = intent.getStringExtra("description")
         val roomPhotoUrl = intent.getStringExtra("photoUrl")
@@ -64,6 +67,16 @@ class WorkOutRoomActivity : AppCompatActivity() {
     }
 
     private fun delete(roomId: String) {
+        """
+        if(superRoomPhotoUri != null){
+            val storage_uri = FirebaseStorage.getInstance().getReferenceFromUrl(superRoomPhotoUri)
+            storage_uri.delete().addOnSuccessListener {
+                //TODO: 성공했을 시
+            }.addOnFailureListener{
+                //TODO: 실패했을 시
+            }
+        }
+        """
 
         val roomTable: DatabaseReference = FirebaseDatabase.getInstance().getReference("/workOutRooms/$roomId")
         // 2020-05-24 21:26 조성재 -변경사항 기록-
@@ -74,7 +87,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
         // 2020-05-24 21:26 조성재 -변경사항 기록-
         // user-workOutRooms에서도 지우려면 경로를 ("/user-workOutRooms/$userId/$roomId")와 같이해줘야됨
         // 이유는 NewPostActivity의 308번 라인 참고
-        
+
         roomTable1.removeValue()
         val intent = Intent(this,WorkoutActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
