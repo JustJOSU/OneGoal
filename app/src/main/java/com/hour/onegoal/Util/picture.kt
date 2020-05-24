@@ -19,5 +19,6 @@ fun ImageView.loadImage(uri:String?){
         Glide.with(this.context)
             .load(uri)
             .into(this)
+
     }
 }

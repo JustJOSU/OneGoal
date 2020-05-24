@@ -289,21 +289,26 @@ import java.io.IOException
         private fun writeNewPost(userId: String, teamHead: String, title: String,
                                  summary:String, description:String,photoUrl:String) {
 
-            val key = database.child("workOutRooms").push().key
-            if (key == null) {
+            val roomId = database.child("workOutRooms").push().key
+            // 생성되는 방의 key값
+
+            if (roomId == null) {
                 Log.w(TAG, "Couldn't get push key for posts")
                 return
             }
 
-            val workOutRoom = WorkoutRoom(userId, teamHead, title, summary, description,photoUrl)
+            val workOutRoom = WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)
+            // 2020-05-24 21:26 조성재 -변경사항 기록-
+            // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
+
             val workOutRoomValues = workOutRoom.toMap()
 
             val childUpdates = HashMap<String, Any>()
             // 일반 방
-            childUpdates["/workOutRooms/$key"] = workOutRoomValues
+            childUpdates["/workOutRooms/$roomId"] = workOutRoomValues
             // 유저가 만든 방 구분
-            childUpdates["/user-workOutRooms/$userId/$key"] = workOutRoomValues
-
+            childUpdates["/user-workOutRooms/$userId/$roomId"] = workOutRoomValues
+            Log.d(TAG, "Child update : $childUpdates")
             database.updateChildren(childUpdates)
         }
         // [END write_fan_out]
