@@ -8,8 +8,12 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.hour.onegoal.Data.EnterRoom
+import com.hour.onegoal.Data.WorkoutRoom
+import com.hour.onegoal.Login.ProfileActivity
 import com.hour.onegoal.Util.loadImage
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_work_out_room.*
@@ -64,6 +68,48 @@ class WorkOutRoomActivity : AppCompatActivity() {
             delete(roomId)
         }
 
+        roomEnter_btn.setOnClickListener {
+            enterRoom1()
+        }
+
+    }
+
+    // 방입장 TODO : 잠옴 ㅠㅠ
+    private fun enterRoom1() {
+
+        // [START single_value_read]
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val user: FirebaseUser = firebaseAuth.currentUser!!
+        val userId = user.uid
+
+        database.child("users").child(userId).addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val username = dataSnapshot.child("username").value.toString()
+                    val roomId = dataSnapshot.child("roomId").value.toString()
+                    val photoUrl = dataSnapshot.child("photoUrl").value.toString()
+                    if(username == null){
+                        val intent = Intent(this@WorkOutRoomActivity, ProfileActivity::class.java).apply {
+                            toast("프로필을 완성시켜야만 방을 입장할 수 있습니다.")
+                        }
+                        startActivity(intent)
+                    }else {
+                        enterRoom(userId,roomId = roomId, username = username,photoUrl = photoUrl)
+                        val intent = Intent(this@WorkOutRoomActivity, RoomActivity::class.java)
+                        startActivity(intent)
+
+                    }
+                    finish()
+                    // [END_EXCLUDE]
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.w(TAG, "getUser:onCancelled", databaseError.toException())
+                }
+            })
+        // [END single_value_read]
+
+
     }
 
     private fun delete(roomId: String) {
@@ -93,6 +139,30 @@ class WorkOutRoomActivity : AppCompatActivity() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
+    }
+
+    // 방입장 TODO: 잠옴 ;;
+    private fun enterRoom(userId: String, roomId: String,username:String,photoUrl:String){
+        val enterId = database.child("workOutRooms/$roomId").push().key
+        // 생성되는 방의 key값
+
+        if (enterId == null) {
+            Log.w(NewPostActivity.TAG, "Couldn't get push key for posts")
+            return
+        }
+
+        val enterRoom = EnterRoom(enterId, roomId, userId, username, photoUrl)
+        // 2020-05-24 21:26 조성재 -변경사항 기록-
+        // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
+
+        val enterRoomValues = enterRoom.toMap()
+
+        val childUpdates = HashMap<String, Any>()
+        // 일반 방
+        childUpdates["/workOutRooms/$roomId/$enterId"] = enterRoomValues
+        // 유저가 만든 방 구분
+        childUpdates["/user-workOutRooms/$userId/$roomId/$enterId"] = enterRoomValues
+        database.updateChildren(childUpdates)
     }
 
     // TAG WorkOutRoomActivity
