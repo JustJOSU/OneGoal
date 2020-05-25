@@ -129,7 +129,7 @@ import java.io.IOException
                             startActivity(intent)
                             finish()
                         } else if (filePath == null && imageUri == null){
-                            writeNewPost(userId, username, title, summary, description, photoUrl = null)
+                            writeNewPost(userId, username, title, summary, description, photoUrl = "")
                         } else {
                             if (filePath == null){
                                 writeNewPost(userId, username, title, summary, description,photoUrl = imageUri.toString())
@@ -287,7 +287,7 @@ import java.io.IOException
 
         // 방 업로드
         private fun writeNewPost(userId: String, teamHead: String, title: String,
-                                 summary:String, description:String,photoUrl:String?) {
+                                 summary:String, description:String,photoUrl:String) {
 
             val roomId = database.child("workOutRooms").push().key
             // 생성되는 방의 key값

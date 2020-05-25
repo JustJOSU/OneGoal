@@ -8,7 +8,7 @@ data class WorkoutRoom(
     var title: String? = "",
     var summary:String?="",
     var description: String?="",
-    var photoUrl: String?= null
+    var photoUrl: String?=""
 ){
     // [START post_to_map]
     @Exclude

@@ -10,13 +10,16 @@ fun ImageView.loadImage(uri:String?){
     val options = RequestOptions()
         .placeholder(R.drawable.user)
         .error(R.mipmap.ic_launcher_round)
+
     if(uri != null){
-        Glide.with(this)
+        Glide.with(this.context)
+            .setDefaultRequestOptions(options)
             .load(uri)
             .into(this)
     } else {
-        Glide.with(this)
-            .load(R.mipmap.ic_launcher_round)
+        //TODO: error 처리
+        Glide.with(this.context)
+            .load(R.drawable.account)
             .into(this)
     }
 }
