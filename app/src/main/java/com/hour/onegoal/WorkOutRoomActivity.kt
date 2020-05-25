@@ -12,12 +12,14 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.Data.EnterRoom
+import com.hour.onegoal.Data.GetUser
 import com.hour.onegoal.Data.User
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Login.ProfileActivity
 import com.hour.onegoal.Util.loadImage
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_work_out_room.*
+import kotlin.reflect.typeOf
 
 class WorkOutRoomActivity : AppCompatActivity() {
     private val userId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -63,64 +65,63 @@ class WorkOutRoomActivity : AppCompatActivity() {
         }
 
         roomEnter_btn.setOnClickListener {
-            enterRoom1()
+            enterRoom()
         }
 
     }
 
     // 방입장 TODO : 잠옴 ㅠㅠ
-    private fun enterRoom1() {
-
+    private fun enterRoom() {
         // [START single_value_read]
         val firebaseAuth = FirebaseAuth.getInstance()
         val user: FirebaseUser = firebaseAuth.currentUser!!
-        val userId = user.uid
+
         database.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                var userInfo = GetUser()
                 val user_info = p0.child("users/$userId").children
-                val room_info = p0.child("workOutRooms/$roomId").value
-                Log.d(TAG, "User Info : $user_info")
+                val room_info = p0.child("workOutRooms/$roomId").children
+                var count=0
+
                 for(h in user_info){
-                    Log.d(TAG,"h : ${h.key}")
+                    when(count){
+                        0 -> userInfo.birth = h.value.toString()
+                        1 -> userInfo.gender = h.value.toString()
+                        2 -> userInfo.uid = h.value.toString()
+                        3 -> userInfo.username = h.value
+                    }
+                    count += 1
                 }
+                
+                if(userInfo.username != null){
+                    val user = User(userId, userInfo.birth,userInfo.gender,userInfo.username)
+                    val userValues = user.toMap()
+
+                    val room = EnterRoom(roomId, userId, userInfo.username)
+                    val roomValues = room.toMap()
+
+                    val childUpdates = HashMap<String, Any>()
+                    childUpdates["users/$userId/$roomId"] = roomValues
+                    childUpdates["workOutRooms/$roomId/members/$userId"] = userValues
+
+                    database.updateChildren(childUpdates)
+
+                    val intent = Intent(this@WorkOutRoomActivity, RoomActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(this@WorkOutRoomActivity, ProfileActivity::class.java).apply {
+                        toast("프로필을 완성시켜야만 방을 입장할 수 있습니다.")
+                    }
+                    startActivity(intent)
+                }
+
             }
 
         })
-        """
-        database.child("users").child(userId).addListenerForSingleValueEvent(
-            object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val username = dataSnapshot.child("username").value
-                    val photoUrl = dataSnapshot.child("photoUrl").value.toString()
-                    if(username != null){
-                        Log.d(TAG,"enterRoom1 func : $roomId")
-                        enterRoom(userId,roomId,username.toString(),photoUrl)
-                        val enterId = database.child("users/$userId").push().key
-                        
-                        val intent = Intent(this@WorkOutRoomActivity, RoomActivity::class.java)
-                        startActivity(intent)
-                    }else {
-                        val intent = Intent(this@WorkOutRoomActivity, ProfileActivity::class.java).apply {
-                            toast("프로필을 완성시켜야만 방을 입장할 수 있습니다.")
-                        }
-                        startActivity(intent)
-                    }
-                    finish()
-                    // [END_EXCLUDE]
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    Log.w(TAG, "getUser:onCancelled", databaseError.toException())
-                }
-            })
-        // [END single_value_read]
-        """
-
-
     }
     private fun delete(roomId: String) {
         """
@@ -133,7 +134,6 @@ class WorkOutRoomActivity : AppCompatActivity() {
             }
         }
         """
-
         val roomTable: DatabaseReference = FirebaseDatabase.getInstance().getReference("/workOutRooms/$roomId")
         // 2020-05-24 21:26 조성재 -변경사항 기록-
         // 지우려는 방의 경로를 ("/workOutRooms") -> ("/workOutRooms/$roomId") 변경
@@ -150,32 +150,6 @@ class WorkOutRoomActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
-
-    // 방입장 TODO: 잠옴 ;;
-    private fun enterRoom(userId: String, roomId: String,username:String,photoUrl:String){
-        Log.d(TAG,"Enter ID : $roomId")
-        val enterId = database.child("workOutRooms/$roomId").push().key
-        // 생성되는 방의 key값
-
-        if (enterId == null) {
-            Log.w(NewPostActivity.TAG, "Couldn't get push key for posts")
-            return
-        }
-
-        val enterRoom = EnterRoom(enterId, roomId, userId, username, photoUrl)
-        // 2020-05-24 21:26 조성재 -변경사항 기록-
-        // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
-
-        val enterRoomValues = enterRoom.toMap()
-
-        val childUpdates = HashMap<String, Any>()
-        // 일반 방
-        childUpdates["/workOutRooms/$roomId/$enterId"] = enterRoomValues
-        // 유저가 만든 방 구분
-        childUpdates["/user-workOutRooms/$userId/$roomId/$enterId"] = enterRoomValues
-        database.updateChildren(childUpdates)
-    }
-
     // TAG WorkOutRoomActivity
     companion object{
         val TAG = WorkOutRoomActivity::class.qualifiedName
