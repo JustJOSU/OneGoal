@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.Data.EnterRoom
+import com.hour.onegoal.Data.User
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Login.ProfileActivity
 import com.hour.onegoal.Util.loadImage
@@ -27,6 +28,13 @@ class WorkOutRoomActivity : AppCompatActivity() {
     private lateinit var imageUri: Uri
     private lateinit var superRoomPhotoUri: String
 
+    private lateinit var roomId :String
+    private lateinit var roomTitle :String
+    private lateinit var roomDescription :String
+    private lateinit var roomPhotoUrl :String
+    private lateinit var roomSummary :String
+    private lateinit var roomTeamHead :String
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -35,34 +43,20 @@ class WorkOutRoomActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         superRoomPhotoUri = intent.getStringExtra("photoUrl")
 
-        val roomId = intent.getStringExtra("roomId")
-        val roomTitle = intent.getStringExtra("title")
-        val roomDescription = intent.getStringExtra("description")
-        val roomPhotoUrl = intent.getStringExtra("photoUrl")
-        val roomSummary = intent.getStringExtra("summary")
-        val roomTeamHead = intent.getStringExtra("teamHead")
-        FirebaseDatabase.getInstance().getReference("/workOutRooms")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
+        roomId = intent.getStringExtra("roomId")
+        roomTitle = intent.getStringExtra("title")
+        roomDescription = intent.getStringExtra("description")
+        roomPhotoUrl = intent.getStringExtra("photoUrl")
+        roomSummary = intent.getStringExtra("summary")
+        roomTeamHead = intent.getStringExtra("teamHead")
 
-                override fun onDataChange(p0: DataSnapshot) {
-                    val workRoomPhoto = findViewById<ImageView>(R.id.roomPhoto)
-                    val workRoomTitle = findViewById<TextView>(R.id.roomTitle)
-                    val workRoomDescription = findViewById<TextView>(R.id.roomDescription)
-                    val workRoomSummary = findViewById<TextView>(R.id.roomSummary)
-                    val workRoomTeamHead = findViewById<TextView>(R.id.roomTeamHead)
 
-                    toast("This is summary : $roomSummary")
-                    workRoomTitle.text = roomTitle
-                    workRoomDescription.text = roomDescription
-                    workRoomSummary.text = roomSummary
-                    workRoomPhoto.loadImage(roomPhotoUrl)
-                    workRoomTeamHead.text = " : $roomTeamHead"
-                }
+        findViewById<TextView>(R.id.roomTitle).text = roomTitle
+        findViewById<ImageView>(R.id.roomPhoto).loadImage(roomPhotoUrl)
+        findViewById<TextView>(R.id.roomDescription).text = roomDescription
+        findViewById<TextView>(R.id.roomSummary).text = roomSummary
+        findViewById<TextView>(R.id.roomTeamHead).text = roomTeamHead
 
-            })
         //TODO 방 삭제 똑바로
         deleteButton.setOnClickListener {
             delete(roomId)
@@ -81,23 +75,39 @@ class WorkOutRoomActivity : AppCompatActivity() {
         val firebaseAuth = FirebaseAuth.getInstance()
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val userId = user.uid
+        database.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
+            override fun onDataChange(p0: DataSnapshot) {
+                val user_info = p0.child("users/$userId").children
+                val room_info = p0.child("workOutRooms/$roomId").value
+                Log.d(TAG, "User Info : $user_info")
+                for(h in user_info){
+                    Log.d(TAG,"h : ${h.key}")
+                }
+            }
+
+        })
+        """
         database.child("users").child(userId).addListenerForSingleValueEvent(
             object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val username = dataSnapshot.child("username").value.toString()
-                    val roomId = dataSnapshot.child("roomId").value.toString()
+                    val username = dataSnapshot.child("username").value
                     val photoUrl = dataSnapshot.child("photoUrl").value.toString()
-                    if(username == null){
+                    if(username != null){
+                        Log.d(TAG,"enterRoom1 func : $roomId")
+                        enterRoom(userId,roomId,username.toString(),photoUrl)
+                        val enterId = database.child("users/$userId").push().key
+                        
+                        val intent = Intent(this@WorkOutRoomActivity, RoomActivity::class.java)
+                        startActivity(intent)
+                    }else {
                         val intent = Intent(this@WorkOutRoomActivity, ProfileActivity::class.java).apply {
                             toast("프로필을 완성시켜야만 방을 입장할 수 있습니다.")
                         }
                         startActivity(intent)
-                    }else {
-                        enterRoom(userId,roomId = roomId, username = username,photoUrl = photoUrl)
-                        val intent = Intent(this@WorkOutRoomActivity, RoomActivity::class.java)
-                        startActivity(intent)
-
                     }
                     finish()
                     // [END_EXCLUDE]
@@ -108,10 +118,10 @@ class WorkOutRoomActivity : AppCompatActivity() {
                 }
             })
         // [END single_value_read]
+        """
 
 
     }
-
     private fun delete(roomId: String) {
         """
         if(superRoomPhotoUri != null){
@@ -143,6 +153,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
 
     // 방입장 TODO: 잠옴 ;;
     private fun enterRoom(userId: String, roomId: String,username:String,photoUrl:String){
+        Log.d(TAG,"Enter ID : $roomId")
         val enterId = database.child("workOutRooms/$roomId").push().key
         // 생성되는 방의 key값
 
