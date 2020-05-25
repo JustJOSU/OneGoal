@@ -40,6 +40,7 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
                 intent.putExtra("photoUrl",room.photoUrl)
                 intent.putExtra("teamHead",room.teamHead)
                 context.startActivity(intent)
+
             }
         }
     }
