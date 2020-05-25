@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ParticipantsActivity"></activity>
+        <activity android:name=".StateActivity"></activity>
+        <activity android:name=".MissionHistoryActivity" />
+        <activity android:name=".ParticipantsActivity" />
         <activity android:name=".RoomActivity" />
         <activity android:name=".WorkOutRoomActivity" />
         <activity android:name=".DetailActivity" />
