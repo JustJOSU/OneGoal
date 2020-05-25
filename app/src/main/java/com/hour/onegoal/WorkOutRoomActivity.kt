@@ -59,7 +59,6 @@ class WorkOutRoomActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.roomSummary).text = roomSummary
         findViewById<TextView>(R.id.roomTeamHead).text = roomTeamHead
 
-        //TODO 방 삭제 똑바로
         deleteButton.setOnClickListener {
             delete(roomId)
         }
@@ -70,42 +69,28 @@ class WorkOutRoomActivity : AppCompatActivity() {
 
     }
 
-    // 방입장 TODO : 잠옴 ㅠㅠ
     private fun enterRoom() {
         // [START single_value_read]
         val firebaseAuth = FirebaseAuth.getInstance()
         val user: FirebaseUser = firebaseAuth.currentUser!!
 
-        database.addListenerForSingleValueEvent(object : ValueEventListener{
+        database.child("users/$userId").addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                var userInfo = GetUser()
-                val user_info = p0.child("users/$userId").children
-                val room_info = p0.child("workOutRooms/$roomId").children
-                var count=0
-
-                for(h in user_info){
-                    when(count){
-                        0 -> userInfo.birth = h.value.toString()
-                        1 -> userInfo.gender = h.value.toString()
-                        2 -> userInfo.uid = h.value.toString()
-                        3 -> userInfo.username = h.value
-                    }
-                    count += 1
-                }
+                val user_info = p0.getValue(User::class.java)
                 
-                if(userInfo.username != null){
-                    val user = User(userId, userInfo.birth,userInfo.gender,userInfo.username)
+                if(user_info?.username != null){
+                    val user = User(userId, user_info.birth,user_info.gender,user_info.username)
                     val userValues = user.toMap()
 
-                    val room = EnterRoom(roomId, userId, userInfo.username)
+                    val room = WorkoutRoom(roomId, roomTeamHead, roomTitle, roomSummary, roomDescription, roomPhotoUrl)
                     val roomValues = room.toMap()
 
                     val childUpdates = HashMap<String, Any>()
-                    childUpdates["users/$userId/$roomId"] = roomValues
+                    childUpdates["users/$userId/myroom"] = roomValues
                     childUpdates["workOutRooms/$roomId/members/$userId"] = userValues
 
                     database.updateChildren(childUpdates)
