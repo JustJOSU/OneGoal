@@ -117,7 +117,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             R.id.login_button -> signIn(email_edittext_login.text.toString(), password_edittext_login.text.toString())
         }
     }
+
+
     companion object{
         private const val TAG = "EmailPassword"
     }
+
 }

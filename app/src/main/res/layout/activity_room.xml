@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/room_Title"
+        android:id="@+id/valid_room_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="방 이름"

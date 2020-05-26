@@ -52,7 +52,6 @@ class WorkOutRoomActivity : AppCompatActivity() {
         roomSummary = intent.getStringExtra("summary")
         roomTeamHead = intent.getStringExtra("teamHead")
 
-
         findViewById<TextView>(R.id.roomTitle).text = roomTitle
         findViewById<ImageView>(R.id.roomPhoto).loadImage(roomPhotoUrl)
         findViewById<TextView>(R.id.roomDescription).text = roomDescription
@@ -83,7 +82,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
                 val user_info = p0.getValue(User::class.java)
                 
                 if(user_info?.username != null){
-                    val user = User(userId, user_info.birth,user_info.gender,user_info.username)
+                    val user = User(userId, user_info.birth,user_info.gender,user_info.username,user_info.photoUrl)
                     val userValues = user.toMap()
 
                     val room = WorkoutRoom(roomId, roomTeamHead, roomTitle, roomSummary, roomDescription, roomPhotoUrl)
@@ -96,6 +95,8 @@ class WorkOutRoomActivity : AppCompatActivity() {
                     database.updateChildren(childUpdates)
 
                     val intent = Intent(this@WorkOutRoomActivity, RoomActivity::class.java)
+                    intent.putExtra("title",roomTitle)
+                    intent.putExtra("roomId",roomId)
                     startActivity(intent)
                 } else {
                     val intent = Intent(this@WorkOutRoomActivity, ProfileActivity::class.java).apply {

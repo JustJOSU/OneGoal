@@ -119,22 +119,21 @@ import java.io.IOException
             database.child("users").child(userId).addListenerForSingleValueEvent(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val username = dataSnapshot.child("username").value.toString()
-                        val teamHead = dataSnapshot.child("username").value
+                        val username = dataSnapshot.child("username").value
 
-                        if(teamHead == null){
+                        if(username == null){
                             val intent = Intent(this@NewPostActivity, ProfileActivity::class.java).apply {
                                 toast("프로필을 완성시켜야만 방을 만들 수가 있습니다!!")
                             }
                             startActivity(intent)
                             finish()
                         } else if (filePath == null && imageUri == null){
-                            writeNewPost(userId, username, title, summary, description, photoUrl = "")
+                            writeNewPost(userId, username.toString(), title, summary, description, photoUrl = "")
                         } else {
                             if (filePath == null){
-                                writeNewPost(userId, username, title, summary, description,photoUrl = imageUri.toString())
+                                writeNewPost(userId, username.toString(), title, summary, description,photoUrl = imageUri.toString())
                             } else{
-                                writeNewPost(userId, username, title, summary, description,photoUrl = filePath.toString())
+                                writeNewPost(userId, username.toString(), title, summary, description,photoUrl = filePath.toString())
                             }
                         }
                         finish()

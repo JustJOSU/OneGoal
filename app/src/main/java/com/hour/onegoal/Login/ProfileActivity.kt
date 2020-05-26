@@ -115,7 +115,7 @@ class ProfileActivity : AppCompatActivity() {
                         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
                         val birth = text_birth.text.toString()
                         val gender = text_gender.text.toString()
-                        val user = User(uid,birth,gender,username = currentUser.displayName!!)
+                        val user = User(uid,birth,gender,username = currentUser.displayName!!,photoUrl = photo.toString())
                         ref.setValue(user)
                         application?.toast("프로필 업데이트 성공")
                         val intent = Intent(this, MainActivity::class.java)

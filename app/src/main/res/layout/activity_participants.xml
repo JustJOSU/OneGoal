@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/room_Title"
+        android:id="@+id/roomTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="참여중 멤버"

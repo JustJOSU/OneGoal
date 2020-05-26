@@ -7,7 +7,9 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class User(var uid: String="",
                 var birth:String="",
                 var gender:String="",
-                var username:Any?=null){
+                var username:Any?=null,
+                var photoUrl:String=""
+                ){
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
@@ -15,7 +17,8 @@ data class User(var uid: String="",
             "uid" to uid,
             "birth" to birth,
             "gender" to gender,
-            "username" to username
+            "username" to username,
+            "photoUrl" to photoUrl
         )
     }
 }
