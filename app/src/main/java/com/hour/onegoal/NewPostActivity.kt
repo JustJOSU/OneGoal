@@ -306,8 +306,7 @@ import java.io.IOException
             val childUpdates = HashMap<String, Any>()
             // 일반 방
             childUpdates["/workOutRooms/$roomId"] = workOutRoomValues
-            // 유저가 만든 방 구분
-            childUpdates["/user-workOutRooms/$userId/$roomId"] = workOutRoomValues
+
             database.updateChildren(childUpdates)
         }
         // [END write_fan_out]
