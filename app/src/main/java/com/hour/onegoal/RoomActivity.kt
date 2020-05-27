@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_room.*
+import soup.neumorphism.NeumorphTextView
 
 class RoomActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class RoomActivity : AppCompatActivity() {
 
         roomTitle = intent.getStringExtra("title")
         roomId = intent.getStringExtra("roomId")
-        findViewById<TextView>(R.id.valid_room_title).text = roomTitle
+        findViewById<NeumorphTextView>(R.id.valid_room_title).text = roomTitle
 
         enterAccount_cardView.setOnClickListener {
             val intent = Intent(this,ParticipantsActivity::class.java)

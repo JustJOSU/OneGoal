@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -37,15 +39,34 @@ class ParticipantsActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError) {
             }
             override fun onDataChange(p0: DataSnapshot) {
-                // 방장 이름 값
-                //TODO: 방 DB 구조 다시 생각
+                // 방장 이름이 존재할 경우 방장 텍스트뷰 밑에 배치
                 val teamHead = p0.child("teamHead").value
-                findViewById<TextView>(R.id.teamHeadName).text = teamHead.toString()
-                val teamPhotoUrl = p0.child("/members/$uid/photoUrl").value
-                Glide.with(this@ParticipantsActivity)
-                    .load(teamPhotoUrl)
-                    .into(teamHeadProfile)
-                Log.d("p0","p0 : ${teamPhotoUrl}")
+                if (teamHead != null){
+                    findViewById<TextView>(R.id.teamHeadName).text = teamHead.toString()
+                    val teamPhotoUrl = p0.child("/members/$uid/photoUrl").value
+                    Glide.with(this@ParticipantsActivity)
+                        .load(teamPhotoUrl)
+                        .into(teamHeadProfile)
+                    Log.d("p0","p0 : ${teamPhotoUrl}")
+                }
+
+                // 팀원일 경우 멤버 텍스트뷰 밑에 배치
+                    var userList: ArrayList<User>?= null
+                    userList = ArrayList<User>()
+                    for ( h in p0.child("members").children){
+                        val users = h.getValue(User::class.java)
+                        userList.add(users!!)
+                        memberRecyclerView?.adapter = ParticipantsAdapter(applicationContext,userList){
+
+                        }
+                        memberRecyclerView?.layoutManager = GridLayoutManager(applicationContext,1)
+                        memberRecyclerView.setHasFixedSize(true)
+
+                        memberRecyclerView.post {
+                            memberRecyclerView.smoothScrollToPosition(1)
+                        }
+                    }
+
             }
         })
     }

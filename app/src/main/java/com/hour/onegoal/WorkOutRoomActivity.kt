@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_work_out_room.*
 import kotlin.reflect.typeOf
 
 class WorkOutRoomActivity : AppCompatActivity() {
+
     private val userId = FirebaseAuth.getInstance().currentUser!!.uid
     private lateinit var database: DatabaseReference
     private val REQUEST_IMAGE_CAPTURE = 100
@@ -104,9 +105,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
                     }
                     startActivity(intent)
                 }
-
             }
-
         })
     }
     private fun delete(roomId: String) {

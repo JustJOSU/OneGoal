@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<soup.neumorphism.NeumorphCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/ShapeAppearance.Neumorph.CardView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    >
+    android:layout_marginLeft="24dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <RelativeLayout
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:padding="24dp"
-        android:layout_marginStart="8dp"
-
+    <soup.neumorphism.NeumorphCardView
+        style="@style/ShapeAppearance.Neumorph.CardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
-        <ImageView
-            android:id="@+id/category_image"
-            android:scaleType="centerInside"
-            android:layout_centerHorizontal="true"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="@drawable/run" />
+        <RelativeLayout
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginStart="8dp"
+            android:padding="24dp">
 
-        <soup.neumorphism.NeumorphTextView
-            android:id="@+id/category_title"
-            style="@style/Widget.Neumorph.TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/category_image"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="2dp"
-            android:text="TextView"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/category_image"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/run" />
 
-    </RelativeLayout>
+            <soup.neumorphism.NeumorphTextView
+                android:id="@+id/category_title"
+                style="@style/Widget.Neumorph.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/category_image"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="2dp"
+                android:text="TextView"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-</soup.neumorphism.NeumorphCardView>
+        </RelativeLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

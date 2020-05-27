@@ -31,7 +31,7 @@
         android:id="@+id/teamHeadProfile"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_margin="10dp"
+        android:layout_margin="25dp"
         android:src="@drawable/account"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toBottomOf="@+id/room_Title2" />
@@ -70,15 +70,24 @@
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/memberRecyclerView"
+    <LinearLayout
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toBottomOf="@+id/room_Title3"
-        app:layout_constraintEnd_toEndOf="@+id/guideline13"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/room_Title3">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/memberRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="81dp" />
+    </LinearLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline13"
