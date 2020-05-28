@@ -202,7 +202,6 @@ import java.io.IOException
                 uploadImageAndSaveUri(imageBitmap)
             }
 
-
         }
 
         // 갤러리에서 이미지 업로드

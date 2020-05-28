@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
@@ -37,6 +38,7 @@
         android:textSize="16dp"
         android:hint="미션 내용"/>
 
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -72,10 +74,12 @@
             android:textColor="#000000"
             android:textSize="16dp"
             android:background="#ffffff"/>
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000"/>
+
 </LinearLayout>
