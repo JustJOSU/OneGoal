@@ -8,17 +8,15 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
+import android.util.Log
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.hour.onegoal.Data.Mission
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_new_post.*
 import kotlinx.android.synthetic.main.activity_room.*
@@ -29,6 +27,7 @@ import java.io.IOException
 
 class RoomActivity : AppCompatActivity() {
 
+    private lateinit var database: DatabaseReference
     private lateinit var roomTitle : String
     private lateinit var roomId : String
     private val REQUEST_IMAGE_CAPTURE = 100
@@ -36,10 +35,12 @@ class RoomActivity : AppCompatActivity() {
     private var filePath: Uri? = null
     private var imageUri: Uri? = null
     lateinit var photo : ImageView
+    var missionTitle: EditText? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room)
 
+        database = FirebaseDatabase.getInstance().reference
         roomTitle = intent.getStringExtra("title")
         roomId = intent.getStringExtra("roomId")
         findViewById<NeumorphTextView>(R.id.valid_room_title).text = roomTitle
@@ -61,15 +62,16 @@ class RoomActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.custom_dialog)
-        val body = dialog.findViewById(R.id.dialog_missionTitle) as TextView
-        body.text = title
+
         photo = dialog.findViewById(R.id.dialog_imageView) as ImageView
         photo.setOnClickListener {
             showPictureDialog()
         }
+
         val yesBtn = dialog.findViewById(R.id.okButton) as Button
         val noBtn = dialog.findViewById(R.id.cancelButton) as Button
         yesBtn.setOnClickListener {
+            submitMission()
             dialog.dismiss()
         }
         noBtn.setOnClickListener { dialog.dismiss() }
@@ -202,4 +204,74 @@ class RoomActivity : AppCompatActivity() {
         }
     }
 
+    // 방 업로드
+    private fun writeNewMission(missionPhotoUrl:String,missionTitle:String){
+
+        val missionId = database.child("workOutRooms/$roomId").push().key
+        // 생성되는 방의 key값
+
+        if (missionId == null) {
+            Log.w(TAG, "Couldn't get push key for posts")
+            return
+        }
+
+        val mission = Mission(missionId,missionWriteTime = ServerValue.TIMESTAMP,missionPhotoUrl = missionPhotoUrl,missionTitle = missionTitle)
+        // 2020-05-24 21:26 조성재 -변경사항 기록-
+        // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
+
+        val missionValues = mission.toMap()
+
+        val childUpdates = HashMap<String, Any>()
+        // 일반 방
+        childUpdates["/workOutRooms/$roomId/$missionId"] = missionValues
+
+        database.updateChildren(childUpdates)
+    }
+
+    //TODO: 미션 추가까지 해놓았지만 사진 URL은 디비에 넣어지는데 타이틀이 넣어지질 않음
+    //그리고 DB 구조 다시 ;;
+    private fun submitMission() {
+        missionTitle = findViewById<EditText>(R.id.dialog_missionTitle)
+        val title = missionTitle?.text.toString()
+        if (title.isEmpty()){
+                dialog_missionTitle.error = "제목을 입력해주세요"
+                dialog_missionTitle.requestFocus()
+                return
+        }
+
+        // [START single_value_read]
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val user: FirebaseUser = firebaseAuth.currentUser!!
+        val userId = user.uid
+
+        database.child("users").child(userId).addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val username = dataSnapshot.child("username").value
+
+                     if (filePath == null && imageUri == null){
+                        writeNewMission(missionPhotoUrl = "",missionTitle = title)
+                    } else {
+                        if (filePath == null){
+                            writeNewMission(missionPhotoUrl = imageUri.toString(),missionTitle = title)
+                        } else{
+                            writeNewMission(missionPhotoUrl = filePath.toString(),missionTitle = title)
+                        }
+                    }
+                    finish()
+                    // [END_EXCLUDE]
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.w(TAG, "getUser:onCancelled", databaseError.toException())
+                }
+            })
+        // [END single_value_read]
+
+
+    }
+    // [END write_fan_out]
+    companion object{
+        val TAG = RoomActivity::class.qualifiedName
+    }
 }
