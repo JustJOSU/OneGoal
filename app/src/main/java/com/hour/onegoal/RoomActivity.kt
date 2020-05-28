@@ -207,7 +207,7 @@ class RoomActivity : AppCompatActivity() {
     // 방 업로드
     private fun writeNewMission(missionPhotoUrl:String,missionTitle:String){
 
-        val missionId = database.child("workOutRooms/$roomId").push().key
+        val missionId = database.child("workOutRooms/$roomId/mission").push().key
         // 생성되는 방의 key값
 
         if (missionId == null) {
@@ -223,7 +223,7 @@ class RoomActivity : AppCompatActivity() {
 
         val childUpdates = HashMap<String, Any>()
         // 일반 방
-        childUpdates["/workOutRooms/$roomId/$missionId"] = missionValues
+        childUpdates["/workOutRooms/$roomId/mission/$missionId"] = missionValues
 
         database.updateChildren(childUpdates)
     }
