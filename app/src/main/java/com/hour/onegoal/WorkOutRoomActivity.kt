@@ -69,6 +69,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
 
     }
 
+    // 방입장
     private fun enterRoom() {
         // [START single_value_read]
         val firebaseAuth = FirebaseAuth.getInstance()

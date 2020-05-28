@@ -59,6 +59,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/missionHistory_rv"
         android:layout_width="409dp"
         android:layout_height="676dp"
         app:layout_constraintEnd_toEndOf="parent"

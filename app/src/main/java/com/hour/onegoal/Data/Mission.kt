@@ -6,7 +6,7 @@ data class Mission(
     var missionId: String?= "",
     var missionWriteTime:Any = Any(),
     var missionPhotoUrl:String?= "",
-    var missionTitle:String? =""
+    var missionUser:String? =""
 ){
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -15,7 +15,7 @@ data class Mission(
             "missionId" to missionId,
             "missionWriteTime" to missionWriteTime,
             "missionPhotoUrl" to missionPhotoUrl,
-            "missionTitle" to missionTitle
+            "missionUser" to missionUser
         )
     }
 }

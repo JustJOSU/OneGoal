@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.Data.Mission
+import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_new_post.*
 import kotlinx.android.synthetic.main.activity_room.*
@@ -35,7 +36,7 @@ class RoomActivity : AppCompatActivity() {
     private var filePath: Uri? = null
     private var imageUri: Uri? = null
     lateinit var photo : ImageView
-    var missionTitle: EditText? = null
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room)
@@ -53,6 +54,11 @@ class RoomActivity : AppCompatActivity() {
 
         submit_cardView.setOnClickListener {
             showDialog()
+        }
+        missionHistory_cardView.setOnClickListener {
+            val intent = Intent(this,ParticipantsActivity::class.java)
+            intent.putExtra("roomId",roomId)
+            startActivity(intent)
         }
     }
 
@@ -205,7 +211,7 @@ class RoomActivity : AppCompatActivity() {
     }
 
     // 방 업로드
-    private fun writeNewMission(missionPhotoUrl:String,missionTitle:String){
+    private fun writeNewMission(missionPhotoUrl:String,missionUser:String){
 
         val missionId = database.child("workOutRooms/$roomId/mission").push().key
         // 생성되는 방의 key값
@@ -215,7 +221,7 @@ class RoomActivity : AppCompatActivity() {
             return
         }
 
-        val mission = Mission(missionId,missionWriteTime = ServerValue.TIMESTAMP,missionPhotoUrl = missionPhotoUrl,missionTitle = missionTitle)
+        val mission = Mission(missionId,missionWriteTime = ServerValue.TIMESTAMP,missionPhotoUrl = missionPhotoUrl,missionUser = missionUser)
         // 2020-05-24 21:26 조성재 -변경사항 기록-
         // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
 
@@ -223,21 +229,13 @@ class RoomActivity : AppCompatActivity() {
 
         val childUpdates = HashMap<String, Any>()
         // 일반 방
-        childUpdates["/workOutRooms/$roomId/mission/$missionId"] = missionValues
-
+        childUpdates["/workOutRooms/$roomId/mission/$userId/$missionId"] = missionValues
+        //TODO: missionId가 넣어지는지?
         database.updateChildren(childUpdates)
     }
 
-    //TODO: 미션 추가까지 해놓았지만 사진 URL은 디비에 넣어지는데 타이틀이 넣어지질 않음
     //그리고 DB 구조 다시 ;;
     private fun submitMission() {
-        missionTitle = findViewById<EditText>(R.id.dialog_missionTitle)
-        val title = missionTitle?.text.toString()
-        if (title.isEmpty()){
-                dialog_missionTitle.error = "제목을 입력해주세요"
-                dialog_missionTitle.requestFocus()
-                return
-        }
 
         // [START single_value_read]
         val firebaseAuth = FirebaseAuth.getInstance()
@@ -250,15 +248,15 @@ class RoomActivity : AppCompatActivity() {
                     val username = dataSnapshot.child("username").value
 
                      if (filePath == null && imageUri == null){
-                        writeNewMission(missionPhotoUrl = "",missionTitle = title)
+                        writeNewMission(missionPhotoUrl = "",missionUser = username.toString())
                     } else {
                         if (filePath == null){
-                            writeNewMission(missionPhotoUrl = imageUri.toString(),missionTitle = title)
+                            writeNewMission(missionPhotoUrl = imageUri.toString(),missionUser = username.toString())
                         } else{
-                            writeNewMission(missionPhotoUrl = filePath.toString(),missionTitle = title)
+                            writeNewMission(missionPhotoUrl = filePath.toString(),missionUser = username.toString())
                         }
                     }
-                    finish()
+
                     // [END_EXCLUDE]
                 }
 
