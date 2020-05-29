@@ -56,7 +56,7 @@ class RoomActivity : AppCompatActivity() {
             showDialog()
         }
         missionHistory_cardView.setOnClickListener {
-            val intent = Intent(this,ParticipantsActivity::class.java)
+            val intent = Intent(this,MissionHistoryActivity::class.java)
             intent.putExtra("roomId",roomId)
             startActivity(intent)
         }
@@ -210,7 +210,7 @@ class RoomActivity : AppCompatActivity() {
         }
     }
 
-    // 방 업로드
+    // 미션 업로드
     private fun writeNewMission(missionPhotoUrl:String,missionUser:String){
 
         val missionId = database.child("workOutRooms/$roomId/mission").push().key
@@ -222,16 +222,15 @@ class RoomActivity : AppCompatActivity() {
         }
 
         val mission = Mission(missionId,missionWriteTime = ServerValue.TIMESTAMP,missionPhotoUrl = missionPhotoUrl,missionUser = missionUser)
-        // 2020-05-24 21:26 조성재 -변경사항 기록-
-        // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
 
         val missionValues = mission.toMap()
 
         val childUpdates = HashMap<String, Any>()
-        // 일반 방
-        childUpdates["/workOutRooms/$roomId/mission/$userId/$missionId"] = missionValues
-        //TODO: missionId가 넣어지는지?
+
+        //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId"] = missionValues
+        childUpdates["/workOutRooms/$roomId/mission/$userId"] = missionValues
         database.updateChildren(childUpdates)
+
     }
 
     //그리고 DB 구조 다시 ;;

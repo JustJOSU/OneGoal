@@ -20,14 +20,10 @@ import java.lang.StringBuilder
 
 class MissionHistoryActivity : AppCompatActivity() {
 
-    private lateinit var missionPhotoUrl :String
-    private lateinit var missionUser :String
-    private lateinit var missionId:String
     private lateinit var roomId:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mission_history)
-        missionId = intent.getStringExtra("missionId")
 
         // 미션히스토리 정보
 
@@ -36,23 +32,24 @@ class MissionHistoryActivity : AppCompatActivity() {
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val uid = user.uid
         // 파이어베이스 방 Id
-        //TODO: uid 어떻게 가져와야하는지;;
-        FirebaseDatabase.getInstance().reference.child("/workOutRooms/$roomId/mission/$uid").addValueEventListener(object :
+
+        FirebaseDatabase.getInstance().reference.child("/workOutRooms/$roomId/mission").addValueEventListener(object :
             ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
             }
             override fun onDataChange(p0: DataSnapshot) {
 
                 // 팀원일 경우 멤버 텍스트뷰 밑에 배치
+
                 var missionList: ArrayList<Mission>?= null
                 missionList = ArrayList<Mission>()
-                for ( h in p0.child("mission").children){
+                for ( h in p0.children){
                     val missions = h.getValue(Mission::class.java)
                     missionList.add(missions!!)
                     missionHistory_rv?.adapter = MissionHistoryAdapter(applicationContext,missionList){
 
                     }
-                    missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,1)
+                    missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,2)
                     missionHistory_rv.setHasFixedSize(true)
 
                     missionHistory_rv.post {

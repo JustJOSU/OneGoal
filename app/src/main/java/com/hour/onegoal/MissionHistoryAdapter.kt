@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hour.onegoal.Data.Mission
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
+import com.makeramen.roundedimageview.RoundedImageView
 import de.hdodenhof.circleimageview.CircleImageView
 import soup.neumorphism.NeumorphCardView
 import soup.neumorphism.NeumorphTextView
@@ -21,8 +22,8 @@ class MissionHistoryAdapter(val context: Context, private val historyList: Array
     : RecyclerView.Adapter<MissionHistoryAdapter.Holder>() {
 
     inner class Holder(itemView: View?, itemClick: (Mission) -> Unit) : RecyclerView.ViewHolder(itemView!!){
-        val missionUserName = itemView?.findViewById<NeumorphTextView>(R.id.missionUserName)
-        val missionPhoto = itemView?.findViewById<ImageView>(R.id.missionPhoto)
+        val missionUserName = itemView?.findViewById<TextView>(R.id.missionUserName)
+        val missionPhoto = itemView?.findViewById<RoundedImageView>(R.id.missionPhoto)
 
         fun bind(mission: Mission, context: Context){
             missionUserName?.text = mission.missionUser
