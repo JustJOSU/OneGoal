@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
+import com.makeramen.roundedimageview.RoundedImageView
 import soup.neumorphism.NeumorphTextView
 
 
@@ -19,7 +20,7 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
     : RecyclerView.Adapter<WorkOutAdapter.Holder>() {
 
     inner class Holder(itemView: View?, itemClick: (WorkoutRoom) -> Unit) : RecyclerView.ViewHolder(itemView!!){
-        val workoutPhoto = itemView?.findViewById<ImageView>(R.id.item_photo)
+        val workoutPhoto = itemView?.findViewById<RoundedImageView>(R.id.item_photo)
         val workoutTitle = itemView?.findViewById<NeumorphTextView>(R.id.item_title)
         val workoutSummary = itemView?.findViewById<TextView>(R.id.item_summary)
 

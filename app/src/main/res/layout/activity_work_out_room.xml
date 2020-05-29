@@ -36,17 +36,29 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@+id/roomTitle"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/summary_Tv"
-        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
-        app:neumorph_shapeType="basin">
-
+        app:layout_constraintTop_toBottomOf="@+id/guideline3"
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2">
+        <TextView
+            android:id="@+id/summary_Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="요약"
+            android:textColor="#2a344f"
+            android:textStyle="bold"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FFF"
+            />
         <TextView
             android:id="@+id/roomSummary"
-            android:layout_margin="10dp"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
@@ -57,17 +69,6 @@
     </soup.neumorphism.NeumorphCardView>
 
 
-    <TextView
-        android:id="@+id/summary_Tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="요약"
-        android:textColor="#2a344f"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -120,7 +121,8 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.72" />
 
-    <TextView
+    <soup.neumorphism.NeumorphTextView
+        style="@style/Widget.Neumorph.TextView"
         android:id="@+id/description_Tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -141,8 +143,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_Tv"
-        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
-        app:neumorph_shapeType="basin">
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2">
 
         <TextView
             android:id="@+id/roomDescription"
