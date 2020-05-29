@@ -92,12 +92,12 @@ class WorkoutActivity : AppCompatActivity() {
                             toast("프로필을 완성시켜야만 방을 만들 수가 있습니다!!")
                         }
                         startActivity(profileIntent)
-                        finish()
+
                     } else{
                         val intent = Intent(this@WorkoutActivity,NewPostActivity::class.java)
                         startActivity(intent)
                     }
-                    finish()
+
                     // [END_EXCLUDE]
                 }
 
