@@ -64,6 +64,9 @@ class NewPostActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 var userinput = fieldSummary.text.toString()
                 countWord.text = userinput.length.toString() + " / 50"
+                if(userinput.length == 30){
+                    fieldSummary.append("\n")
+                }
                 if(userinput.length == 50 ){
                     fieldDescription.requestFocus()
                 }
@@ -96,20 +99,15 @@ class NewPostActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 var userinput = fieldDescription.text.toString()
                 countWord_1.text = userinput.length.toString() + " / 100"
+                if(userinput.length == 40){
+                    fieldDescription.append("\n")
+                }
             }
 
         })
 
         fieldDescription.movementMethod= ScrollingMovementMethod()
 
-        fieldDescription.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-            if (event.keyCode === KeyEvent.KEYCODE_ENTER) {
-                fieldPhoto.requestFocus()
-                true
-            } else {
-                false
-            }
-        })
 
     }
 

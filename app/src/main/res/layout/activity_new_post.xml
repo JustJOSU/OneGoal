@@ -6,33 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/progressbar_pic"
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+        android:alpha="0.5"
+        android:text="방 이름"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline5" />
+
+
     <EditText
         android:id="@+id/fieldTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:ellipsize="end"
-        android:maxLength="15"
-        android:maxLines="1"
-        android:hint="방 이름"
         android:background="@null"
+        android:ellipsize="end"
+        android:hint="방 이름"
+        android:inputType="text"
+        android:maxLength="20"
+        android:maxLines="1"
         android:textColor="#2a344f"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline10"
-        app:layout_constraintStart_toStartOf="@+id/guideline5" />
-
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -41,54 +43,45 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.11" />
 
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/summaryCardView"
-        style="@style/ShapeAppearance.Neumorph.CardView"
-        android:layout_width="320dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/roomTitle"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline3"
-        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
-        app:neumorph_shapeType="basin">
-        <TextView
-            android:id="@+id/summary_Tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:text="요약"
-            android:textColor="#2a344f"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-             />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.16" />
 
-        <EditText
-            android:id="@+id/fieldSummary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="12dp"
-            android:background="@null"
-            android:maxLines="2"
-            android:gravity="left|center"
-            android:hint="Write your Summary..."
-            android:scrollHorizontally="false"
-            android:textSize="15sp" />
+    <TextView
+        android:id="@+id/summary_Tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="요약"
+        android:alpha="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline16" />
 
-        <TextView
-            android:id="@+id/countWord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="right|bottom"
-            android:hint="0/30"/>
 
-    </soup.neumorphism.NeumorphCardView>
+    <EditText
+        android:id="@+id/fieldSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="left|center"
+        android:hint="Write your Summary..."
+        android:maxLines="2"
+        android:scrollHorizontally="false"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/summary_Tv" />
+
+    <TextView
+        android:id="@+id/countWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:hint="0/30"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11" />
+
 
 
 
@@ -104,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.57" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -127,51 +120,36 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.72" />
 
+    <soup.neumorphism.NeumorphTextView
+        android:id="@+id/description_Tv"
+        style="@style/Widget.Neumorph.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:text="상세설명"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
 
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/descriptionCardView"
-        style="@style/ShapeAppearance.Neumorph.CardView"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_below="@+id/roomTitle"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline4"
-        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
-        app:neumorph_shapeType="basin">
-        <soup.neumorphism.NeumorphTextView
-            style="@style/Widget.Neumorph.TextView"
-            android:id="@+id/description_Tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="20dp"
-            android:text="상세설명"/>
-        <EditText
-            android:id="@+id/fieldDescription"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="15sp"
-            android:background="@null"
-            android:lines="3"
-            android:maxLines="3"
-            android:scrollHorizontally="false"
-            android:hint="Write your Summary..." />
-        <TextView
-            android:id="@+id/countWord_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="right|bottom"
-            android:hint="글자 수가 표시될 자리 입니다."/>
-    </soup.neumorphism.NeumorphCardView>
+    <EditText
+        android:id="@+id/fieldDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:background="@null"
+        android:hint="Write your Summary..."
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/description_Tv" />
 
+    <TextView
+        android:id="@+id/countWord_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:hint="0/100"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11" />
     <soup.neumorphism.NeumorphButton
         android:id="@+id/fabSubmitRoom"
         style="@style/Widget.Neumorph.ImageButton"
@@ -271,7 +249,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90" />
-
+        app:layout_constraintGuide_percent="0.79" />
+    <ProgressBar
+        android:id="@+id/progressbar_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

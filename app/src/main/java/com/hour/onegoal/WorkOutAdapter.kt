@@ -32,20 +32,7 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
             workoutPhoto?.loadImage(workoutRoom.photoUrl)
         }
         init {
-            /**
-            itemView?.setOnClickListener {
-                val room = workoutList[adapterPosition]
-                //TODO: 아이템뷰 클릭했을 때 intent
-                val intent = Intent(context,WorkOutRoomActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                intent.putExtra("roomId",room.roomId)
-                intent.putExtra("title",room.title)
-                intent.putExtra("summary",room.summary)
-                intent.putExtra("description",room.description)
-                intent.putExtra("photoUrl",room.photoUrl)
-                intent.putExtra("teamHead",room.teamHead)
-                context.startActivity(intent)
-            }**/
+            // 정보 아이콘 눌렀을때
             workoutInformation?.setOnClickListener {
                 val room = workoutList[adapterPosition]
                 val intent = Intent(context,WorkOutRoomActivity::class.java)
@@ -58,7 +45,8 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
                 intent.putExtra("teamHead",room.teamHead)
                 context.startActivity(intent)
             }
-            workoutCountNumber?.setOnClickListener {
+            // 숫자 아이콘 눌렀을때 현재 참가자 보여줌
+           workoutCountNumber?.setOnClickListener {
                 val room = workoutList[adapterPosition]
                 val intent = Intent(context,ParticipantsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -70,6 +58,8 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
                 intent.putExtra("teamHead",room.teamHead)
                 context.startActivity(intent)
             }
+            //TODO : 숫자 1/8 ~ 7/8 까지는 WAITING
+            //TODO : 숫자 8/8 일때는 FULL
 
 
 
