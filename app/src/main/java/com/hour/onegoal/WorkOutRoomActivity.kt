@@ -2,24 +2,22 @@ package com.hour.onegoal
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.text.method.ScrollingMovementMethod
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.google.firebase.storage.FirebaseStorage
-import com.hour.onegoal.Data.EnterRoom
-import com.hour.onegoal.Data.GetUser
 import com.hour.onegoal.Data.User
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Login.ProfileActivity
 import com.hour.onegoal.Util.loadImage
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_work_out_room.*
-import kotlin.reflect.typeOf
+import org.w3c.dom.Text
+
 
 class WorkOutRoomActivity : AppCompatActivity() {
 
@@ -66,7 +64,8 @@ class WorkOutRoomActivity : AppCompatActivity() {
         roomEnter_btn.setOnClickListener {
             enterRoom()
         }
-
+        val d = findViewById<TextView>(R.id.roomDescription)
+        d.movementMethod = ScrollingMovementMethod()
     }
 
     // 방입장

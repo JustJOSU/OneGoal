@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
 import com.makeramen.roundedimageview.RoundedImageView
+import org.w3c.dom.Text
 import soup.neumorphism.NeumorphTextView
 
 
@@ -23,13 +24,15 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
         val workoutPhoto = itemView?.findViewById<RoundedImageView>(R.id.item_photo)
         val workoutTitle = itemView?.findViewById<NeumorphTextView>(R.id.item_title)
         val workoutSummary = itemView?.findViewById<TextView>(R.id.item_summary)
-
+        val workoutInformation = itemView?.findViewById<ImageView>(R.id.item_information)
+        val workoutCountNumber = itemView?.findViewById<TextView>(R.id.item_countNumber)
         fun bind(workoutRoom: WorkoutRoom, context: Context){
             workoutTitle?.text = workoutRoom.title
             workoutSummary?.text = workoutRoom.summary
             workoutPhoto?.loadImage(workoutRoom.photoUrl)
         }
         init {
+            /**
             itemView?.setOnClickListener {
                 val room = workoutList[adapterPosition]
                 //TODO: 아이템뷰 클릭했을 때 intent
@@ -42,7 +45,34 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
                 intent.putExtra("photoUrl",room.photoUrl)
                 intent.putExtra("teamHead",room.teamHead)
                 context.startActivity(intent)
+            }**/
+            workoutInformation?.setOnClickListener {
+                val room = workoutList[adapterPosition]
+                val intent = Intent(context,WorkOutRoomActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("roomId",room.roomId)
+                intent.putExtra("title",room.title)
+                intent.putExtra("summary",room.summary)
+                intent.putExtra("description",room.description)
+                intent.putExtra("photoUrl",room.photoUrl)
+                intent.putExtra("teamHead",room.teamHead)
+                context.startActivity(intent)
             }
+            workoutCountNumber?.setOnClickListener {
+                val room = workoutList[adapterPosition]
+                val intent = Intent(context,ParticipantsActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("roomId",room.roomId)
+                intent.putExtra("title",room.title)
+                intent.putExtra("summary",room.summary)
+                intent.putExtra("description",room.description)
+                intent.putExtra("photoUrl",room.photoUrl)
+                intent.putExtra("teamHead",room.teamHead)
+                context.startActivity(intent)
+            }
+
+
+
         }
     }
 

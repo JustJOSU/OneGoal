@@ -11,7 +11,10 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +30,7 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 
-    class NewPostActivity : AppCompatActivity() {
+class NewPostActivity : AppCompatActivity() {
 
     private lateinit var database: DatabaseReference
         private val REQUEST_IMAGE_CAPTURE = 100
@@ -45,24 +48,36 @@ import java.io.IOException
 
         fieldPhoto.setOnClickListener { showPictureDialog() }
 
-        fieldSummary.filters = arrayOf(InputFilter.LengthFilter(100))
+        fieldSummary.filters = arrayOf(InputFilter.LengthFilter(50))
 
         fieldSummary.addTextChangedListener(object: TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                countWord.text = "0 / 100"
+                countWord.text = "0 / 50"
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 var userinput = fieldSummary.text.toString()
-                countWord.text = userinput.length.toString() + " / 100"
+                countWord.text = userinput.length.toString() + " / 50"
             }
 
             override fun afterTextChanged(s: Editable?) {
                 var userinput = fieldSummary.text.toString()
-                countWord.text = userinput.length.toString() + " / 100"
+                countWord.text = userinput.length.toString() + " / 50"
+                if(userinput.length == 50 ){
+                    fieldDescription.requestFocus()
+                }
             }
 
+        })
+
+        fieldSummary.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (event.keyCode === KeyEvent.KEYCODE_ENTER) {
+                fieldDescription.requestFocus()
+                true
+            } else {
+                false
+            }
         })
 
         fieldDescription.filters = arrayOf(InputFilter.LengthFilter(100))
@@ -84,7 +99,18 @@ import java.io.IOException
             }
 
         })
+
         fieldDescription.movementMethod= ScrollingMovementMethod()
+
+        fieldDescription.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (event.keyCode === KeyEvent.KEYCODE_ENTER) {
+                fieldPhoto.requestFocus()
+                true
+            } else {
+                false
+            }
+        })
+
     }
 
         private fun submitRoom() {
