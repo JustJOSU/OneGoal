@@ -2,20 +2,24 @@ package com.hour.onegoal
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.DialogTitle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -24,7 +28,9 @@ import com.hour.onegoal.Data.Mission
 import com.hour.onegoal.Data.TodayMission
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_room.*
+import kotlinx.android.synthetic.main.today_mission_dialog.*
 import kotlinx.android.synthetic.main.today_mission_dialog.view.*
+import kotlinx.android.synthetic.main.today_mission_dialog.view.dialog_Today_missionTitle
 import soup.neumorphism.NeumorphTextView
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -86,13 +92,13 @@ class RoomActivity : AppCompatActivity() {
         val yesBtn = dialog.findViewById(R.id.ok_Today_Button) as Button
         val noBtn = dialog.findViewById(R.id.no_TodayButton) as Button
         yesBtn.setOnClickListener {
-            submitTodayMission()
+            val title = dialog.dialog_Today_missionTitle.text
+            val description = dialog.dialog_Today_missionDescription.text
+            submitTodayMission(this, title, description)
             dialog.dismiss()
         }
         noBtn.setOnClickListener { dialog.dismiss() }
         dialog.show()
-
-
     }
     // 미션 업로드
     private fun writeNewTodayMission(todayMissionTitle:String,todayMissionDescription:String){
@@ -121,23 +127,17 @@ class RoomActivity : AppCompatActivity() {
     }
 
     //
-    private fun submitTodayMission() {
+    private fun submitTodayMission(context: Context, title: Editable, description:Editable) {
 
         // [START single_value_read]
         val firebaseAuth = FirebaseAuth.getInstance()
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val userId = user.uid
-        val view: View = LayoutInflater.from(this)
-            .inflate(R.layout.today_mission_dialog, null, false)
-
-        val title = view.dialog_Today_missionTitle.text.toString()
-        val description = view.dialog_Today_missionDescription.text.toString()
-
 
         database.child("users").child(userId).addListenerForSingleValueEvent(
             object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    writeNewTodayMission(todayMissionTitle = title, todayMissionDescription = description)
+                    writeNewTodayMission(todayMissionTitle = title.toString(), todayMissionDescription = description.toString())
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -145,8 +145,6 @@ class RoomActivity : AppCompatActivity() {
                 }
             })
         // [END single_value_read]
-
-
     }
 
 
