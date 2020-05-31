@@ -9,6 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
 import com.makeramen.roundedimageview.RoundedImageView
@@ -26,10 +30,27 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
         val workoutSummary = itemView?.findViewById<TextView>(R.id.item_summary)
         val workoutInformation = itemView?.findViewById<ImageView>(R.id.item_information)
         val workoutCountNumber = itemView?.findViewById<TextView>(R.id.item_countNumber)
+
         fun bind(workoutRoom: WorkoutRoom, context: Context){
+            val room = workoutList[adapterPosition]
+            val members_ref = FirebaseDatabase.getInstance().getReference("workOutRooms/${room.roomId}/members")
+
             workoutTitle?.text = workoutRoom.title
             workoutSummary?.text = workoutRoom.summary
             workoutPhoto?.loadImage(workoutRoom.photoUrl)
+
+            members_ref.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    // 2020-05-31 22:49 조성재
+                    // 방의 입장인원을 보여주는 부분
+                    // 현재는 입장에 인원 제한을 두지 않았음으로 향후 업데이트 필요
+                    workoutCountNumber?.text = "${p0.childrenCount}/8"
+                }
+            })
         }
         init {
             // 정보 아이콘 눌렀을때
@@ -58,11 +79,6 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
                 intent.putExtra("teamHead",room.teamHead)
                 context.startActivity(intent)
             }
-            //TODO : 숫자 1/8 ~ 7/8 까지는 WAITING
-            //TODO : 숫자 8/8 일때는 FULL
-
-
-
         }
     }
 
