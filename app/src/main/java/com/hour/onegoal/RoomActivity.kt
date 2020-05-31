@@ -10,16 +10,12 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.view.Window
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.DialogTitle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -29,8 +25,6 @@ import com.hour.onegoal.Data.TodayMission
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_room.*
 import kotlinx.android.synthetic.main.today_mission_dialog.*
-import kotlinx.android.synthetic.main.today_mission_dialog.view.*
-import kotlinx.android.synthetic.main.today_mission_dialog.view.dialog_Today_missionTitle
 import soup.neumorphism.NeumorphTextView
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -77,7 +71,7 @@ class RoomActivity : AppCompatActivity() {
             intent.putExtra("roomId",roomId)
             startActivity(intent)
         }
-        todayMission.setOnClickListener {
+        todayMissionTitle.setOnClickListener {
             todayMissionDialog()
         }
     }
@@ -95,6 +89,7 @@ class RoomActivity : AppCompatActivity() {
             val title = dialog.dialog_Today_missionTitle.text
             val description = dialog.dialog_Today_missionDescription.text
             submitTodayMission(this, title, description)
+            todayMissionTitle.text = title
             dialog.dismiss()
         }
         noBtn.setOnClickListener { dialog.dismiss() }
@@ -121,7 +116,7 @@ class RoomActivity : AppCompatActivity() {
         val childUpdates = HashMap<String, Any>()
 
         //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId/$todayMissionId"] = missionValues
-        childUpdates["/workOutRooms/$roomId/mission/$userId/$todayMissionId"] = todayMissionValues
+        childUpdates["/workOutRooms/$roomId/mission/todayMission/$todayMissionId"] = todayMissionValues
         database.updateChildren(childUpdates)
 
     }
@@ -319,7 +314,6 @@ class RoomActivity : AppCompatActivity() {
         database.updateChildren(childUpdates)
 
     }
-
     //그리고 DB 구조 다시 ;;
     private fun submitMission() {
 
@@ -354,6 +348,32 @@ class RoomActivity : AppCompatActivity() {
 
 
     }
+
+    override fun onStart() {
+        super.onStart()
+        FirebaseDatabase.getInstance().reference.child("/workOutRooms/$roomId/mission/todayMission").addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                val todayMission = p0.value
+                for (ds in p0.children) {
+                    val title = ds.child("todaymissionTitle").getValue(String::class.java)
+                    todayMissionTitle.text = title
+                }
+               // Log.d(TAG,"p0 : $todayMission")
+                /**
+                if(todayMission == null){
+                    todayMissionTitle.text = "오늘의 미션을 입력해 주세요."
+               }
+                else{
+                    todayMissionTitle.text =
+                }**/
+            }
+
+        })
+    }
+
     // [END write_fan_out]
     companion object{
         val TAG = RoomActivity::class.qualifiedName

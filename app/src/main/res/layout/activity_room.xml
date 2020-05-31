@@ -29,7 +29,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <TextView
-        android:id="@+id/todayMission"
+        android:id="@+id/todayMissionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="오늘의 미션"
@@ -45,7 +45,7 @@
         android:layout_marginStart="70dp"
         android:src="@drawable/flag"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/todayMission"
+        app:layout_constraintEnd_toStartOf="@+id/todayMissionTitle"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline12" />
 
