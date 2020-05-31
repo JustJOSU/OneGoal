@@ -29,7 +29,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/todayMission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="오늘의 미션"
@@ -45,7 +45,7 @@
         android:layout_marginStart="70dp"
         android:src="@drawable/flag"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintEnd_toStartOf="@+id/todayMission"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline12" />
 
@@ -91,23 +91,6 @@
             android:text="미션 히스토리" />
     </soup.neumorphism.NeumorphCardView>
 
-    <!--TODO: 성공여부 : 액티비티 or 프래그먼트 -->
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/state_cardView"
-        style="@style/Widget.Neumorph.CardView"
-        android:layout_width="300dp"
-        android:layout_height="90dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline13"
-        app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toBottomOf="@+id/missionHistory_cardView">
-
-        <soup.neumorphism.NeumorphTextView
-            style="@style/Widget.Neumorph.TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="1 SHOT" />
-    </soup.neumorphism.NeumorphCardView>
 
     <!--TODO: 제출 : 다이얼로그(팝업 형태) -->
     <soup.neumorphism.NeumorphCardView
@@ -117,7 +100,7 @@
         android:layout_height="90dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline13"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toBottomOf="@+id/state_cardView">
+        app:layout_constraintTop_toBottomOf="@+id/missionHistory_cardView">
 
         <soup.neumorphism.NeumorphTextView
             style="@style/Widget.Neumorph.TextView"

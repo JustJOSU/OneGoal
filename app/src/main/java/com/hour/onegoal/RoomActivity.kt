@@ -5,26 +5,34 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.Data.Mission
-import com.hour.onegoal.Data.WorkoutRoom
+import com.hour.onegoal.Data.TodayMission
 import com.hour.onegoal.Util.toast
-import kotlinx.android.synthetic.main.activity_new_post.*
 import kotlinx.android.synthetic.main.activity_room.*
-import kotlinx.android.synthetic.main.custom_dialog.*
+import kotlinx.android.synthetic.main.today_mission_dialog.view.*
 import soup.neumorphism.NeumorphTextView
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
+
 
 class RoomActivity : AppCompatActivity() {
 
@@ -46,23 +54,103 @@ class RoomActivity : AppCompatActivity() {
         roomId = intent.getStringExtra("roomId")
         findViewById<NeumorphTextView>(R.id.valid_room_title).text = roomTitle
 
+        // 참여자 카드 클릭 시
         enterAccount_cardView.setOnClickListener {
             val intent = Intent(this,ParticipantsActivity::class.java)
             intent.putExtra("roomId",roomId)
             startActivity(intent)
         }
 
+        // 제출 버튼 클릭시
         submit_cardView.setOnClickListener {
             showDialog()
         }
+        // 미션 히스토리 버튼 클릭 시
         missionHistory_cardView.setOnClickListener {
             val intent = Intent(this,MissionHistoryActivity::class.java)
             intent.putExtra("roomId",roomId)
             startActivity(intent)
         }
+        todayMission.setOnClickListener {
+            todayMissionDialog()
+        }
     }
 
-    // 사진
+    // 오늘의 미션 텍스트뷰 클릭 시 나오는 다이얼로그
+    private fun todayMissionDialog(){
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.today_mission_dialog)
+
+        val yesBtn = dialog.findViewById(R.id.ok_Today_Button) as Button
+        val noBtn = dialog.findViewById(R.id.no_TodayButton) as Button
+        yesBtn.setOnClickListener {
+            submitTodayMission()
+            dialog.dismiss()
+        }
+        noBtn.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+
+
+    }
+    // 미션 업로드
+    private fun writeNewTodayMission(todayMissionTitle:String,todayMissionDescription:String){
+
+        val todayMissionId = database.child("workOutRooms/$roomId/mission/today").push().key
+        // 생성되는 방의 key값
+
+        if (todayMissionId == null) {
+            Log.w(TAG, "Couldn't get push key for posts")
+            return
+        }
+        val dateFormat: DateFormat = SimpleDateFormat("yyyy/MM/dd")
+        val date = Date()
+        val strDate: String = dateFormat.format(date).toString()
+
+        val todayMission = TodayMission(todayMissionId,todayMissionTitle,todayMissionDescription,strDate)
+
+        val todayMissionValues = todayMission.toMap()
+
+        val childUpdates = HashMap<String, Any>()
+
+        //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId/$todayMissionId"] = missionValues
+        childUpdates["/workOutRooms/$roomId/mission/$userId/$todayMissionId"] = todayMissionValues
+        database.updateChildren(childUpdates)
+
+    }
+
+    //
+    private fun submitTodayMission() {
+
+        // [START single_value_read]
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val user: FirebaseUser = firebaseAuth.currentUser!!
+        val userId = user.uid
+        val view: View = LayoutInflater.from(this)
+            .inflate(R.layout.today_mission_dialog, null, false)
+
+        val title = view.dialog_Today_missionTitle.text.toString()
+        val description = view.dialog_Today_missionDescription.text.toString()
+
+
+        database.child("users").child(userId).addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    writeNewTodayMission(todayMissionTitle = title, todayMissionDescription = description)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.w(TAG, "getUser:onCancelled", databaseError.toException())
+                }
+            })
+        // [END single_value_read]
+
+
+    }
+
+
+    // 제출 버튼 클릭 시 나오는 다이얼로그
     private fun showDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -74,8 +162,8 @@ class RoomActivity : AppCompatActivity() {
             showPictureDialog()
         }
 
-        val yesBtn = dialog.findViewById(R.id.okButton) as Button
-        val noBtn = dialog.findViewById(R.id.cancelButton) as Button
+        val yesBtn = dialog.findViewById(R.id.ok_Today_Button) as Button
+        val noBtn = dialog.findViewById(R.id.no_TodayButton) as Button
         yesBtn.setOnClickListener {
             submitMission()
             dialog.dismiss()
@@ -84,6 +172,7 @@ class RoomActivity : AppCompatActivity() {
         dialog.show()
 
     }
+
     // 카메라 or 갤러리 선택
     private fun showPictureDialog() {
         val pictureDialog = AlertDialog.Builder(this)
@@ -114,27 +203,6 @@ class RoomActivity : AppCompatActivity() {
         val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent, OPEN_GALLERY)
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == OPEN_GALLERY && resultCode == Activity.RESULT_OK) {
-            if(data == null || data.data == null){
-                return
-            }
-            filePath = data.data
-            try {
-                uploadImage()
-            }catch (e: IOException) {
-                e.printStackTrace()
-            }
-
-        }
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
-            val imageBitmap = data!!.extras?.get("data") as Bitmap
-            uploadImageAndSaveUri(imageBitmap)
-        }
-
-
     }
 
     // 갤러리에서 이미지 업로드
@@ -210,7 +278,28 @@ class RoomActivity : AppCompatActivity() {
         }
     }
 
-    // 미션 업로드
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OPEN_GALLERY && resultCode == Activity.RESULT_OK) {
+            if(data == null || data.data == null){
+                return
+            }
+            filePath = data.data
+            try {
+                uploadImage()
+            }catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
+            val imageBitmap = data!!.extras?.get("data") as Bitmap
+            uploadImageAndSaveUri(imageBitmap)
+        }
+
+
+    }
+    // 제출 버튼 미션 업로드
     private fun writeNewMission(missionPhotoUrl:String,missionUser:String){
 
         val missionId = database.child("workOutRooms/$roomId/mission").push().key
