@@ -64,9 +64,7 @@ class NewPostActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 var userinput = fieldSummary.text.toString()
                 countWord.text = userinput.length.toString() + " / 50"
-                if(userinput.length == 30){
-                    fieldSummary.append("\n")
-                }
+
                 if(userinput.length == 50 ){
                     fieldDescription.requestFocus()
                 }
@@ -83,25 +81,23 @@ class NewPostActivity : AppCompatActivity() {
             }
         })
 
-        fieldDescription.filters = arrayOf(InputFilter.LengthFilter(100))
+        fieldDescription.filters = arrayOf(InputFilter.LengthFilter(300))
 
         fieldDescription.addTextChangedListener(object: TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                countWord_1.text = "0 / 100"
+                countWord_1.text = "0 / 300"
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 var userinput = fieldDescription.text.toString()
-                countWord_1.text = userinput.length.toString() + " / 100"
+                countWord_1.text = userinput.length.toString() + " / 300"
             }
 
             override fun afterTextChanged(s: Editable?) {
                 var userinput = fieldDescription.text.toString()
-                countWord_1.text = userinput.length.toString() + " / 100"
-                if(userinput.length == 40){
-                    fieldDescription.append("\n")
-                }
+                countWord_1.text = userinput.length.toString() + " / 300"
+
             }
 
         })
