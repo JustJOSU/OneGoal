@@ -2,6 +2,7 @@ package com.hour.onegoal
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +28,7 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
     inner class Holder(itemView: View?, itemClick: (WorkoutRoom) -> Unit) : RecyclerView.ViewHolder(itemView!!){
         val workoutPhoto = itemView?.findViewById<RoundedImageView>(R.id.item_photo)
         val workoutTitle = itemView?.findViewById<NeumorphTextView>(R.id.item_title)
-        val workoutSummary = itemView?.findViewById<TextView>(R.id.item_summary)
-        val workoutInformation = itemView?.findViewById<ImageView>(R.id.item_information)
+        val workoutState = itemView?.findViewById<TextView>(R.id.item_state)
         val workoutCountNumber = itemView?.findViewById<TextView>(R.id.item_countNumber)
 
         fun bind(workoutRoom: WorkoutRoom, context: Context){
@@ -36,7 +36,8 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
             val members_ref = FirebaseDatabase.getInstance().getReference("workOutRooms/${room.roomId}/members")
 
             workoutTitle?.text = workoutRoom.title
-            workoutSummary?.text = workoutRoom.summary
+            //TODO: state
+
             workoutPhoto?.loadImage(workoutRoom.photoUrl)
 
             members_ref.addListenerForSingleValueEvent(object : ValueEventListener{
@@ -49,12 +50,16 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
                     // 방의 입장인원을 보여주는 부분
                     // 현재는 입장에 인원 제한을 두지 않았음으로 향후 업데이트 필요
                     workoutCountNumber?.text = "${p0.childrenCount}/8"
+                    if (workoutCountNumber?.text == "1/8"){
+                        workoutCountNumber.setTextColor(Color.parseColor("#e8b854"))
+                        workoutState?.text = "FULL"
+                    }
                 }
             })
         }
         init {
             // 정보 아이콘 눌렀을때
-            workoutInformation?.setOnClickListener {
+            itemView?.setOnClickListener {
                 val room = workoutList[adapterPosition]
                 val intent = Intent(context,WorkOutRoomActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

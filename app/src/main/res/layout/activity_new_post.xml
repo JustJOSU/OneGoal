@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,34 +6,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <soup.neumorphism.NeumorphCardView
-            android:id="@+id/roomCardView"
-            style="@style/ShapeAppearance.Neumorph.CardView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        <soup.neumorphism.NeumorphTextView
+        android:id="@+id/neumorphTextView"
+        style="@style/Widget.Neumorph.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create"
+            android:layout_marginTop="24dp"
+            android:textColor="#856088"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:neumorph_shapeAppearance="@style/CustomShapeAppearance2">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="대표 이미지" />
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/roomCardView"
+        style="@style/ShapeAppearance.Neumorph.CardView"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/neumorphTextView"
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/fieldPhoto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/roomDescription"
-                android:layout_margin="10dp"
-                android:contentDescription="방 이미지"
-                android:scaleType="fitXY"
-                app:riv_corner_radius="10dp"></com.makeramen.roundedimageview.RoundedImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#cdbef3"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="대표 이미지" />
 
-        </soup.neumorphism.NeumorphCardView>
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/fieldPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/roomDescription"
+            android:layout_margin="10dp"
+            android:contentDescription="방 이미지"
+            android:scaleType="fitXY"
+            app:riv_corner_radius="10dp"></com.makeramen.roundedimageview.RoundedImageView>
+
+    </soup.neumorphism.NeumorphCardView>
 
         <soup.neumorphism.NeumorphCardView
             android:id="@+id/neumorphCardView"
@@ -46,7 +61,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/roomCardView"
             app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
-            app:neumorph_shapeType="basin">
+            app:neumorph_shapeType="pressed">
 
             <EditText
                 android:id="@+id/fieldTitle"
@@ -55,13 +70,14 @@
                 android:background="@null"
                 android:ellipsize="end"
                 android:hint="방 이름"
+                android:textColorHint="#cdbef3"
                 android:gravity="left|center"
                 android:layout_margin="16dp"
                 android:inputType="text"
                 android:maxLength="20"
                 android:maxLines="1"
                 android:textColor="#2a344f"
-                android:textSize="12dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
 
         </soup.neumorphism.NeumorphCardView>
@@ -89,7 +105,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/neumorphCardView"
             app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
-            app:neumorph_shapeType="basin">
+            app:neumorph_shapeType="pressed">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,12 +118,13 @@
                     android:background="@null"
                     android:ellipsize="end"
                     android:hint="요약"
+                    android:textColorHint="#cdbef3"
                     android:layout_margin="16dp"
                     android:inputType="text|textMultiLine|textCapSentences"
                     android:maxLength="20"
                     android:maxLines="3"
                     android:textColor="#2a344f"
-                    android:textSize="12dp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -163,13 +180,13 @@
         android:id="@+id/neumorphCardView3"
         style="@style/ShapeAppearance.Neumorph.CardView"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/neumorphCardView2"
         app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
-        app:neumorph_shapeType="basin">
+        app:neumorph_shapeType="pressed">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -183,11 +200,12 @@
                 android:layout_gravity="left|center"
                 android:layout_margin="16dp"
                 android:background="@null"
+                android:textColorHint="#cdbef3"
                 android:hint="설명"
                 android:inputType="text|textMultiLine|textCapSentences"
-                android:maxLines="5"
+                android:maxLines="10"
                 android:textColor="#2a344f"
-                android:textSize="12dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -205,9 +223,10 @@
             android:id="@+id/fabSubmitRoom"
             style="@style/Widget.Neumorph.ImageButton"
             android:layout_width="300dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:gravity="center"
             android:scaleType="centerInside"
+            android:textColor="#856088"
             android:text="완료"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

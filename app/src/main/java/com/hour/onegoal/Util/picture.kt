@@ -1,5 +1,6 @@
 package com.hour.onegoal.Util
 
+import android.graphics.Color
 import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -9,7 +10,7 @@ import com.hour.onegoal.R
 fun ImageView.loadImage(uri:String?){
     val options = RequestOptions()
         .placeholder(R.drawable.user)
-        .error(R.mipmap.ic_launcher_round)
+        .error(R.color.colorPrimary)
 
     if(uri != null){
         Glide.with(this.context)

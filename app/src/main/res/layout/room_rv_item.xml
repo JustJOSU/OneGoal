@@ -36,6 +36,7 @@
             android:textStyle="bold"
             android:layout_toEndOf="@id/item_photo"
             tools:text="Title" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,10 +45,11 @@
             android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
             android:text="#이승규#운동하자#해시태그#보이냐?"
+            android:visibility="invisible"
             android:textSize="12dp"/>
 
         <TextView
-            android:id="@+id/item_summary"
+            android:id="@+id/item_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -61,15 +63,7 @@
             android:layout_below="@id/item_title"
             tools:text="FULL" />
 
-        <ImageView
-            style="@style/ShapeAppearance.Neumorph.FloatingActionButton"
-            android:id="@+id/item_information"
-            android:src="@drawable/infor"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            />
+
 
         <TextView
             android:id="@+id/item_countNumber"
@@ -77,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="5dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="20dp"
             android:layout_alignParentBottom="true"
 
             android:text="1/8"/>
