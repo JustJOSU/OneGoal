@@ -8,7 +8,8 @@ data class WorkoutRoom(
     var title: String? = "",
     var summary:String?="",
     var description: String?="",
-    var photoUrl: String?=""
+    var photoUrl: String?="",
+    var numberCount:String = ""
 ){
     // [START post_to_map]
     @Exclude
@@ -19,7 +20,8 @@ data class WorkoutRoom(
             "title" to title,
             "summary" to summary,
             "description" to description,
-            "photoUrl" to photoUrl
+            "photoUrl" to photoUrl,
+            "numberCount" to numberCount
         )
     }
     // [END post_to_map]

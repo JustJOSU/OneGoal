@@ -219,19 +219,46 @@
             android:textSize="8sp" />
     </soup.neumorphism.NeumorphCardView>
 
-        <soup.neumorphism.NeumorphButton
-            android:id="@+id/fabSubmitRoom"
-            style="@style/Widget.Neumorph.ImageButton"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/neumorphCardView4"
+        style="@style/ShapeAppearance.Neumorph.CardView"
+        android:layout_width="320dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="@+id/progressbar_pic"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance2"
+        app:neumorph_shapeType="pressed">
+        <EditText
+            android:id="@+id/fieldNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_margin="16dp"
+            android:background="@null"
+            android:textColorHint="#cdbef3"
+            android:hint="인원 수 최대 8명"
             android:gravity="center"
-            android:scaleType="centerInside"
-            android:textColor="#856088"
-            android:text="완료"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline8" />
+            android:textColor="#2a344f"
+            android:textSize="16dp"
+            android:inputType="number"
+            android:textStyle="bold" />
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphButton
+        android:id="@+id/fabSubmitRoom"
+        style="@style/Widget.Neumorph.ImageButton"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:scaleType="centerInside"
+        android:text="완료"
+        android:textColor="#856088"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
         <androidx.constraintlayout.widget.Guideline

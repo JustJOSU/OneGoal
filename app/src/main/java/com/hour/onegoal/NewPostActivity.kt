@@ -112,7 +112,7 @@ class NewPostActivity : AppCompatActivity() {
             val title = fieldTitle.text.toString()
             val summary = fieldSummary.text.toString()
             val description = fieldDescription.text.toString()
-
+            val numberCount = fieldNumber.text.toString()
             // Title is required
             if (title.isEmpty()) {
                 fieldTitle.error = "제목을 입력해주세요"
@@ -129,7 +129,12 @@ class NewPostActivity : AppCompatActivity() {
                 fieldDescription.requestFocus()
                 return
             }
-
+            //TODO: 인원 수 조건 문 달기
+            if(numberCount.isEmpty()){
+                fieldNumber.error = "인원 수를 입력해주세요"
+                fieldNumber.requestFocus()
+                return
+            }
 
             // [START single_value_read]
             val firebaseAuth = FirebaseAuth.getInstance()
@@ -148,12 +153,12 @@ class NewPostActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         } else if (filePath == null && imageUri == null){
-                            writeNewPost(userId, username.toString(), title, summary, description, photoUrl = "")
+                            writeNewPost(userId, username.toString(), title, summary, description, photoUrl = "",numberCount = numberCount)
                         } else {
                             if (filePath == null){
-                                writeNewPost(userId, username.toString(), title, summary, description,photoUrl = imageUri.toString())
+                                writeNewPost(userId, username.toString(), title, summary, description,photoUrl = imageUri.toString(),numberCount = numberCount)
                             } else{
-                                writeNewPost(userId, username.toString(), title, summary, description,photoUrl = filePath.toString())
+                                writeNewPost(userId, username.toString(), title, summary, description,photoUrl = filePath.toString(),numberCount = numberCount)
                             }
                         }
                         finish()
@@ -305,7 +310,7 @@ class NewPostActivity : AppCompatActivity() {
 
         // 방 업로드
         private fun writeNewPost(userId: String, teamHead: String, title: String,
-                                 summary:String, description:String,photoUrl:String) {
+                                 summary:String, description:String,photoUrl:String,numberCount:String) {
 
             val roomId = database.child("workOutRooms").push().key
             // 생성되는 방의 key값
@@ -315,7 +320,7 @@ class NewPostActivity : AppCompatActivity() {
                 return
             }
 
-            val workOutRoom = WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)
+            val workOutRoom = WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl,numberCount)
             // 2020-05-24 21:26 조성재 -변경사항 기록-
             // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
 
