@@ -14,6 +14,7 @@ import com.google.firebase.database.*
 import com.google.firebase.firestore.auth.User
 import com.hour.onegoal.Data.Category
 import com.hour.onegoal.Login.ProfileActivity
+import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         val mDb = mDatabase.reference
         val user: FirebaseUser = firebaseAuth.currentUser!!
-        val userKey = user.uid
+        val uid = user.uid
 
         /**
         currentUser?.let {
@@ -94,6 +95,43 @@ class MainActivity : AppCompatActivity() {
 
             }
             main_category_recyclerView.viewTreeObserver.addOnGlobalLayoutListener { scrollToEnd() }
+
+        // 투데이 미션 setText
+        FirebaseDatabase.getInstance().getReference("/users/$uid").addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                if (p0.child("/myroom/todayMission").child("todaymissionTitle").value == null){
+                    todayMission_title.text = "오늘의 미션은??"
+                }else {
+                    val title1 =
+                        p0.child("/myroom/todayMission").child("todaymissionTitle").value.toString()
+                    todayMission_title.text = title1
+                }
+                if (p0.child("/myroom").child("roomId").value == null){
+                    main_today_mission_cardView.isClickable = false
+                    toast("방 등록 또는 가입을 해주세요 ^^")
+                }
+                else{
+                    val myroom = p0.child("/myroom").child("roomId").value.toString()
+                    val title = p0.child("/myroom").child("title").value.toString()
+                    // main_today_mission_cardView 클릭 시
+                    main_today_mission_cardView.setOnClickListener {
+                        val intent = Intent(this@MainActivity, RoomActivity::class.java)
+                        intent.putExtra("roomId",myroom)
+                        intent.putExtra("title",title)
+                        startActivity(intent)
+                    }
+                }
+
+            }
+
+        })
+
+
 
         }
     private fun scrollToEnd() =

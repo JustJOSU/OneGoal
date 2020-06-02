@@ -50,7 +50,7 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
                     // 방의 입장인원을 보여주는 부분
                     // 현재는 입장에 인원 제한을 두지 않았음으로 향후 업데이트 필요
                     workoutCountNumber?.text = "${p0.childrenCount}/8"
-                    if (workoutCountNumber?.text == "1/8"){
+                    if (workoutCountNumber?.text == "8/8"){
                         workoutCountNumber.setTextColor(Color.parseColor("#e8b854"))
                         workoutState?.text = "FULL"
                     }

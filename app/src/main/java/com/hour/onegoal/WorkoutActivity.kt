@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.hour.onegoal.Data.User
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Login.ProfileActivity
 import com.hour.onegoal.Util.toast
@@ -86,18 +87,28 @@ class WorkoutActivity : AppCompatActivity() {
             object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val username = dataSnapshot.child("username").value
-
+                    val user_info = dataSnapshot.getValue(User::class.java)
+                    val user = User(userId, user_info!!.birth,user_info.gender,user_info.username,user_info.photoUrl)
                     if(username == null){
                         val profileIntent = Intent(this@WorkoutActivity, ProfileActivity::class.java).apply {
                             toast("프로필을 완성시켜야만 방을 만들 수가 있습니다!!")
                         }
                         startActivity(profileIntent)
 
-                    } else{
+                    } else if(dataSnapshot.child("myroom").exists()){
+                        fab_addBtn.isClickable = false
+                        toast("방은 하나만 만드실 수 있습니다 ^^")
+                    }
+                    else
+                    {
                         val intent = Intent(this@WorkoutActivity,NewPostActivity::class.java)
+                        intent.putExtra("userId",userId)
+                        intent.putExtra("birth",user_info!!.birth)
+                        intent.putExtra("gender",user_info.gender)
+                        intent.putExtra("username",user_info.username)
+                        intent.putExtra("photoUrl",user_info.photoUrl)
                         startActivity(intent)
                     }
-
                     // [END_EXCLUDE]
                 }
 

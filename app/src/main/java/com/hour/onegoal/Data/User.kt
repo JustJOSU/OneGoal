@@ -7,7 +7,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class User(var uid: String="",
                 var birth:String="",
                 var gender:String="",
-                var username:Any?=null,
+                var username:String?=null,
                 var photoUrl:String=""
                 ){
     @Exclude

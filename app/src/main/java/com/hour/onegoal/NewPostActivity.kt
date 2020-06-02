@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.hour.onegoal.Data.User
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Login.ProfileActivity
 import com.hour.onegoal.Util.toast
@@ -37,6 +38,11 @@ class NewPostActivity : AppCompatActivity() {
         private val OPEN_GALLERY = 1
         private var filePath: Uri? = null
         private var imageUri: Uri? = null
+    private lateinit var getUserId :String
+    private lateinit var getBirthId :String
+    private lateinit var getGenderId :String
+    private lateinit var getUsernameId :String
+    private lateinit var getPhotoUrlId :String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +110,11 @@ class NewPostActivity : AppCompatActivity() {
 
         fieldDescription.movementMethod= ScrollingMovementMethod()
 
+         getUserId = intent.getStringExtra("userId")
+         getBirthId = intent.getStringExtra("birth")
+         getGenderId = intent.getStringExtra("gender")
+         getUsernameId = intent.getStringExtra("username")
+         getPhotoUrlId = intent.getStringExtra("photoUrl")
 
     }
 
@@ -153,7 +164,11 @@ class NewPostActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         } else if (filePath == null && imageUri == null){
-                            writeNewPost(userId, username.toString(), title, summary, description, photoUrl = "",numberCount = numberCount)
+                            val roomId = writeNewPost(userId, username.toString(), title, summary, description, photoUrl = "",numberCount = numberCount)
+                            val intent = Intent(this@NewPostActivity, RoomActivity::class.java)
+                            intent.putExtra("roomId",roomId)
+                            intent.putExtra("title",title)
+                            startActivity(intent)
                         } else {
                             if (filePath == null){
                                 writeNewPost(userId, username.toString(), title, summary, description,photoUrl = imageUri.toString(),numberCount = numberCount)
@@ -310,27 +325,37 @@ class NewPostActivity : AppCompatActivity() {
 
         // 방 업로드
         private fun writeNewPost(userId: String, teamHead: String, title: String,
-                                 summary:String, description:String,photoUrl:String,numberCount:String) {
+                                 summary:String, description:String,photoUrl:String,numberCount:String): String {
 
             val roomId = database.child("workOutRooms").push().key
             // 생성되는 방의 key값
 
             if (roomId == null) {
                 Log.w(TAG, "Couldn't get push key for posts")
-                return
             }
+            val user = User(getUserId, getUsernameId,getGenderId,getBirthId,getPhotoUrlId)
+            val userValues = user.toMap()
 
             val workOutRoom = WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl,numberCount)
             // 2020-05-24 21:26 조성재 -변경사항 기록-
             // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
-
             val workOutRoomValues = workOutRoom.toMap()
 
             val childUpdates = HashMap<String, Any>()
             // 일반 방
-            childUpdates["/workOutRooms/$roomId"] = workOutRoomValues
+            childUpdates["workOutRooms/$roomId"] = workOutRoomValues
+            childUpdates["users/$userId/myroom"] = workOutRoomValues
+            database.updateChildren(childUpdates)
+            childUpdates.clear()
+            // 방 만들면 내 userId 밑에 myroom 이라는걸 만듦 2020 - 06 -02
+
+            childUpdates["workOutRooms/$roomId/members/$userId"] = userValues
+
+            Log.d(TAG,"childUpdated : $childUpdates")
 
             database.updateChildren(childUpdates)
+
+            return roomId.toString()
         }
         // [END write_fan_out]
 

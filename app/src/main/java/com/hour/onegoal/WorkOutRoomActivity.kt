@@ -51,6 +51,8 @@ class WorkOutRoomActivity : AppCompatActivity() {
         roomSummary = intent.getStringExtra("summary")
         roomTeamHead = intent.getStringExtra("teamHead")
 
+
+
         findViewById<TextView>(R.id.roomTitle).text = roomTitle
         findViewById<ImageView>(R.id.roomPhoto).loadImage(roomPhotoUrl)
         findViewById<TextView>(R.id.roomDescription).text = roomDescription
@@ -81,7 +83,13 @@ class WorkOutRoomActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 val user_info = p0.getValue(User::class.java)
-                
+
+                if(p0.child("myroom").exists()){
+                    roomEnter_btn.isClickable = false
+                    toast("방은 계정 당 하나만 입장하실 수 있습니다.")
+                    return
+                }
+
                 if(user_info?.username != null){
                     val user = User(userId, user_info.birth,user_info.gender,user_info.username,user_info.photoUrl)
                     val userValues = user.toMap()
@@ -105,6 +113,8 @@ class WorkOutRoomActivity : AppCompatActivity() {
                     }
                     startActivity(intent)
                 }
+
+
             }
         })
     }
@@ -124,7 +134,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
         // 지우려는 방의 경로를 ("/workOutRooms") -> ("/workOutRooms/$roomId") 변경
 
         roomTable.removeValue()
-        val roomTable1 : DatabaseReference = FirebaseDatabase.getInstance().getReference("/user-workOutRooms/$userId/$roomId")
+        val roomTable1 : DatabaseReference = FirebaseDatabase.getInstance().getReference("/users/$userId/myroom")
         // 2020-05-24 21:26 조성재 -변경사항 기록-
         // user-workOutRooms에서도 지우려면 경로를 ("/user-workOutRooms/$userId/$roomId")와 같이해줘야됨
         // 이유는 NewPostActivity의 308번 라인 참고

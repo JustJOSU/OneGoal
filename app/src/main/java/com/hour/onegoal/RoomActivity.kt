@@ -52,6 +52,7 @@ class RoomActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         roomTitle = intent.getStringExtra("title")
         roomId = intent.getStringExtra("roomId")
+
         findViewById<NeumorphTextView>(R.id.valid_room_title).text = roomTitle
 
         // 참여자 카드 클릭 시
@@ -117,6 +118,7 @@ class RoomActivity : AppCompatActivity() {
 
         //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId/$todayMissionId"] = missionValues
         childUpdates["/workOutRooms/$roomId/mission/todayMission/$todayMissionId"] = todayMissionValues
+        childUpdates["users/$userId/myroom/todayMission"] = todayMissionValues
         database.updateChildren(childUpdates)
 
     }
@@ -133,6 +135,7 @@ class RoomActivity : AppCompatActivity() {
             object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     writeNewTodayMission(todayMissionTitle = title.toString(), todayMissionDescription = description.toString())
+
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
