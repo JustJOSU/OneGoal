@@ -31,13 +31,13 @@
         android:layout_below="@+id/fieldTitle"
         android:hint="Write your Summary..."
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/summary_Tv"
+        app:layout_constraintTop_toBottomOf="@+id/roomSummary"
         android:inputType="textMultiLine"
         android:maxLines="3"
         android:layout_marginLeft="10dp"
         android:scrollHorizontally="false" />
     <TextView
-        android:id="@+id/summary_Tv"
+        android:id="@+id/roomSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"

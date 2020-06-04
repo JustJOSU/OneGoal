@@ -16,6 +16,7 @@ import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Login.ProfileActivity
 import com.hour.onegoal.Util.loadImage
 import com.hour.onegoal.Util.toast
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_work_out_room.*
 import org.w3c.dom.Text
 
@@ -54,15 +55,32 @@ class WorkOutRoomActivity : AppCompatActivity() {
 
 
 
+
+        //findViewById<ImageView>(R.id.teamUserProfile).loadImage(teamHeadPhotoUrl)
         findViewById<TextView>(R.id.roomTitle).text = roomTitle
         findViewById<ImageView>(R.id.roomPhoto).loadImage(roomPhotoUrl)
         findViewById<TextView>(R.id.roomDescription).text = roomDescription
         findViewById<TextView>(R.id.roomSummary).text = roomSummary
         findViewById<TextView>(R.id.roomTeamHead).text = roomTeamHead
 
-        deleteButton.setOnClickListener {
+       /** deleteButton.setOnClickListener {
             delete(roomId)
-        }
+        }**/
+       // 방장 프로필
+       val teamHeadPhotoUrl = FirebaseDatabase.getInstance().getReference("workOutRooms/${roomId}")
+        teamHeadPhotoUrl.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val checkProfile = p0.child("teamHeadPhotoUrl").value.toString()
+                findViewById<CircleImageView>(R.id.roomTeamHeadProfileImage).loadImage(checkProfile)
+
+            }
+
+        })
+
 
         roomEnter_btn.setOnClickListener {
             val members_ref = FirebaseDatabase.getInstance().getReference("workOutRooms/${roomId}/members")

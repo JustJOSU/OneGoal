@@ -156,7 +156,7 @@ class NewPostActivity : AppCompatActivity() {
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val username = dataSnapshot.child("username").value
-
+                        val teamHeadPhotoUrl = dataSnapshot.child("photoUrl").value.toString()
                         if(username == null){
                             val intent = Intent(this@NewPostActivity, ProfileActivity::class.java).apply {
                                 toast("프로필을 완성시켜야만 방을 만들 수가 있습니다!!")
@@ -164,16 +164,33 @@ class NewPostActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         } else if (filePath == null && imageUri == null){
-                            val roomId = writeNewPost(userId, username.toString(), title, summary, description, photoUrl = "",numberCount = numberCount)
+                            val roomId = writeNewPost(userId, username.toString(), title, summary, description, roomPhotoUrl = "",
+                                numberCount = numberCount,
+                                teamHeadPhotoUrl = teamHeadPhotoUrl
+                            )
                             val intent = Intent(this@NewPostActivity, RoomActivity::class.java)
                             intent.putExtra("roomId",roomId)
                             intent.putExtra("title",title)
+                            Log.d("teamHeadPhotoUrl", "teamHeadPhotoUrl : ${intent.putExtra("teamHeadPhotoUrl",teamHeadPhotoUrl)}")
                             startActivity(intent)
                         } else {
+                            //TODO: 뭘 넣어야할것같은데;;
                             if (filePath == null){
-                                writeNewPost(userId, username.toString(), title, summary, description,photoUrl = imageUri.toString(),numberCount = numberCount)
+                                val roomId = writeNewPost(userId, username.toString(), title, summary, description,
+                                    roomPhotoUrl = imageUri.toString(),numberCount = numberCount,teamHeadPhotoUrl = teamHeadPhotoUrl)
+                                val intent = Intent(this@NewPostActivity, RoomActivity::class.java)
+                                intent.putExtra("roomId",roomId)
+                                intent.putExtra("title",title)
+                                Log.d("teamHeadPhotoUrl", "teamHeadPhotoUrl : ${intent.putExtra("teamHeadPhotoUrl",teamHeadPhotoUrl)}")
+                                startActivity(intent)
                             } else{
-                                writeNewPost(userId, username.toString(), title, summary, description,photoUrl = filePath.toString(),numberCount = numberCount)
+                                val roomId = writeNewPost(userId, username.toString(), title, summary, description,
+                                    roomPhotoUrl = filePath.toString(),numberCount = numberCount,teamHeadPhotoUrl = teamHeadPhotoUrl)
+                                val intent = Intent(this@NewPostActivity, RoomActivity::class.java)
+                                intent.putExtra("roomId",roomId)
+                                intent.putExtra("title",title)
+                                Log.d("teamHeadPhotoUrl", "teamHeadPhotoUrl : ${intent.putExtra("teamHeadPhotoUrl",teamHeadPhotoUrl)}")
+                                startActivity(intent)
                             }
                         }
                         finish()
@@ -325,7 +342,7 @@ class NewPostActivity : AppCompatActivity() {
 
         // 방 업로드
         private fun writeNewPost(userId: String, teamHead: String, title: String,
-                                 summary:String, description:String,photoUrl:String,numberCount:String): String {
+                                 summary:String, description:String,roomPhotoUrl:String,numberCount:String,teamHeadPhotoUrl:String): String {
 
             val roomId = database.child("workOutRooms").push().key
             // 생성되는 방의 key값
@@ -336,7 +353,7 @@ class NewPostActivity : AppCompatActivity() {
             val user = User(getUserId, getUsernameId,getGenderId,getBirthId,getPhotoUrlId)
             val userValues = user.toMap()
 
-            val workOutRoom = WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl,numberCount)
+            val workOutRoom = WorkoutRoom(roomId, teamHead, title, summary, description,roomPhotoUrl,numberCount,teamHeadPhotoUrl)
             // 2020-05-24 21:26 조성재 -변경사항 기록-
             // WorkoutRoom(uid, teamHead, title, summary, description,photoUrl) -> WorkoutRoom(roomId, teamHead, title, summary, description,photoUrl)로 변경
             val workOutRoomValues = workOutRoom.toMap()

@@ -22,6 +22,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.hour.onegoal.Data.Mission
 import com.hour.onegoal.Data.TodayMission
+import com.hour.onegoal.Util.loadImage
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_room.*
 import kotlinx.android.synthetic.main.today_mission_dialog.*
