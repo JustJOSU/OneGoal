@@ -53,6 +53,7 @@ class WorkOutAdapter(val context: Context, val workoutList: ArrayList<WorkoutRoo
                     if (workoutCountNumber?.text == "8/8"){
                         workoutCountNumber.setTextColor(Color.parseColor("#e8b854"))
                         workoutState?.text = "FULL"
+                        itemView.alpha = 0.5F
                     }
                 }
             })
