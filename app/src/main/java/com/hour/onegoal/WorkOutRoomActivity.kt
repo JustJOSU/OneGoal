@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -64,7 +65,26 @@ class WorkOutRoomActivity : AppCompatActivity() {
         }
 
         roomEnter_btn.setOnClickListener {
-            enterRoom()
+            val members_ref = FirebaseDatabase.getInstance().getReference("workOutRooms/${roomId}/members")
+            members_ref.addValueEventListener(object : ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    val checkNumber = p0.childrenCount.toString().toInt()
+                    if (checkNumber == 8){
+                        roomEnter_btn.isClickable = false
+                        Log.d("checkNumber","check Number : $checkNumber")
+                        toast("인원이 꽉 찼습니다. 다른 방을 이용하여 주세요 ^^")
+                    }
+                    else{
+                        enterRoom()
+                    }
+                }
+
+            })
+
         }
         val d = findViewById<TextView>(R.id.roomDescription)
         d.movementMethod = ScrollingMovementMethod()
@@ -91,7 +111,8 @@ class WorkOutRoomActivity : AppCompatActivity() {
                 }
 
                 if(user_info?.username != null){
-                    val user = User(userId, user_info.birth,user_info.gender,user_info.username,user_info.photoUrl)
+                    val user = User(userId,
+                        user_info.username!!,user_info.gender,user_info.birth,user_info.photoUrl)
                     val userValues = user.toMap()
 
                     val room = WorkoutRoom(roomId, roomTeamHead, roomTitle, roomSummary, roomDescription, roomPhotoUrl)
@@ -107,7 +128,8 @@ class WorkOutRoomActivity : AppCompatActivity() {
                     intent.putExtra("title",roomTitle)
                     intent.putExtra("roomId",roomId)
                     startActivity(intent)
-                } else {
+                }
+                else {
                     val intent = Intent(this@WorkOutRoomActivity, ProfileActivity::class.java).apply {
                         toast("프로필을 완성시켜야만 방을 입장할 수 있습니다.")
                     }

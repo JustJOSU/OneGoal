@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
 
                 if (p0.child("/myroom/todayMission").child("todaymissionTitle").value == null){
-                    todayMission_title.text = "오늘의 미션은??"
+                    todayMission_title.text = "오늘의 미션"
                 }else {
                     val title1 =
                         p0.child("/myroom/todayMission").child("todaymissionTitle").value.toString()
