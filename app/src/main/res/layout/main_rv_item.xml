@@ -3,46 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="24dp"
+    android:layout_marginLeft="36dp"
+    android:layout_marginRight="12dp"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <soup.neumorphism.NeumorphCardView
+        android:id="@+id/cardview"
         style="@style/ShapeAppearance.Neumorph.CardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance4"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        app:neumorph_shapeType="basin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         >
 
-        <RelativeLayout
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_marginStart="8dp"
-            android:padding="24dp">
-
             <ImageView
                 android:id="@+id/category_image"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="3dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/run" />
-
-            <soup.neumorphism.NeumorphTextView
-                android:id="@+id/category_title"
-                style="@style/Widget.Neumorph.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/category_image"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="2dp"
-                android:text="TextView"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+                android:src="@drawable/execercise" />
 
     </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphTextView
+        android:id="@+id/category_title"
+        style="@style/Widget.Neumorph.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

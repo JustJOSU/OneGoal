@@ -22,12 +22,13 @@ class MissionHistoryAdapter(val context: Context, private val historyList: Array
     : RecyclerView.Adapter<MissionHistoryAdapter.Holder>() {
 
     inner class Holder(itemView: View?, itemClick: (Mission) -> Unit) : RecyclerView.ViewHolder(itemView!!){
-        val missionUserName = itemView?.findViewById<TextView>(R.id.missionUserName)
+       // val missionUserName = itemView?.findViewById<TextView>(R.id.missionUserName)
         val missionPhoto = itemView?.findViewById<RoundedImageView>(R.id.missionPhoto)
-
+        val missionUserPhotoUrl = itemView?.findViewById<CircleImageView>(R.id.missionUserPhotoUrl)
         fun bind(mission: Mission, context: Context){
-            missionUserName?.text = mission.missionUser
+            //missionUserName?.text = mission.missionUser
             missionPhoto?.loadImage(mission.missionPhotoUrl)
+            missionUserPhotoUrl?.loadImage(mission.missionUserPhotoUrl)
         }
         /** 만약에 히스토리 아이디 클릭했을 경우 이벤트 발생시키려면 사용
         init {

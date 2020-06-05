@@ -297,7 +297,7 @@ class RoomActivity : AppCompatActivity() {
 
     }
     // 제출 버튼 미션 업로드
-    private fun writeNewMission(missionPhotoUrl:String,missionUser:String){
+    private fun writeNewMission(missionPhotoUrl:String,missionUser:String,missionUserPhotoUrl: String){
 
         val missionId = database.child("workOutRooms/$roomId/mission").push().key
         // 생성되는 방의 key값
@@ -307,7 +307,10 @@ class RoomActivity : AppCompatActivity() {
             return
         }
 
-        val mission = Mission(missionId,missionWriteTime = ServerValue.TIMESTAMP,missionPhotoUrl = missionPhotoUrl,missionUser = missionUser)
+        val mission = Mission(missionId,missionWriteTime = ServerValue.TIMESTAMP,
+            missionPhotoUrl = missionPhotoUrl,missionUser = missionUser,
+                missionUserPhotoUrl = missionUserPhotoUrl
+            )
 
         val missionValues = mission.toMap()
 
@@ -330,14 +333,14 @@ class RoomActivity : AppCompatActivity() {
             object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val username = dataSnapshot.child("username").value
-
+                    val userPhotoUrl = dataSnapshot.child("photoUrl").value.toString()
                      if (filePath == null && imageUri == null){
-                        writeNewMission(missionPhotoUrl = "",missionUser = username.toString())
+                        writeNewMission(missionPhotoUrl = "",missionUser = username.toString(),missionUserPhotoUrl = userPhotoUrl)
                     } else {
                         if (filePath == null){
-                            writeNewMission(missionPhotoUrl = imageUri.toString(),missionUser = username.toString())
+                            writeNewMission(missionPhotoUrl = imageUri.toString(),missionUser = username.toString(),missionUserPhotoUrl = userPhotoUrl)
                         } else{
-                            writeNewMission(missionPhotoUrl = filePath.toString(),missionUser = username.toString())
+                            writeNewMission(missionPhotoUrl = filePath.toString(),missionUser = username.toString(),missionUserPhotoUrl = userPhotoUrl)
                         }
                     }
 

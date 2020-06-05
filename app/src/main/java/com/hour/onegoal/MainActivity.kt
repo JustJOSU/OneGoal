@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     val categoryList = arrayListOf<Category>(
-        Category(R.drawable.run,"운동") ,
+        Category(R.drawable.execercise,"운동") ,
         Category(R.drawable.study, "공부")
     )
     private val currentUser = FirebaseAuth.getInstance().currentUser
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             val lm = GridLayoutManager(applicationContext,2)
             //LayoutManager는 RecyclerView의 각 item들을 배치하고,
             // item이 더이상 보이지 않을 때 재사용할 것인지 결정하는 역할을 한다
-            main_category_recyclerView.layoutManager = lm
+            main_category_recyclerView.layoutManager = lm as RecyclerView.LayoutManager?
             main_category_recyclerView.setHasFixedSize(true)
             main_category_recyclerView.adapter = MainRvAdapter(applicationContext, categoryList){
 

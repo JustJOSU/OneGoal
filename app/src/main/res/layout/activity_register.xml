@@ -8,17 +8,30 @@
     android:background="#f1f3f5"
     tools:context=".Login.RegisterActivity">
 
+    <TextView
+        android:id="@+id/neumorphTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/use_font"
+        android:text="Sign Up"
+        android:textSize="64sp"
+        app:layout_constraintBottom_toTopOf="@+id/edittext_card_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintGuide_percent="0.25"
         app:layout_constraintTop_toTopOf="parent" />
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/edittext_card_2"
-        app:neumorph_shapeType="basin"
+        app:neumorph_shapeType="pressed"
         style="@style/Widget.Neumorph.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +61,7 @@
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/edittext_card_3"
-        app:neumorph_shapeType="basin"
+        app:neumorph_shapeType="pressed"
         style="@style/Widget.Neumorph.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +91,7 @@
     </soup.neumorphism.NeumorphCardView>
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/edittext_card_4"
-        app:neumorph_shapeType="basin"
+        app:neumorph_shapeType="pressed"
         style="@style/Widget.Neumorph.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,7 +121,7 @@
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/edittext_card_5"
-        app:neumorph_shapeType="basin"
+        app:neumorph_shapeType="pressed"
         style="@style/Widget.Neumorph.CardView"
         android:layout_width="match_parent"
         android:layout_height="60dp"

@@ -153,8 +153,6 @@ class WorkOutRoomActivity : AppCompatActivity() {
                     }
                     startActivity(intent)
                 }
-
-
             }
         })
     }

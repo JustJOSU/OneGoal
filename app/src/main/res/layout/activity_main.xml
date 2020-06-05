@@ -14,11 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Today"
-        android:textStyle="bold"
+        android:fontFamily="@font/midum"
+        android:text="Mission"
         android:textColor="#2a344f"
-        android:textSize="32sp"
-        android:fontFamily="monospace"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/main_today_mission_cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="16dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/midum"
         android:text="Category"
         android:textStyle="bold"
         android:textColor="#2a344f"
@@ -61,8 +62,9 @@
 
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/main_today_mission_cardView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        app:neumorph_shapeType="basin"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,33 +73,40 @@
 
         <ImageView
             android:id="@+id/category_image1"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="4dp"
             android:layout_gravity="center"
             android:scaleType="centerInside"
-            android:src="@drawable/run" />
+            android:src="@drawable/group" />
 
-        <TextView
-            android:id="@+id/todayMission_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:text="오늘의 미션"
-            android:textStyle="bold"
-            android:textColor="#454e5f"
-            android:textSize="12sp" />
+
 
     </soup.neumorphism.NeumorphCardView>
 
+    <TextView
+        android:id="@+id/todayMission_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:ems="8"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="오늘의 미션"
+        android:textColor="#454e5f"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/main_today_mission_cardView"
+        app:layout_constraintStart_toStartOf="@+id/main_today_mission_cardView"
+        app:layout_constraintTop_toBottomOf="@+id/main_today_mission_cardView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintGuide_percent="0.6"
         app:layout_constraintTop_toTopOf="parent" />
 
 

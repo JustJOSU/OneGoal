@@ -8,11 +8,31 @@
     android:background="#f1f3f5"
     tools:context=".Login.LoginActivity">
 
-    <soup.neumorphism.NeumorphTextView
+    <soup.neumorphism.NeumorphCardView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        app:neumorph_shapeType="basin"
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance4"
+        app:layout_constraintBottom_toTopOf="@+id/neumorphTextView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:padding="15dp"
+                android:src="@drawable/main_icon" />
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <TextView
+        android:id="@+id/neumorphTextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="하나만"
+        android:fontFamily="@font/use_font"
+        android:text="Dream Mate"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/edittext_card"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +42,7 @@
         android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintGuide_percent="0.35"
         android:orientation="horizontal" />
 
 

@@ -42,7 +42,7 @@ class MissionHistoryActivity : AppCompatActivity() {
                 // 팀원일 경우 멤버 텍스트뷰 밑에 배치
 
                 var missionList: ArrayList<Mission>?= null
-                missionList = ArrayList<Mission>()
+                missionList = ArrayList()
                 for ( h in p0.children){
                     val missions = h.getValue(Mission::class.java)
                     missionList.add(missions!!)
@@ -51,7 +51,6 @@ class MissionHistoryActivity : AppCompatActivity() {
                     }
                     missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,2)
                     missionHistory_rv.setHasFixedSize(true)
-
                     missionHistory_rv.post {
                         missionHistory_rv.smoothScrollToPosition(1)
                     }

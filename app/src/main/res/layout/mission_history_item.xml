@@ -9,24 +9,44 @@
     <soup.neumorphism.NeumorphCardView
         android:id="@+id/missionCardView"
         style="@style/ShapeAppearance.Neumorph.CardView"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+        app:layout_constraintStart_toEndOf="@+id/neumorphCardView5"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <soup.neumorphism.NeumorphCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"/>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.5"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="32dp" />
+        </soup.neumorphism.NeumorphCardView>
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/neumorphCardView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/missionUserName"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="User" />
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/missionPhoto"
-            android:scaleType="centerCrop"
-            android:alpha="0.5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/missionUserPhotoUrl"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
     </soup.neumorphism.NeumorphCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
