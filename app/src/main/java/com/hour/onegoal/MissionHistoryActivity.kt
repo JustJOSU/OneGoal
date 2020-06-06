@@ -43,20 +43,23 @@ class MissionHistoryActivity : AppCompatActivity() {
 
                 var missionList: ArrayList<Mission>?= null
                 missionList = ArrayList()
+
                 for ( h in p0.children){
                     val missions = h.getValue(Mission::class.java)
                     missionList.add(missions!!)
                     missionHistory_rv?.adapter = MissionHistoryAdapter(applicationContext,missionList){
 
                     }
-                    missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,2)
+                    missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,1)
                     missionHistory_rv.setHasFixedSize(true)
                     missionHistory_rv.post {
                         missionHistory_rv.smoothScrollToPosition(1)
                     }
                 }
 
+
             }
         })
     }
+
 }

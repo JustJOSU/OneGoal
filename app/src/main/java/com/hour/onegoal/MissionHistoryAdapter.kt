@@ -25,8 +25,9 @@ class MissionHistoryAdapter(val context: Context, private val historyList: Array
        // val missionUserName = itemView?.findViewById<TextView>(R.id.missionUserName)
         val missionPhoto = itemView?.findViewById<RoundedImageView>(R.id.missionPhoto)
         val missionUserPhotoUrl = itemView?.findViewById<CircleImageView>(R.id.missionUserPhotoUrl)
+        val missionUserName = itemView?.findViewById<TextView>(R.id.missionUserName)
         fun bind(mission: Mission, context: Context){
-            //missionUserName?.text = mission.missionUser
+            missionUserName?.text = mission.missionUser
             missionPhoto?.loadImage(mission.missionPhotoUrl)
             missionUserPhotoUrl?.loadImage(mission.missionUserPhotoUrl)
         }

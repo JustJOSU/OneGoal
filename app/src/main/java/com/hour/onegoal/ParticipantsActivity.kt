@@ -44,7 +44,7 @@ class ParticipantsActivity : AppCompatActivity() {
                 if (teamHead != null){
                     findViewById<TextView>(R.id.teamHeadName).text = teamHead.toString()
                     val teamPhotoUrl = p0.child("/members/$uid/photoUrl").value
-                    Glide.with(this@ParticipantsActivity)
+                    Glide.with(applicationContext)
                         .load(teamPhotoUrl)
                         .into(teamHeadProfile)
                     Log.d("p0","p0 : ${teamPhotoUrl}")

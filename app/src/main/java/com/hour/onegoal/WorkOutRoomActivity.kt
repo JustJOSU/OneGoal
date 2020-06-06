@@ -56,7 +56,6 @@ class WorkOutRoomActivity : AppCompatActivity() {
 
 
 
-        //findViewById<ImageView>(R.id.teamUserProfile).loadImage(teamHeadPhotoUrl)
         findViewById<TextView>(R.id.roomTitle).text = roomTitle
         findViewById<ImageView>(R.id.roomPhoto).loadImage(roomPhotoUrl)
         findViewById<TextView>(R.id.roomDescription).text = roomDescription
