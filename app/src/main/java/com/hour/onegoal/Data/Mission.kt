@@ -4,7 +4,7 @@ import com.google.firebase.database.Exclude
 
 data class Mission(
     var missionId: String?= "",
-    var missionWriteTime:Any = Any(),
+    var missionWriteTime:String = "",
     var missionPhotoUrl:String?= "",
     var missionUser:String? ="",
     var missionUserPhotoUrl: String? = ""

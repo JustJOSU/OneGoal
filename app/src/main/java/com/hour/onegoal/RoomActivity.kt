@@ -100,17 +100,17 @@ class RoomActivity : AppCompatActivity() {
     // 미션 업로드
     private fun writeNewTodayMission(todayMissionTitle:String,todayMissionDescription:String){
 
-        val todayMissionId = database.child("workOutRooms/$roomId/mission/today").push().key
+
+        val dateFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+        val date = Date()
+        val strDate: String = dateFormat.format(date).toString()
+        val todayMissionId = database.child("workOutRooms/$roomId/TodayMission").push().key
         // 생성되는 방의 key값
 
         if (todayMissionId == null) {
             Log.w(TAG, "Couldn't get push key for posts")
             return
         }
-        val dateFormat: DateFormat = SimpleDateFormat("yyyy/MM/dd")
-        val date = Date()
-        val strDate: String = dateFormat.format(date).toString()
-
         val todayMission = TodayMission(todayMissionId,todayMissionTitle,todayMissionDescription,strDate)
 
         val todayMissionValues = todayMission.toMap()
@@ -118,8 +118,9 @@ class RoomActivity : AppCompatActivity() {
         val childUpdates = HashMap<String, Any>()
 
         //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId/$todayMissionId"] = missionValues
-        childUpdates["/workOutRooms/$roomId/mission/todayMission/$todayMissionId"] = todayMissionValues
-        childUpdates["users/$userId/myroom/todayMission"] = todayMissionValues
+        childUpdates["/workOutRooms/$roomId/MissionHistory/$strDate"] = todayMissionValues
+        childUpdates["/workOutRooms/$roomId/TodayMission/$strDate"] = todayMissionValues
+        childUpdates["users/$userId/myroom/TodayMission"] = todayMissionValues
         database.updateChildren(childUpdates)
 
     }
@@ -301,13 +302,16 @@ class RoomActivity : AppCompatActivity() {
 
         val missionId = database.child("workOutRooms/$roomId/mission").push().key
         // 생성되는 방의 key값
+        val dateFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+        val date = Date()
+        val strDate: String = dateFormat.format(date).toString()
 
         if (missionId == null) {
             Log.w(TAG, "Couldn't get push key for posts")
             return
         }
 
-        val mission = Mission(missionId,missionWriteTime = ServerValue.TIMESTAMP,
+        val mission = Mission(missionId,missionWriteTime = strDate,
             missionPhotoUrl = missionPhotoUrl,missionUser = missionUser,
                 missionUserPhotoUrl = missionUserPhotoUrl
             )
@@ -316,8 +320,12 @@ class RoomActivity : AppCompatActivity() {
 
         val childUpdates = HashMap<String, Any>()
 
+
+        val userid_map = mapOf("1" to "$userId")
+
+
         //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId"] = missionValues
-        childUpdates["/workOutRooms/$roomId/mission/$userId"] = missionValues
+        childUpdates["/workOutRooms/$roomId/MissionHistory/$strDate/members"] = userid_map
         database.updateChildren(childUpdates)
 
     }
@@ -335,7 +343,13 @@ class RoomActivity : AppCompatActivity() {
                     val username = dataSnapshot.child("username").value
                     val userPhotoUrl = dataSnapshot.child("photoUrl").value.toString()
                      if (filePath == null && imageUri == null){
+                         val dateFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+                         val date = Date()
+                         val strDate: String = dateFormat.format(date).toString()
                         writeNewMission(missionPhotoUrl = "",missionUser = username.toString(),missionUserPhotoUrl = userPhotoUrl)
+                         val intent = Intent(this@RoomActivity, MissionHistoryActivity::class.java)
+                         intent.putExtra("writeDate", strDate)
+                         startActivity(intent)
                     } else {
                         if (filePath == null){
                             writeNewMission(missionPhotoUrl = imageUri.toString(),missionUser = username.toString(),missionUserPhotoUrl = userPhotoUrl)

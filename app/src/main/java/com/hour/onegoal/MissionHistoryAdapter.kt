@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 import com.hour.onegoal.Data.Mission
+import com.hour.onegoal.Data.TodayMission
 import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
 import com.makeramen.roundedimageview.RoundedImageView
 import de.hdodenhof.circleimageview.CircleImageView
+import org.w3c.dom.Text
 import soup.neumorphism.NeumorphCardView
 import soup.neumorphism.NeumorphTextView
 
@@ -26,10 +29,13 @@ class MissionHistoryAdapter(val context: Context, private val historyList: Array
         val missionPhoto = itemView?.findViewById<RoundedImageView>(R.id.missionPhoto)
         val missionUserPhotoUrl = itemView?.findViewById<CircleImageView>(R.id.missionUserPhotoUrl)
         val missionUserName = itemView?.findViewById<TextView>(R.id.missionUserName)
+        val missionDate = itemView?.findViewById<TextView>(R.id.missionDate)
+
         fun bind(mission: Mission, context: Context){
             missionUserName?.text = mission.missionUser
             missionPhoto?.loadImage(mission.missionPhotoUrl)
             missionUserPhotoUrl?.loadImage(mission.missionUserPhotoUrl)
+
         }
         /** 만약에 히스토리 아이디 클릭했을 경우 이벤트 발생시키려면 사용
         init {

@@ -26,14 +26,13 @@ class MissionHistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_mission_history)
 
         // 미션히스토리 정보
-
         roomId = intent.getStringExtra("roomId")
         val firebaseAuth = FirebaseAuth.getInstance()
         val user: FirebaseUser = firebaseAuth.currentUser!!
         val uid = user.uid
         // 파이어베이스 방 Id
 
-        FirebaseDatabase.getInstance().reference.child("/workOutRooms/$roomId/mission").addValueEventListener(object :
+        FirebaseDatabase.getInstance().reference.child("/workOutRooms/$roomId/TodayMission").addValueEventListener(object :
             ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
             }

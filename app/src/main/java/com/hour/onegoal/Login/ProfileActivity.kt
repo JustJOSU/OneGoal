@@ -23,6 +23,7 @@ import com.hour.onegoal.Data.User
 import com.hour.onegoal.R
 import com.hour.onegoal.Util.logout
 import com.hour.onegoal.Util.toast
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.edit_text_name
 import kotlinx.android.synthetic.main.activity_profile.logout
@@ -58,6 +59,7 @@ class ProfileActivity : AppCompatActivity() {
                     p0.child("birth").getValue(String::class.java)!!
                 val genderID =
                     p0.child("gender").getValue(String::class.java)
+                val profileImage = findViewById<CircleImageView>(R.id.profile_image_view)
                 currentUser?.let {
                     text_birth.setText(birthID)
                     text_gender.setText(genderID)
@@ -65,7 +67,7 @@ class ProfileActivity : AppCompatActivity() {
                     text_email.text = user.email
                     Glide.with(this@ProfileActivity)
                         .load(user.photoUrl)
-                        .into(profile_image_view)
+                        .into(profileImage)
                     if (user.isEmailVerified) {
                         text_not_verified.visibility = View.INVISIBLE
                     } else {

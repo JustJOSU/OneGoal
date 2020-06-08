@@ -53,9 +53,6 @@ class WorkOutRoomActivity : AppCompatActivity() {
         roomSummary = intent.getStringExtra("summary")
         roomTeamHead = intent.getStringExtra("teamHead")
 
-
-
-
         findViewById<TextView>(R.id.roomTitle).text = roomTitle
         findViewById<ImageView>(R.id.roomPhoto).loadImage(roomPhotoUrl)
         findViewById<TextView>(R.id.roomDescription).text = roomDescription
@@ -69,17 +66,12 @@ class WorkOutRoomActivity : AppCompatActivity() {
        val teamHeadPhotoUrl = FirebaseDatabase.getInstance().getReference("workOutRooms/${roomId}")
         teamHeadPhotoUrl.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-
             }
-
             override fun onDataChange(p0: DataSnapshot) {
                 val checkProfile = p0.child("teamHeadPhotoUrl").value.toString()
                 findViewById<CircleImageView>(R.id.roomTeamHeadProfileImage).loadImage(checkProfile)
-
             }
-
         })
-
 
         roomEnter_btn.setOnClickListener {
             val members_ref = FirebaseDatabase.getInstance().getReference("workOutRooms/${roomId}/members")
@@ -101,7 +93,6 @@ class WorkOutRoomActivity : AppCompatActivity() {
                 }
 
             })
-
         }
         val d = findViewById<TextView>(R.id.roomDescription)
         d.movementMethod = ScrollingMovementMethod()
@@ -120,6 +111,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 val user_info = p0.getValue(User::class.java)
+                //Log.d(TAG, "user : $user_info")
 
                 if(p0.child("myroom").exists()){
                     roomEnter_btn.isClickable = false
@@ -128,9 +120,7 @@ class WorkOutRoomActivity : AppCompatActivity() {
                 }
 
                 if(user_info?.username != null){
-                    val user = User(userId,
-                        user_info.username!!,user_info.gender,user_info.birth,user_info.photoUrl)
-                    val userValues = user.toMap()
+                    val userValues = user_info.toMap()
 
                     val room = WorkoutRoom(roomId, roomTeamHead, roomTitle, roomSummary, roomDescription, roomPhotoUrl)
                     val roomValues = room.toMap()

@@ -350,7 +350,14 @@ class NewPostActivity : AppCompatActivity() {
             if (roomId == null) {
                 Log.w(TAG, "Couldn't get push key for posts")
             }
-            val user = User(getUserId, getUsernameId,getGenderId,getBirthId,getPhotoUrlId)
+            val user = User(getUserId, getBirthId,getGenderId,getUsernameId,getPhotoUrlId)
+            Log.d(TAG,"user key : ${user.uid}")
+            Log.d(TAG,"user id : ${user.username}")
+            Log.d(TAG,"user gend : ${user.gender}")
+            Log.d(TAG,"user birth : ${user.birth}")
+            Log.d(TAG,"user photo : ${user.photoUrl}")
+            Log.d(TAG,"user key : ${user}")
+
             val userValues = user.toMap()
 
             val workOutRoom = WorkoutRoom(roomId, teamHead, title, summary, description,roomPhotoUrl,numberCount,teamHeadPhotoUrl)
