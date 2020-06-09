@@ -1,17 +1,14 @@
 package com.hour.onegoal
 
 import android.content.Context
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.FirebaseDatabase
 import com.hour.onegoal.Data.Mission
 import com.hour.onegoal.Data.TodayMission
-import com.hour.onegoal.Data.WorkoutRoom
 import com.hour.onegoal.Util.loadImage
 import com.makeramen.roundedimageview.RoundedImageView
 import de.hdodenhof.circleimageview.CircleImageView
@@ -20,38 +17,36 @@ import soup.neumorphism.NeumorphCardView
 import soup.neumorphism.NeumorphTextView
 
 
-class TodayMissionHistoryAdapter(val context: Context, private val todayMissionHistoryList: ArrayList<TodayMission>,
-                            var itemClick: (TodayMission) -> Unit)
+class TodayMissionHistoryAdapter(
+    val context: Context, private val todayMissionHistoryList: ArrayList<TodayMission>, private val photoUrl: ArrayList<String>?,
+    var itemClick: (TodayMission) -> Unit)
     : RecyclerView.Adapter<TodayMissionHistoryAdapter.Holder>() {
 
     inner class Holder(itemView: View?, itemClick: (TodayMission) -> Unit) : RecyclerView.ViewHolder(itemView!!){
 
         val todayMissiontitle = itemView?.findViewById<TextView>(R.id.item_todayMissionTitle_TextView)
         val todayMissionDate = itemView?.findViewById<TextView>(R.id.item_todayMissionDate_TextView)
-        val todayMissionPhotoUrl = itemView?.findViewById<CircleImageView>(R.id.item_todayMissionUserPhotoUrl)
+        private fun getId():ArrayList<RoundedImageView>{
+            val result: ArrayList<RoundedImageView> = ArrayList()
+            for(i in 0..7){
+                result.add(itemView.findViewById<RoundedImageView>(context.resources.getIdentifier("missionPhoto_"+i.toString(),"id",context.packageName)))
+                //Log.d("근바", "${itemView.findViewById<RoundedImageView>(context.resources.getIdentifier("missionPhoto_0","id",context.packageName))}")
+            }
+            return result
+        }
+        private val missionUserPhotoUrl: ArrayList<RoundedImageView> = getId()
+
+        //itemView?.findViewById<RoundedImageView>(R.id.missionPhoto_1)
         fun bind(todayMission: TodayMission, context: Context){
             todayMissiontitle?.text = todayMission.todaymissionTitle
             todayMissionDate?.text =  todayMission.todaymissionDate
+            for(i in photoUrl?.indices!!){
+                missionUserPhotoUrl[i].loadImage(photoUrl?.get(i))
+            }
+        }
 
-        }
-        /** 만약에 히스토리 아이디 클릭했을 경우 이벤트 발생시키려면 사용
-        init {
-        itemView?.setOnClickListener {
-        val room = workoutList[adapterPosition]
-        //TODO: 아이템뷰 클릭했을 때 intent
-        val intent = Intent(context,WorkOutRoomActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.putExtra("roomId",room.roomId)
-        intent.putExtra("title",room.title)
-        intent.putExtra("summary",room.summary)
-        intent.putExtra("description",room.description)
-        intent.putExtra("photoUrl",room.photoUrl)
-        intent.putExtra("teamHead",room.teamHead)
-        context.startActivity(intent)
-        }
-        }
-         **/
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         // 화면을 최초 로딩하여 만들어진 View 가 없는 경우,
@@ -62,6 +57,7 @@ class TodayMissionHistoryAdapter(val context: Context, private val todayMissionH
                 view = LayoutInflater.from(context).inflate(R.layout.today_mission_item,parent,false)
                 return Holder(view,itemClick)
             }
+
             else -> throw RuntimeException("알 수 없는 뷰 타입 에러")
         }
 
@@ -75,6 +71,7 @@ class TodayMissionHistoryAdapter(val context: Context, private val todayMissionH
     override fun onBindViewHolder(holder: Holder, position: Int) {
         // 위의 onCreateViewHolder 에서 만든 view 와 실제 입력되는 각각의 데이터를 연결한다.
         holder.bind(todayMissionHistoryList[position],context)
+
     }
 
 }

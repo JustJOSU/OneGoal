@@ -10,9 +10,11 @@
         android:id="@+id/item_todayMissionDate_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:text="2000-00-00"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/missionUserName" />
+        app:layout_constraintStart_toEndOf="@+id/missionUserName"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/item_todayMissionTitle_TextView"
@@ -20,23 +22,202 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:text="제목"
-        app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView"
+        app:layout_constraintBottom_toBottomOf="@+id/item_todayMissionDate_TextView"
         app:layout_constraintStart_toEndOf="@+id/item_todayMissionDate_TextView" />
 
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/neumorphCardView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintStart_toEndOf="@+id/item_todayMissionTitle_TextView"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_todayMissionDate_TextView">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/item_todayMissionUserPhotoUrl"
-            android:layout_width="32dp"
-            android:layout_height="32dp" />
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/missionCardView"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+            app:layout_constraintStart_toEndOf="@+id/neumorphCardView5">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="1"
+                android:textSize="10dp" />
 
-    </soup.neumorphism.NeumorphCardView>
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto_0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:riv_corner_radius="20dp"
+                />
+        </soup.neumorphism.NeumorphCardView>
 
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/missionCardView1"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
 
+            app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+            app:layout_constraintStart_toEndOf="@+id/missionCardView">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="2"
+                android:textSize="10dp" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:riv_corner_radius="20dp"
+                />
+        </soup.neumorphism.NeumorphCardView>
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/missionCardView3"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+            app:layout_constraintStart_toEndOf="@+id/missionCardView1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="3"
+                android:textSize="10dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto_2"
+                android:layout_width="match_parent"
+                android:layout_height="31dp"
+                app:riv_corner_radius="20dp" />
+        </soup.neumorphism.NeumorphCardView>
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/missionCardView4"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+            app:layout_constraintStart_toEndOf="@+id/missionCardView3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="4"
+                android:textSize="10dp" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:riv_corner_radius="20dp"
+                />
+        </soup.neumorphism.NeumorphCardView>
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/missionCardView5"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+            app:layout_constraintStart_toEndOf="@+id/missionCardView4">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="5"
+                android:textSize="10dp" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:riv_corner_radius="20dp"
+                />
+        </soup.neumorphism.NeumorphCardView>
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/missionCardView6"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+            app:layout_constraintStart_toEndOf="@+id/missionCardView5">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="6"
+                android:textSize="10dp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto_5"
+                android:layout_width="22dp"
+                android:layout_height="match_parent"
+                app:riv_corner_radius="20dp" />
+        </soup.neumorphism.NeumorphCardView>
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/missionCardView7"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+            app:layout_constraintStart_toEndOf="@+id/missionCardView6">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="7"
+                android:textSize="10dp" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto_6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:riv_corner_radius="20dp"
+                />
+        </soup.neumorphism.NeumorphCardView>
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/missionCardView8"
+            style="@style/ShapeAppearance.Neumorph.CardView"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/neumorphCardView5"
+            app:layout_constraintStart_toEndOf="@+id/missionCardView6">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="8"
+                android:textSize="10dp" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/missionPhoto_7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:riv_corner_radius="20dp"
+                />
+        </soup.neumorphism.NeumorphCardView>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

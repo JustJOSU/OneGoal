@@ -20,4 +20,7 @@ data class Mission(
             "missionUserPhotoUrl" to missionUserPhotoUrl
         )
     }
+    companion object{
+        const val Mission = 0
+    }
 }

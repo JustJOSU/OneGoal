@@ -323,8 +323,9 @@ class RoomActivity : AppCompatActivity() {
         val userid_map = mapOf("$missionUser" to "${missionUserPhotoUrl}")
 
         //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId"] = missionValues
-        childUpdates["/workOutRooms/$roomId/MissionHistory/$strDate/members"] = missionValues
+        childUpdates["/workOutRooms/$roomId/MissionHistory/$strDate/members/$missionUser"] = missionPhotoUrl
         database.updateChildren(childUpdates)
+
 
     }
     //그리고 DB 구조 다시 ;;

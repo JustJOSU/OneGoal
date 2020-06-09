@@ -1,6 +1,7 @@
 package com.hour.onegoal
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -9,7 +10,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.hour.onegoal.Data.Mission
 import com.hour.onegoal.Data.TodayMission
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_mission_history.*
@@ -36,17 +36,25 @@ class MissionHistoryActivity : AppCompatActivity() {
             }
             override fun onDataChange(p0: DataSnapshot) {
 
-                // 팀원일 경우 멤버 텍스트뷰 밑에 배치
+                var todayMissionList: ArrayList<TodayMission>?= null
+                todayMissionList = ArrayList()
 
-                var missionList: ArrayList<TodayMission>?= null
-                missionList = ArrayList()
-
-
+                Log.d("date11","${p0.getValue()}")
                 for ( h in p0.children){
+                    val todayMissions = h.getValue(TodayMission::class.java)
+                    todayMissionList.add(todayMissions!!)
+                    Log.d("members","${h.getValue()}")
 
-                    val missions = h.getValue(TodayMission::class.java)
-                    missionList.add(missions!!)
-                    missionHistory_rv?.adapter = TodayMissionHistoryAdapter(applicationContext,missionList){
+                    val photoUrlList : ArrayList<String> = ArrayList()
+                    val child_test = h.child("members").children
+
+                    //TODO: 조성재 이거좀 해줘 !
+                    for(l in child_test){
+                        photoUrlList.add(l.value.toString())
+                        Log.d("이근희",l.value.toString())
+                        Log.d("값 불러와짐", "${h.child("members").child("test").getValue(String::class.java)}")
+                    }
+                    missionHistory_rv?.adapter = TodayMissionHistoryAdapter(applicationContext,todayMissionList,photoUrlList){
 
                     }
                     missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,1)
@@ -55,8 +63,6 @@ class MissionHistoryActivity : AppCompatActivity() {
                         missionHistory_rv.smoothScrollToPosition(1)
                     }
                 }
-
-
             }
         })
     }
