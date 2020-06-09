@@ -9,6 +9,7 @@ data class TodayMission(
     var todaymissionTitle:String?= "",
     var todaymissionDescription:String? ="",
     var todaymissionDate:String = ""
+
 ){
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -20,4 +21,10 @@ data class TodayMission(
             "todaymissionDate" to todaymissionDate
         )
     }
+    companion object {
+        const val DATE_TYPE = 0
+        const val IMAGE_TYPE = 1
+        const val IMAGE_TYPE_2 = 2
+    }
 }
+

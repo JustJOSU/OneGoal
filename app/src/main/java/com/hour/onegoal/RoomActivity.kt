@@ -98,7 +98,7 @@ class RoomActivity : AppCompatActivity() {
         dialog.show()
     }
     // 미션 업로드
-    private fun writeNewTodayMission(todayMissionTitle:String,todayMissionDescription:String){
+    private fun writeNewTodayMission(todayMissionTitle:String,todayMissionDescription:String) {
 
 
         val dateFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
@@ -109,7 +109,7 @@ class RoomActivity : AppCompatActivity() {
 
         if (todayMissionId == null) {
             Log.w(TAG, "Couldn't get push key for posts")
-            return
+
         }
         val todayMission = TodayMission(todayMissionId,todayMissionTitle,todayMissionDescription,strDate)
 
@@ -320,12 +320,10 @@ class RoomActivity : AppCompatActivity() {
 
         val childUpdates = HashMap<String, Any>()
 
-
-        val userid_map = mapOf("1" to "$userId")
-
+        val userid_map = mapOf("$missionUser" to "${missionUserPhotoUrl}")
 
         //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId"] = missionValues
-        childUpdates["/workOutRooms/$roomId/MissionHistory/$strDate/members"] = userid_map
+        childUpdates["/workOutRooms/$roomId/MissionHistory/$strDate/members"] = missionValues
         database.updateChildren(childUpdates)
 
     }
@@ -343,13 +341,7 @@ class RoomActivity : AppCompatActivity() {
                     val username = dataSnapshot.child("username").value
                     val userPhotoUrl = dataSnapshot.child("photoUrl").value.toString()
                      if (filePath == null && imageUri == null){
-                         val dateFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
-                         val date = Date()
-                         val strDate: String = dateFormat.format(date).toString()
                         writeNewMission(missionPhotoUrl = "",missionUser = username.toString(),missionUserPhotoUrl = userPhotoUrl)
-                         val intent = Intent(this@RoomActivity, MissionHistoryActivity::class.java)
-                         intent.putExtra("writeDate", strDate)
-                         startActivity(intent)
                     } else {
                         if (filePath == null){
                             writeNewMission(missionPhotoUrl = imageUri.toString(),missionUser = username.toString(),missionUserPhotoUrl = userPhotoUrl)
