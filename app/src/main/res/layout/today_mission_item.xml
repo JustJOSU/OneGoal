@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/item_todayMissionDate_TextView">
 
         <soup.neumorphism.NeumorphCardView
-            android:id="@+id/missionCardView"
+            android:id="@+id/missionCardView0"
             style="@style/ShapeAppearance.Neumorph.CardView"
             android:layout_width="70dp"
             android:layout_height="60dp"
@@ -83,7 +83,7 @@
         </soup.neumorphism.NeumorphCardView>
 
         <soup.neumorphism.NeumorphCardView
-            android:id="@+id/missionCardView3"
+            android:id="@+id/missionCardView2"
             style="@style/ShapeAppearance.Neumorph.CardView"
             android:layout_width="70dp"
             android:layout_height="60dp"
@@ -102,11 +102,12 @@
                 android:id="@+id/missionPhoto_2"
                 android:layout_width="match_parent"
                 android:layout_height="31dp"
-                app:riv_corner_radius="20dp" />
+                app:riv_corner_radius="20dp"
+                />
         </soup.neumorphism.NeumorphCardView>
 
         <soup.neumorphism.NeumorphCardView
-            android:id="@+id/missionCardView4"
+            android:id="@+id/missionCardView3"
             style="@style/ShapeAppearance.Neumorph.CardView"
             android:layout_width="70dp"
             android:layout_height="60dp"
@@ -129,7 +130,7 @@
         </soup.neumorphism.NeumorphCardView>
 
         <soup.neumorphism.NeumorphCardView
-            android:id="@+id/missionCardView5"
+            android:id="@+id/missionCardView4"
             style="@style/ShapeAppearance.Neumorph.CardView"
             android:layout_width="70dp"
             android:layout_height="60dp"
@@ -152,7 +153,7 @@
         </soup.neumorphism.NeumorphCardView>
 
         <soup.neumorphism.NeumorphCardView
-            android:id="@+id/missionCardView6"
+            android:id="@+id/missionCardView5"
             style="@style/ShapeAppearance.Neumorph.CardView"
             android:layout_width="70dp"
             android:layout_height="60dp"
@@ -175,7 +176,7 @@
         </soup.neumorphism.NeumorphCardView>
 
         <soup.neumorphism.NeumorphCardView
-            android:id="@+id/missionCardView7"
+            android:id="@+id/missionCardView6"
             style="@style/ShapeAppearance.Neumorph.CardView"
             android:layout_width="70dp"
             android:layout_height="60dp"
@@ -197,7 +198,7 @@
                 />
         </soup.neumorphism.NeumorphCardView>
         <soup.neumorphism.NeumorphCardView
-            android:id="@+id/missionCardView8"
+            android:id="@+id/missionCardView7"
             style="@style/ShapeAppearance.Neumorph.CardView"
             android:layout_width="70dp"
             android:layout_height="60dp"
