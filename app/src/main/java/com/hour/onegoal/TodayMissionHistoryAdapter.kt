@@ -18,7 +18,7 @@ import soup.neumorphism.NeumorphTextView
 
 
 class TodayMissionHistoryAdapter(
-    val context: Context, private val todayMissionHistoryList: ArrayList<TodayMission>, private val photoUrl: ArrayList<String>?,
+    val context: Context, private val todayMissionHistoryList: ArrayList<TodayMission>, private val photoUrl: ArrayList<ArrayList<String>>?,
     var itemClick: (TodayMission) -> Unit)
     : RecyclerView.Adapter<TodayMissionHistoryAdapter.Holder>() {
 
@@ -37,11 +37,14 @@ class TodayMissionHistoryAdapter(
         private val missionUserPhotoUrl: ArrayList<RoundedImageView> = getId()
 
         //itemView?.findViewById<RoundedImageView>(R.id.missionPhoto_1)
-        fun bind(todayMission: TodayMission, context: Context){
+        fun bind(todayMission: TodayMission, context: Context, photo:ArrayList<String>){
             todayMissiontitle?.text = todayMission.todaymissionTitle
             todayMissionDate?.text =  todayMission.todaymissionDate
-            for(i in photoUrl?.indices!!){
-                missionUserPhotoUrl[i].loadImage(photoUrl?.get(i))
+            photo.forEach{
+                Log.d("TAG : ", "$it")
+            }
+            for(i in photo.indices){
+                missionUserPhotoUrl[i].loadImage(photo[i])
             }
         }
 
@@ -68,10 +71,10 @@ class TodayMissionHistoryAdapter(
         return todayMissionHistoryList.size
     }
 
+    var count = 0
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        // 위의 onCreateViewHolder 에서 만든 view 와 실제 입력되는 각각의 데이터를 연결한다.
-        holder.bind(todayMissionHistoryList[position],context)
-
+        // 위의 onreateViewHolder 에서 만든 view 와 실제 입력되는 각각의 데이터를 연결한다.
+        holder.bind(todayMissionHistoryList[position],context,photoUrl?.get(position)!!)
     }
 
 }
