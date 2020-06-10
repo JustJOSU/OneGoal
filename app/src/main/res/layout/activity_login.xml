@@ -9,20 +9,21 @@
     tools:context=".Login.LoginActivity">
 
     <soup.neumorphism.NeumorphCardView
+        android:id="@+id/neumorphCardView6"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        app:neumorph_shapeType="basin"
-        app:neumorph_shapeAppearance="@style/CustomShapeAppearance4"
         app:layout_constraintBottom_toTopOf="@+id/neumorphTextView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance4"
+        app:neumorph_shapeType="basin">
 
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
-                android:padding="15dp"
-                android:src="@drawable/main_icon" />
+        <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:src="@drawable/main_icon" />
 
     </soup.neumorphism.NeumorphCardView>
 
@@ -31,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:fontFamily="@font/use_font"
+        android:fontFamily="@font/dreammate1"
         android:text="Dream Mate"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/edittext_card"
@@ -141,16 +142,27 @@
         app:layout_constraintEnd_toEndOf="@+id/login_button"
         app:layout_constraintStart_toStartOf="@+id/login_button" />
 
-    <soup.neumorphism.NeumorphButton
-        android:id="@+id/register"
-        style="@style/Widget.Neumorph.Button"
-        android:layout_width="300dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="계정이 없으십니까?"
+        app:layout_constraintEnd_toEndOf="@+id/login_button"
+        app:layout_constraintStart_toStartOf="@+id/login_button"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="24dp"
         android:text="회원가입"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_button"
-        app:neumorph_shapeType="flat" />
+        android:textColor="#673AB7"
+        app:layout_constraintEnd_toEndOf="@+id/login_button"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
 
 

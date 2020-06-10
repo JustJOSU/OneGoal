@@ -1,9 +1,12 @@
 package com.hour.onegoal
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -97,6 +100,23 @@ class MainActivity : AppCompatActivity() {
             }
             main_category_recyclerView.viewTreeObserver.addOnGlobalLayoutListener { scrollToEnd() }
 
+        main_today_mission_cardView.setOnClickListener {
+            FirebaseDatabase.getInstance().getReference("/users/$uid").addValueEventListener(object :ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.child("/myroom").child("roomId").value == null){
+                        main_today_mission_cardView.isClickable = false
+                        MessageShow()
+                    }
+
+                }
+
+            })
+
+        }
         // 투데이 미션 setText
         FirebaseDatabase.getInstance().getReference("/users/$uid").addValueEventListener(object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -104,17 +124,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-
-                if (p0.child("/myroom/todayMission").child("todaymissionTitle").value == null){
-                    todayMission_title.text = "오늘의 미션"
-                }else {
-                    val title1 =
-                        p0.child("/myroom/todayMission").child("todaymissionTitle").value.toString()
-                    todayMission_title.text = title1
-                }
                 if (p0.child("/myroom").child("roomId").value == null){
                     main_today_mission_cardView.isClickable = false
-                    toast("방 등록 또는 가입을 해주세요 ^^")
+
                 }
                 else{
                     val myroom = p0.child("/myroom").child("roomId").value.toString()
@@ -137,5 +149,19 @@ class MainActivity : AppCompatActivity() {
         }
     private fun scrollToEnd() =
         (main_category_recyclerView.adapter!!.itemCount - 1).takeIf { it > 0 }?.let(main_category_recyclerView::smoothScrollToPosition)
+    // 오늘의 미션 텍스트뷰 클릭 시 나오는 다이얼로그
+    private fun MessageShow(){
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+       dialog.setContentView(R.layout.custom_show_message_dialog)
 
+        val yesBtn = dialog.findViewById(R.id.ok_Today_Button) as Button
+        yesBtn.setOnClickListener {
+
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
 }

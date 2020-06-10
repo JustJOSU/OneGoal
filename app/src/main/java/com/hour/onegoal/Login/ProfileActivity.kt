@@ -65,7 +65,8 @@ class ProfileActivity : AppCompatActivity() {
                     text_gender.setText(genderID)
                     edit_text_name.setText(user.displayName)
                     text_email.text = user.email
-                    Glide.with(this@ProfileActivity)
+
+                    Glide.with(applicationContext)
                         .load(user.photoUrl)
                         .into(profileImage)
                     if (user.isEmailVerified) {

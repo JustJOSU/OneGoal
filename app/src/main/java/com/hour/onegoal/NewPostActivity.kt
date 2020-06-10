@@ -164,7 +164,7 @@ class NewPostActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         } else if (filePath == null && imageUri == null){
-                            val roomId = writeNewPost(userId, username.toString(), title, summary, description, roomPhotoUrl = "",
+                            val roomId = writeNewPost(userId, username.toString(), title, summary, description, roomPhotoUrl = imageUri.toString(),
                                 numberCount = numberCount,
                                 teamHeadPhotoUrl = teamHeadPhotoUrl
                             )

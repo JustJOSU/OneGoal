@@ -1,6 +1,7 @@
 package com.hour.onegoal.Login
 
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -50,6 +51,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             signIn(email,password)
         }
 
+        register.paintFlags = register.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
 
         register.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)

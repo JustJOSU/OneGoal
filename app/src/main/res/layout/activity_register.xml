@@ -13,9 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/use_font"
-        android:text="Sign Up"
-        android:textSize="64sp"
+        android:fontFamily="@font/dreammate1"
+        android:text="Dream Mate"
+        android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/edittext_card_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,26 +119,15 @@
 
     </soup.neumorphism.NeumorphCardView>
 
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/edittext_card_5"
-        app:neumorph_shapeType="pressed"
-        style="@style/Widget.Neumorph.CardView"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edittext_card_4">
+
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/birthday_edittext_register"
-        app:layout_constraintStart_toStartOf="@+id/birthday_edittext_register"
-        app:layout_constraintTop_toBottomOf="@+id/birthday_edittext_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edittext_card_4"
         android:gravity="center"
         >
 
@@ -147,6 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="남자"
+            android:buttonTint="#673AB7"
             android:checked="true"
             />
 
@@ -155,6 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="여자"
+            android:buttonTint="#673AB7"
             android:checked="false"
             />
     </RadioGroup>
@@ -171,7 +162,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-    </soup.neumorphism.NeumorphCardView>
 
 
     <soup.neumorphism.NeumorphButton
@@ -179,11 +169,10 @@
         style="@style/Widget.Neumorph.Button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
         android:text="회원가입"
-        app:layout_constraintEnd_toEndOf="@+id/edittext_card_5"
-        app:layout_constraintStart_toStartOf="@+id/edittext_card_5"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_card_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
         app:neumorph_shapeType="flat" />
 
 

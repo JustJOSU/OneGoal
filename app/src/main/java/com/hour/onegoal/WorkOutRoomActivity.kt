@@ -112,12 +112,24 @@ class WorkOutRoomActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 val user_info = p0.getValue(User::class.java)
                 //Log.d(TAG, "user : $user_info")
+                // 유저 정보에서 방 아이디와 해당아이디 방 일치하면 입장가능하도록 하기
+                if(p0.child("myroom").child("roomId").value == roomId)
+                {
+                    val intent = Intent(this@WorkOutRoomActivity, RoomActivity::class.java)
+                    intent.putExtra("title",roomTitle)
+                    intent.putExtra("roomId",roomId)
+                    startActivity(intent)
 
-                if(p0.child("myroom").exists()){
+                }
+                else if(p0.child("myroom").exists()){
                     roomEnter_btn.isClickable = false
                     toast("방은 계정 당 하나만 입장하실 수 있습니다.")
+                    //Log.d("이근희2","${p0.child("myroom").child("roomId").value}")
+                    Log.d("이근희3","${roomId}")
                     return
                 }
+
+
 
                 if(user_info?.username != null){
                     val userValues = user_info.toMap()
