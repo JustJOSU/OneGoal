@@ -320,10 +320,11 @@ class RoomActivity : AppCompatActivity() {
 
         val childUpdates = HashMap<String, Any>()
 
-        val userid_map = mapOf("$missionUser" to "${missionUserPhotoUrl}")
+        val userid_map = mapOf("$missionUser" to "${missionUserPhotoUrl}",
+            "$missionUser" to "{$missionPhotoUrl}")
 
         //childUpdates["/workOutRooms/$roomId/mission/$missionId/$userId"] = missionValues
-        childUpdates["/workOutRooms/$roomId/MissionHistory/$strDate/members/$missionUser"] = missionPhotoUrl
+        childUpdates["/workOutRooms/$roomId/MissionHistory/$strDate/members/$missionUser"] = missionUserPhotoUrl
         database.updateChildren(childUpdates)
 
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -64,7 +65,7 @@ class MissionHistoryActivity : AppCompatActivity() {
                 missionHistory_rv?.adapter = TodayMissionHistoryAdapter(applicationContext,todayMissionList,photoUrlList){
 
                 }
-                missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,1)
+                missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,1) as RecyclerView.LayoutManager?
                 missionHistory_rv.setHasFixedSize(true)
                 missionHistory_rv.post {
                     missionHistory_rv.smoothScrollToPosition(1)
