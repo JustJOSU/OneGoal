@@ -72,7 +72,8 @@ class ProfileActivity : AppCompatActivity() {
                     if (user.isEmailVerified) {
                         text_not_verified.visibility = View.INVISIBLE
                     } else {
-                        text_not_verified.visibility = View.VISIBLE
+                        // 이메일 인증 visible 후에 처리 하슈
+                        text_not_verified.visibility = View.INVISIBLE
                     }
                 }
             }
@@ -151,6 +152,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         // 이메일 인증이 안되었을 때
+
         text_not_verified.setOnClickListener {
             AlertDialog.Builder(this).apply {
                 setTitle("이메일 인증하시겠습니까?")
