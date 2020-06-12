@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener
 import com.hour.onegoal.Data.TodayMission
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_mission_history.*
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
 class MissionHistoryActivity : AppCompatActivity() {
@@ -33,38 +34,42 @@ class MissionHistoryActivity : AppCompatActivity() {
         FirebaseDatabase.getInstance().reference.child("/workOutRooms/$roomId/MissionHistory").addValueEventListener(object :
             ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
+
             }
             override fun onDataChange(p0: DataSnapshot) {
 
                 var todayMissionList: ArrayList<TodayMission>?= null
                 todayMissionList = ArrayList()
 
-                Log.d("date11","${p0.getValue()}")
-                for ( h in p0.children){
+                val photoUrlList : ArrayList<ArrayList<String>> = ArrayList()
+
+                Log.d("date11","${p0.ref}")
+                for ( h in p0.children) {
                     val todayMissions = h.getValue(TodayMission::class.java)
                     todayMissionList.add(todayMissions!!)
-                    Log.d("members","${h.getValue()}")
-
-                    val photoUrlList : ArrayList<String> = ArrayList()
+                    Log.d("members", "${h.getValue()}")
                     val child_test = h.child("members").children
 
-                    //TODO: 조성재 이거좀 해줘 !
-                    for(l in child_test){
-                        photoUrlList.add(l.value.toString())
-                        Log.d("이근희",l.value.toString())
-                        Log.d("값 불러와짐", "${h.child("members").child("test").getValue(String::class.java)}")
+                    val result: ArrayList<String> = ArrayList()
+                    child_test.forEach {
+                        result.add(it.value.toString())
+                        print("foreach")
+                        println(it.value)
                     }
-                    missionHistory_rv?.adapter = TodayMissionHistoryAdapter(applicationContext,todayMissionList,photoUrlList){
+                    photoUrlList.add(result)
+                }
+                photoUrlList.forEach{
+                    Log.d("MissionActivity : ", "$it")
+                }
+                missionHistory_rv?.adapter = TodayMissionHistoryAdapter(applicationContext,todayMissionList,photoUrlList){
 
-                    }
-                    missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,1)
-                    missionHistory_rv.setHasFixedSize(true)
-                    missionHistory_rv.post {
-                        missionHistory_rv.smoothScrollToPosition(1)
-                    }
+                }
+                missionHistory_rv?.layoutManager = GridLayoutManager(applicationContext,1)
+                missionHistory_rv.setHasFixedSize(true)
+                missionHistory_rv.post {
+                    missionHistory_rv.smoothScrollToPosition(1)
                 }
             }
         })
     }
-
 }

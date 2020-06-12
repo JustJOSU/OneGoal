@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.hour.onegoal.Data.Mission
 import com.hour.onegoal.Data.TodayMission
@@ -18,7 +20,7 @@ import soup.neumorphism.NeumorphTextView
 
 
 class TodayMissionHistoryAdapter(
-    val context: Context, private val todayMissionHistoryList: ArrayList<TodayMission>, private val photoUrl: ArrayList<String>?,
+    val context: Context, private val todayMissionHistoryList: ArrayList<TodayMission>, private val photoUrl: ArrayList<ArrayList<String>>?,
     var itemClick: (TodayMission) -> Unit)
     : RecyclerView.Adapter<TodayMissionHistoryAdapter.Holder>() {
 
@@ -26,23 +28,37 @@ class TodayMissionHistoryAdapter(
 
         val todayMissiontitle = itemView?.findViewById<TextView>(R.id.item_todayMissionTitle_TextView)
         val todayMissionDate = itemView?.findViewById<TextView>(R.id.item_todayMissionDate_TextView)
-        private fun getId():ArrayList<RoundedImageView>{
+
+        private fun getId(itemView: View?):ArrayList<RoundedImageView>{
             val result: ArrayList<RoundedImageView> = ArrayList()
             for(i in 0..7){
-                result.add(itemView.findViewById<RoundedImageView>(context.resources.getIdentifier("missionPhoto_"+i.toString(),"id",context.packageName)))
+                result.add(itemView!!.findViewById(context.resources.getIdentifier("missionPhoto_$i","id",context.packageName)))
                 //Log.d("근바", "${itemView.findViewById<RoundedImageView>(context.resources.getIdentifier("missionPhoto_0","id",context.packageName))}")
             }
             return result
         }
-        private val missionUserPhotoUrl: ArrayList<RoundedImageView> = getId()
+
+        private val missionUserPhotoUrl: ArrayList<RoundedImageView> = getId(itemView)
 
         //itemView?.findViewById<RoundedImageView>(R.id.missionPhoto_1)
-        fun bind(todayMission: TodayMission, context: Context){
+        fun bind(todayMission: TodayMission, context: Context, photo:ArrayList<String>){
             todayMissiontitle?.text = todayMission.todaymissionTitle
             todayMissionDate?.text =  todayMission.todaymissionDate
-            for(i in photoUrl?.indices!!){
-                missionUserPhotoUrl[i].loadImage(photoUrl?.get(i))
+            photo.forEach{
+                Log.d("TAG : ", "$it")
             }
+            var count = 0
+            for(i in photo.indices){
+               missionUserPhotoUrl[i].loadImage(photo[i])
+                count += 1
+            }
+            Log.d("COUNT : ","$count")
+            itemView.findViewById<NeumorphCardView>(R.id.missionCardView7).visibility = View.INVISIBLE
+            /*
+            for(i in count..7){
+                Log.d("MissionUser : ", "${missionUserPhotoUrl[i].visibility}")
+            }*/
+
         }
 
     }
@@ -68,10 +84,10 @@ class TodayMissionHistoryAdapter(
         return todayMissionHistoryList.size
     }
 
+    var count = 0
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        // 위의 onCreateViewHolder 에서 만든 view 와 실제 입력되는 각각의 데이터를 연결한다.
-        holder.bind(todayMissionHistoryList[position],context)
-
+        // 위의 onreateViewHolder 에서 만든 view 와 실제 입력되는 각각의 데이터를 연결한다.
+        holder.bind(todayMissionHistoryList[position],context,photoUrl?.get(position)!!)
     }
 
 }
