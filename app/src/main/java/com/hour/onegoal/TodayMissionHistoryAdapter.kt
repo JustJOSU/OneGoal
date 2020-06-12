@@ -16,6 +16,7 @@ import com.makeramen.roundedimageview.RoundedImageView
 import de.hdodenhof.circleimageview.CircleImageView
 import org.w3c.dom.Text
 import soup.neumorphism.NeumorphCardView
+import soup.neumorphism.NeumorphImageButton
 import soup.neumorphism.NeumorphTextView
 
 
@@ -29,8 +30,8 @@ class TodayMissionHistoryAdapter(
         val todayMissiontitle = itemView?.findViewById<TextView>(R.id.item_todayMissionTitle_TextView)
         val todayMissionDate = itemView?.findViewById<TextView>(R.id.item_todayMissionDate_TextView)
 
-        private fun getId(itemView: View?):ArrayList<RoundedImageView>{
-            val result: ArrayList<RoundedImageView> = ArrayList()
+        private fun getId(itemView: View?):ArrayList<NeumorphImageButton>{
+            val result: ArrayList<NeumorphImageButton> = ArrayList()
             for(i in 0..7){
                 result.add(itemView!!.findViewById(context.resources.getIdentifier("missionPhoto_$i","id",context.packageName)))
                 //Log.d("근바", "${itemView.findViewById<RoundedImageView>(context.resources.getIdentifier("missionPhoto_0","id",context.packageName))}")
@@ -38,7 +39,7 @@ class TodayMissionHistoryAdapter(
             return result
         }
 
-        private val missionUserPhotoUrl: ArrayList<RoundedImageView> = getId(itemView)
+        private val missionUserPhotoUrl: ArrayList<NeumorphImageButton> = getId(itemView)
 
         //itemView?.findViewById<RoundedImageView>(R.id.missionPhoto_1)
         fun bind(todayMission: TodayMission, context: Context, photo:ArrayList<String>){
@@ -53,11 +54,12 @@ class TodayMissionHistoryAdapter(
                 count += 1
             }
             Log.d("COUNT : ","$count")
-            itemView.findViewById<NeumorphCardView>(R.id.missionCardView7).visibility = View.INVISIBLE
-            /*
+            //itemView.findViewById<NeumorphCardView>(R.id.missionCardView7).visibility = View.INVISIBLE
+
             for(i in count..7){
+                missionUserPhotoUrl[i].visibility = View.INVISIBLE
                 Log.d("MissionUser : ", "${missionUserPhotoUrl[i].visibility}")
-            }*/
+            }
 
         }
 

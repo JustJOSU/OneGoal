@@ -17,11 +17,13 @@ fun ImageView.loadImage(uri:String?){
         Glide.with(this.context)
             .setDefaultRequestOptions(options)
             .load(uri)
+            .circleCrop()
             .into(this)
     } else {
         //TODO: error 처리
         Glide.with(this.context)
             .load(R.drawable.account)
+            .circleCrop()
             .into(this)
     }
 }
