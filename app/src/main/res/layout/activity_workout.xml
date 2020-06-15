@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
+        android:layout_margin="20dp"
         android:layout_weight="0.9">
         <soup.neumorphism.NeumorphImageButton
             android:id="@+id/fab_backBtn"

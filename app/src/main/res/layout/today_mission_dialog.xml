@@ -1,91 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
 
-    <TextView
-        android:id="@+id/title"
+    android:background = "#FFF"
+    android:layout_gravity="center"
+    android:layout_marginBottom="50dp"
+   >
+    <soup.neumorphism.NeumorphCardView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="16dp"
-        android:text="오늘의 미션"
-        android:background="@color/colorAccent"/>
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:text="오늘의 미션"
+                />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"/>
 
+<soup.neumorphism.NeumorphCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:neumorph_shapeType="pressed"
+    app:neumorph_shapeAppearance="@style/CustomShapeAppearance3"
+    >
     <EditText
         android:id="@+id/dialog_Today_missionTitle"
-        android:inputType="text"
+        android:inputType="textMultiLine"
+        android:maxLength="12"
+        android:lines="2"
+        android:maxLines="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="오늘의 미션을 입력해주세요."
         />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
-    <EditText
-        android:id="@+id/dialog_Today_missionDescription"
-        android:inputType="textMultiLine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="상세한 내용을 입력해주세요."
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+</soup.neumorphism.NeumorphCardView>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/no_TodayButton"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="취소"
-            android:textColor="#000000"
-            android:textSize="16dp"
-            android:background="#ffffff"/>
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <soup.neumorphism.NeumorphButton
+                    android:id="@+id/no_TodayButton"
+                    android:layout_width="150dp"
+                    android:layout_height="80dp"
+                    style="@style/Widget.Neumorph.Button"
+                    app:neumorph_shapeType="flat"
+                    android:gravity="center"
+                    android:text="취소"
+                    android:textColor="#000000"
+                    android:textSize="16dp"
+                    android:background="#ffffff"/>
 
-        <Button
-            android:id="@+id/ok_Today_Button"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="확인"
-            android:textColor="#000000"
-            android:textSize="16dp"
-            android:background="#ffffff"/>
+                <soup.neumorphism.NeumorphButton
+                    android:id="@+id/ok_Today_Button"
+                    android:layout_width="150dp"
+                    android:layout_height="80dp"
+                    style="@style/Widget.Neumorph.Button"
+                    android:gravity="center"
+                    android:text="확인"
+                    android:layout_marginLeft="30dp"
+                    android:textColor="#000000"
+                    android:textSize="16dp"
+                    android:background="#ffffff"/>
+            </LinearLayout>
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/dialog_Today_missionDescription"
+                android:inputType="textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="상세한 내용을 입력해주세요."
+                android:visibility="gone"
+                />
+        </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+    </soup.neumorphism.NeumorphCardView>
+
 
 </LinearLayout>

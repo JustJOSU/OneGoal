@@ -5,17 +5,22 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -56,6 +61,7 @@ class RoomActivity : AppCompatActivity() {
 
         findViewById<NeumorphTextView>(R.id.valid_room_title).text = roomTitle
 
+        back_button_room.setOnClickListener { onBackPressed() }
         // 참여자 카드 클릭 시
         enterAccount_cardView.setOnClickListener {
             val intent = Intent(this,ParticipantsActivity::class.java)
@@ -73,18 +79,21 @@ class RoomActivity : AppCompatActivity() {
             intent.putExtra("roomId",roomId)
             startActivity(intent)
         }
+
+
         todayMissionTitle.setOnClickListener {
             todayMissionDialog()
+
         }
     }
 
     // 오늘의 미션 텍스트뷰 클릭 시 나오는 다이얼로그
     private fun todayMissionDialog(){
-        val dialog = Dialog(this)
+        val dialog = Dialog(this,R.style.AppTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.today_mission_dialog)
-
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val yesBtn = dialog.findViewById(R.id.ok_Today_Button) as Button
         val noBtn = dialog.findViewById(R.id.no_TodayButton) as Button
         yesBtn.setOnClickListener {

@@ -6,24 +6,51 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/item_todayMissionDate_TextView"
-        android:layout_width="wrap_content"
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/Cradview"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="2000-00-00"
-        app:layout_constraintStart_toEndOf="@+id/missionUserName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/item_todayMissionTitle_TextView"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="2">
+            <TextView
+                android:id="@+id/item_todayMissionDate_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:text="2000-00-00" />
+        </LinearLayout>
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/Cradview2"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="제목"
-        app:layout_constraintBottom_toBottomOf="@+id/item_todayMissionDate_TextView"
-        app:layout_constraintStart_toEndOf="@+id/item_todayMissionDate_TextView" />
+        app:layout_constraintStart_toEndOf="@+id/Cradview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:neumorph_shapeAppearance="@style/CustomShapeAppearance3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/item_todayMissionTitle_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="제목" />
+        </LinearLayout>
+    </soup.neumorphism.NeumorphCardView>
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -33,7 +60,7 @@
         android:orientation="horizontal"
         android:weightSum="4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_todayMissionDate_TextView">
+        app:layout_constraintTop_toBottomOf="@+id/Cradview">
 
         <soup.neumorphism.NeumorphImageButton
             android:id="@+id/missionPhoto_0"

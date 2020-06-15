@@ -12,17 +12,27 @@
     >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:padding="12dp"
         >
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/cardview3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:neumorph_shapeAppearance="@style/CustomShapeAppearance4"
+            app:neumorph_shapeType="pressed"
+            >
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/item_photo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/camera"
-                app:riv_corner_radius="20dp"
-            />
+                />
+        </soup.neumorphism.NeumorphCardView>
+
 
         <soup.neumorphism.NeumorphTextView
             style="@style/Widget.Neumorph.TextView"
@@ -34,13 +44,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textStyle="bold"
-            android:layout_toEndOf="@id/item_photo"
+            android:layout_toEndOf="@id/cardview3"
             tools:text="Title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/item_photo"
+            android:layout_toEndOf="@id/cardview3"
             android:layout_below="@id/item_title"
             android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
@@ -59,7 +69,7 @@
             android:textSize="24dp"
             android:textColor="#e8b854"
             android:ellipsize="end"
-            android:layout_toEndOf="@id/item_photo"
+            android:layout_toEndOf="@id/cardview3"
             android:layout_below="@id/item_title"
             tools:text="FULL" />
 
