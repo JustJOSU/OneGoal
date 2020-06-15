@@ -11,7 +11,9 @@ import com.hour.onegoal.R
 fun ImageView.loadImage(uri:String?){
     val options = RequestOptions()
         .placeholder(R.drawable.user)
-        .error(R.color.colorPrimary)
+        .circleCrop()
+        .error(R.drawable.account)
+
 
     if(uri != null){
         Glide.with(this.context)

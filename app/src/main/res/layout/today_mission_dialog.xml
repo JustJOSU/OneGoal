@@ -50,7 +50,8 @@
         android:maxLines="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="오늘의 미션을 입력해주세요."
+        android:layout_margin="10dp"
+        android:hint="미션 제목 :  최대 10글자, 최대 2줄"
         />
 </soup.neumorphism.NeumorphCardView>
 
