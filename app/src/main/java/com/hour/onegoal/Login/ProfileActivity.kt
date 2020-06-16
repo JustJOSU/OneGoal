@@ -61,8 +61,16 @@ class ProfileActivity : AppCompatActivity() {
                     p0.child("gender").getValue(String::class.java)
                 val profileImage = findViewById<CircleImageView>(R.id.profile_image_view)
                 currentUser?.let {
-                    text_birth.setText(birthID)
-                    text_gender.setText(genderID)
+                    text_birth.text = birthID
+                    text_gender.text = genderID
+                    if(genderID == "남자")
+                    {
+                        text_gender.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_male, 0, 0, 0)
+                    }
+                    else
+                    {
+                        text_gender.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_female, 0, 0, 0)
+                    }
                     edit_text_name.setText(user.displayName)
                     text_email.text = user.email
 

@@ -14,6 +14,7 @@ import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -30,6 +31,7 @@ import com.hour.onegoal.Data.TodayMission
 import com.hour.onegoal.Util.loadImage
 import com.hour.onegoal.Util.toast
 import kotlinx.android.synthetic.main.activity_room.*
+import kotlinx.android.synthetic.main.custom_dialog.*
 import kotlinx.android.synthetic.main.today_mission_dialog.*
 import soup.neumorphism.NeumorphTextView
 import java.io.ByteArrayOutputStream
@@ -94,6 +96,7 @@ class RoomActivity : AppCompatActivity() {
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.today_mission_dialog)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         val yesBtn = dialog.findViewById(R.id.ok_Today_Button) as Button
         val noBtn = dialog.findViewById(R.id.no_TodayButton) as Button
         yesBtn.setOnClickListener {
@@ -159,10 +162,11 @@ class RoomActivity : AppCompatActivity() {
 
     // 제출 버튼 클릭 시 나오는 다이얼로그
     private fun showDialog() {
-        val dialog = Dialog(this)
+        val dialog = Dialog(this,R.style.AppTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.custom_dialog)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         photo = dialog.findViewById(R.id.dialog_imageView) as ImageView
         photo.setOnClickListener {
@@ -212,6 +216,7 @@ class RoomActivity : AppCompatActivity() {
         startActivityForResult(intent, OPEN_GALLERY)
     }
 
+
     // 갤러리에서 이미지 업로드
     private fun uploadImage(){
 
@@ -230,6 +235,7 @@ class RoomActivity : AppCompatActivity() {
         val upload = storageRef.putBytes(image)
 
         // TODO: 프로그래스바
+        toast("이미지를 불러오고 있습니다. 잠시만 기다려주세요 ^^")
         upload.addOnCompleteListener { uploadTask ->
             if (uploadTask.isSuccessful) {
                 // 객체를 다운로드하는 데 사용할 수 있는 URL
@@ -241,7 +247,7 @@ class RoomActivity : AppCompatActivity() {
                 }
             } else {
                 uploadTask.exception?.let {
-                    toast(it.message!!)
+                    //toast(it.message!!)
                 }
             }
         }
@@ -263,23 +269,25 @@ class RoomActivity : AppCompatActivity() {
         val image = baos.toByteArray()
         // 스토리지 레퍼런스에 배열로 반환한 image 변수를 put !
         val upload = storageRef.putBytes(image)
-        val dialogImageView = findViewById<ImageView>(R.id.dialog_imageView)
+
         //TODO: 프로그래스바
+        toast("이미지를 불러오고 있습니다. 잠시만 기다려주세요 ^^")
         upload.addOnCompleteListener { uploadTask ->
             // 성공하면 프로그레스바 안보이도록
             if (uploadTask.isSuccessful) {
                 // 객체를 다운로드하는 데 사용할 수 있는 URL
                 storageRef.downloadUrl.addOnCompleteListener { urlTask ->
                     urlTask.result?.let {
+
                         imageUri = it
-                        Toast.makeText(this,"$it", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this,"$it", Toast.LENGTH_SHORT).show()
                         photo.setImageBitmap(bitmap)
 
                     }
                 }
             } else {
                 uploadTask.exception?.let {
-                    toast(it.message!!)
+                    //toast(it.message!!)
                 }
             }
         }
